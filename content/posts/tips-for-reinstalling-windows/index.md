@@ -5,163 +5,106 @@ title: "Windows の再インストール後にやることメモ"
 tags: ["windows10"]
 categories: tweak
 draft: false
-hidden: true
+hidden: false
 ---
 
 OS クリーンインストールを頻繁にやるようになったので毎回やってることを書き留めておく。
 
+PC は主に趣味での開発、ゲームに使っている。
+
 ## 前準備
 
-OS クリーンインストールを行うまえに、クリーンインストール後に必要になるものはドライバ含め全てインストールしておく。
+エクスポートしたファイルやドライバはまとめてブータブル USB に入れておく。
 
-自分の場合、
+### アプリケーション
+
+アプリケーションの管理は winget と一部 chocolatey を使ってやっている。
+
+**winget**
 
 ```
-.
-├── 1 - install chipset and audio drivers
-│  ├── intel_chipset_9.zip
-│  └── realtek_creative_audio.zip
-├── 2 - install GPU driver
-│  ├── 442.74-desktop-win10-64bit-international-whql.exe
-│  └── [Guru3D.com]-NVSlimmer.zip
-├── 3 - install runtimes
-│  ├── dxwebsetup.exe
-│  └── Visual-C-Runtimes-All-in-One-Aug-2020.zip
-├── 4 - windows optimization
-│  └── Windows Intel.zip (Optimization tools)
-├── 5 - install basic programs
-│  ├── 1PasswordSetup-7.6.785.exe
-│  ├── 7z1900-x64.msi
-│  ├── Avidemux_2.7.6VC++64bits.exe
-│  ├── DiscordSetup.exe
-│  ├── FACEITInstaller_64.exe
-│  ├── Firefox Installer.exe
-│  ├── GoogleJapaneseInputSetup.exe
-│  ├── OBS-Studio-26.0.2-Full-Installer-x64.exe
-│  ├── OpenShellSetup_4_4_142.exe
-│  ├── osu!install.exe
-│  ├── RawAccel_v1.3.0.zip
-│  ├── ShareX-13.3.0-setup.exe
-│  ├── SlackSetup.exe
-│  ├── SoundSwitch_v5.6.1.38743_Release_Installer.exe
-│  ├── SpotifySetup.exe
-│  ├── SteamSetup.exe
-│  ├── vlc-3.0.11-win32.exe
-│  └── VSCodeUserSetup-x64-1.51.1.exe
-├── 6 - setup program config
-│  ├── csgo/
-│  ├── kovaak config/
-│  ├── obs/
-│  ├── openshell/
-│  ├── osu!/
-│  └── sharex config/
-├── buckup
-│  └── 20h2s2_default.reg
-├── caps2ctrl.reg
-└── README.md
+winget export --output winget-export.json
 ```
 
-だいたいこんな感じですべて zip して起動 USB の中に入れておいてます。
+**chocolatey**
 
-## 各種ドライバのダウンロード・インストール
+```
+choco export
+```
 
-### チップセットドライバとオーディオドライバ
+エクスポートしたファイルは GitHub あたりにアップロードして管理する。
 
-使っているマザボの型番を調べるとドライバが見つかるのでインストール。
+サイズの大きいゲームは再インストールの手間や config の移動の手間を省くために別ドライブ、またはパーティションを分割して分離しておくといい。
 
-自分の場合 Z87 GD65 GAMING というものなので、 `z87 gd65 gaming drivers` とかで調べると出てくる。
+### ドライバ
 
-![](2020-12-19_19-28_firefox.png)
+前もってダウンロードしておくのは以下二つ。マザーボードの型番や GPU の型番を調べて最適なものを探す。
 
-たくさん出てくる場合もあるみたいですが、ダウンロードしておくのは
+- チップセットドライバ
+- LAN ドライバ
+- GPU ドライバ
 
-- System & Chipset Drivers
-- On-Board Audio Drivers
-- LAN Drivers
+GPU ドライバは NVSlimmer などを使って require なもの以外を省いておく。
 
-だけで十分だと思う。
+### ランタイム
 
-だいたい使うことのない余計なソフトウェアがついてくる時があるので、ダウンロードの段階で Driver Only が選択できるなら選択しておく。
-
-インストールウィザードで除外できるなら除外する。
-
-### GPU ドライバ
-
-Nvidia の GPU ドライバを以下からダウンロード。バージョンは 442.74 。
-
-https://www.nvidia.com/en-us/drivers/results/158759/
-
-でもって、NVSlimmer[^1] もダウンロード。
-
-https://www.guru3d.com/files-get/nvidia-driver-slimming-utility,1.html
-
-required 以外はアンチェックしてインストール。
-
-## ランタイムのダウンロード・インストール
-
-以下 2 つをダウンロード・インストール。
+以下 2 つをダウンロード。
 
 - https://www.microsoft.com/en-us/download/details.aspx?id=35
 - https://www.techpowerup.com/download/visual-c-redistributable-runtime-package-all-in-one/
-  - `install_all.bat` を実行。
+  - `install_all.bat` を実行
 
-## プログラムのインストール
+### 最適化ツール
 
-全てにおいてインストール時にデスクトップショートカットを作成しないようにする。
+[ReviOS WorkSpace](https://www.revi.cc/revios/workspace) から以下をダウンロード。
 
-- 1Password
-- 7zip
-- Avidemux (動画編集ソフト)
-- Discord
-- FACEITAC
-  - クライアントを除いてインストール
-- Firefox
-  - https://github.com/spencerwooo/firefox-overlay-scrollbar をインストール後に適用。
-- Google 日本語入力
-  - インストール後、IME 有効化無効化のキーマップを全て `Ctrl-Space` に変更する。
-- OBS
-- OpenShell
-  - Start Menu のみインストール。それ以外はアンチェック。
-- ShareX (スクリーンショットツール)
-- Slack
-- SoundSwitch
-  - https://github.com/Belphemur/SoundSwitch
-  - ホットキーでサウンドデバイスを切り替えられるようにするツール。
-- Spotify
-  - `%USERPROFILE%\AppData\Roaming\Spotify` に移動して、 `prefs` を開き `storage.size=1024` の一行を追記。
-- Steam
-- VLC (動画プレイヤー)
-- VSCode
+- disable-windows-update.reg
+- enable-windows-update.reg
+- disable-uac.reg
+- enable-uac.reg
 
-## プログラムごとの設定
+併せて、以下も必要に応じてダウンロード。
 
-初期化前に設定をエクスポートできるものは全てしておく。
+- [disable-plugandplay.reg](https://gist.githubusercontent.com/shiomiyan/4acf033967f225c6a40e488a1b3918c2/raw/14ffbf217a00f494ee078b4237b2e2b815e04e8f/disable-plugandplay.reg)
+  - Razer などのデバイスによくある、接続したらドライバと一緒にソフトウェアがインストールされる機能を無効にする
+- [caps2ctrl.reg](https://gist.githubusercontent.com/shiomiyan/554d01e4b1276a2d2d3009bcb0eddf94/raw/ccf2625c439b4958706e2a30f181989c564cd15c/caps2ctrl.reg)
+  - <kbd>CapsLock</kbd> に <kbd>Ctrl</kbd> を割り当てる
 
-自分の場合は主に以下。
+Windows にプリインストールされたアプリケーション（BloatWare）をアンインストールには以下を使用。
 
-- CS:GO
-  - `autoexec.cfg`
-  - `config.cfg`
-  - `video.txt`
-  - フォントとフォントマネージャー
-- kovaak
-  - `palette.ini`
-  - `weaponsettings.ini`
-- OBS
-- OpenShell
-- Osu!
-- ShareX
+{{< blogcard "https://github.com/Sycnex/Windows10Debloater" >}}
 
-保存されているパスも確認しておくとなお楽。
+Windows Defender 無効化には以下を使用。
 
-## 細かい最適化
+{{< blogcard "https://github.com/disable-windows-defender/disable-windows-defender.github.io" >}}
 
-- https://sites.google.com/view/winshit/guides
+## インストール
+
+LAN ケーブルを抜いた状態で、ブータブル USB から Windows をインストールする。
+
+Microsoft アカウントでのサインインや、LAN ケーブルの接続を促されるがすべて無視する。
+
+前準備でそろえたものを使って以下を行う。
+
+- BloatWare アンインストール
+- Windows Update、UAC、Windows Defender の無効化
+- ドライバのインストール
+
+これができたら LAN ケーブルを接続し、パッケージマネージャーから各種アプリケーションをインストールする。
+
+{{< blogcard "https://github.com/microsoft/winget-cli" >}}
+
+{{< blogcard "https://chocolatey.org/install" >}}
+
+### その他
+
+- 一部ゲームの config 移行
+- NeoVim、OBS、SoundSwitch、REAL 等のセットアップ
+
+## 参考にしているリンク
+
+- https://docs.google.com/document/d/1c2-lUJq74wuYK1WrA_bIvgb89dUN0sj8-hO3vqmrau4/edit
+- https://www.revi.cc/revios/post-install
 - https://github.com/djdallmann/GamingPCSetup
 - https://github.com/BoringBoredom/PC-Optimization-Hub
-
-あとこれも
-
-- https://www.shiomiya.com/caps-to-ctrl/
-
-[^1]: Nvidia GPU Driver を最適化するツール。
+- https://www.techpowerup.com/forums/threads/how-to-reduce-stuttering-and-audio-distortion-in-windows-10.270051/
