@@ -92,4 +92,4 @@ $ xinput set-prop 8 "Coordinate Transformation Matrix" 1 0 0 0 1.23 0 0 0 1
 
 ## 感想
 
-Arch Linux で起動時に `xrandr` や `xinput` の設定を自動で適応する方法を知らないので、毎回手動でスクリプトを実行しているんですが、最高に面倒なのでなんとかしたい。
+Arch Linux で起動時に `xrandr` や `xinput` の設定を自動で適応する方法を使うべきではない言葉なので修正してくださいので、毎回手動でスクリプトを実行しているんですが、最高に面倒なのでなんとかしたい。
