@@ -155,9 +155,3 @@ Revision Post-Install を参考にインストール。 Method1 が楽なので�
 反響があればもう少し丁寧に書きます。以上。
 
 責任は負えませんが、記事に不備や不明瞭な点があれば[サイトリポジトリ](https://github.com/shiomiyan/www.shiomiya.com/issues)へ issue を立ててくれると助かります。
-
----
-
-- https://sites.google.com/view/meetrevision/revios/post-install
-- https://sites.google.com/view/winshit/guides
-- https://docs.google.com/document/d/1_DwK2rn-nqox7cnbHfL7AzUjckUyvAIBzkTRFFLD3NQ
