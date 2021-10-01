@@ -4,7 +4,7 @@ draft: false
 title: "超軽量版 Windows10 こと ReviOS インストールガイド"
 author: "shiomiya"
 tags: ["revios","windows10"]
-categories: tweak
+categories: etc
 hidden: true
 ---
 

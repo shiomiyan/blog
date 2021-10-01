@@ -4,7 +4,7 @@ date: 2020-12-28T13:05:35+09:00
 description:
 draft: false
 author: shiomiya
-categories: game
+categories: etc
 tags:
   - discord
 hidden: true

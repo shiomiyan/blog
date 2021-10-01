@@ -4,7 +4,7 @@ date: 2021-01-15T11:14:30+09:00
 description:
 draft: false
 author: shiomiya
-categories: tech
+categories: etc
 tags:
   - hugo
   - shields.io

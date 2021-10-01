@@ -4,10 +4,10 @@ date: 2021-09-12T03:37:05+09:00
 description:
 draft: false
 author: shiomiya
-categories: tweak
+categories: etc
 tags:
-  - Windows
-  - OBS
+  - windows
+  - obs
 
 ---
 

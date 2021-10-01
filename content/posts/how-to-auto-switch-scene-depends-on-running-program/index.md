@@ -4,7 +4,7 @@ date: 2020-12-30T13:41:27+09:00
 description:
 draft: false
 author: shiomiya
-categories: software
+categories: etc
 tags:
   - obs
 

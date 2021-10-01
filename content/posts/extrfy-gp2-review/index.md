@@ -2,7 +2,7 @@
 date: "2020-05-24 21:02:16 +0000 UTC"
 draft: false
 title: "Xtrfy GP2 レビュー"
-categories: review
+categories: gadget
 tags: ["mousepad"]
 hidden: true
 ---

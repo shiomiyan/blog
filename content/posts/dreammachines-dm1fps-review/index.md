@@ -3,7 +3,7 @@ date: "2020-02-18 00:03:00 +0000 UTC"
 draft: false
 title: "DREAM MACHINES DM1 FPS レビュー"
 tags: ["mouse"]
-categories: review
+categories: gadget
 hidden: true
 ---
 

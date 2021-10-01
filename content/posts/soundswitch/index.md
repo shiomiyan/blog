@@ -4,10 +4,10 @@ date: 2021-03-08T07:12:21+09:00
 description:
 draft: false
 author: shiomiya
-categories: software
+categories: etc
 tags:
   - windows10
-  -
+  - soundswitch
 
 ---
 

@@ -4,9 +4,9 @@ date: 2021-09-21T18:28:03+09:00
 description:
 draft: false
 author: shiomiya
-categories: review
+categories: gadget
 tags:
-  - 
+  - mouse
   -
 
 ---

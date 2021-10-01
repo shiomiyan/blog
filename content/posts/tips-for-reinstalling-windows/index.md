@@ -3,7 +3,7 @@ date: 2020-12-19T07:00:00Z
 lastmod: 2020-12-19T07:00:00Z
 title: "Windows の再インストール後にやることメモ"
 tags: ["windows10"]
-categories: tweak
+categories: etc
 draft: false
 hidden: false
 ---

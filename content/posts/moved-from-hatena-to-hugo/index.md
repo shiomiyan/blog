@@ -1,9 +1,9 @@
 ---
-title: "はてなブログからHugo+Netlifyへ移行した"
+title: "はてなブログから Hugo + Netlify へ移行した"
 date: 2020-12-16T10:13:46+09:00
 draft: false
 author: shiomiya
-categories: random
+categories: etc
 tags: ["hugo"]
 ---
 

@@ -2,7 +2,7 @@
 date: "2020-02-26 07:07:07 +0000 UTC"
 draft: false
 title: "S2 DIVINA のコーティング削り"
-categories: random
+categories: gadget
 tags: ["mouse"]
 hidden: true
 ---

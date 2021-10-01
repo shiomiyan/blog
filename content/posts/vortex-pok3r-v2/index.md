@@ -4,7 +4,7 @@ date: 2019-12-10 05:23:37
 description:
 draft: false
 author: shiomiya
-categories: review
+categories: gadget
 tags:
   - keyboard
 

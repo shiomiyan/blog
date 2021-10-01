@@ -4,7 +4,7 @@ lastmod: 2020-12-18T08:00:00Z
 author: "shiomiya"
 title: "CapsLock を Ctrl として機能させる (Windows10)"
 tags: ["windows10","memo"]
-categories: tweak
+categories: etc
 ---
 
 毎回毎回調べていて面倒だったのでメモ。

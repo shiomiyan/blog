@@ -4,7 +4,7 @@ date: "2020-12-21T15:47:10+09:00"
 description: ""
 draft: false
 author: "shiomiya"
-categories: random
+categories: etc
 tags: ["1password","bitwarden"]
 ---
 

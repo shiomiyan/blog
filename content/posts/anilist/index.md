@@ -4,7 +4,7 @@ date: 2021-01-19T15:24:10+09:00
 description: アニメ・漫画好きにおすすめしたい anilist という Web サイトの紹介。
 draft: false
 author: shiomiya
-categories: random
+categories: etc
 tags:
   - anime
 hidden: true

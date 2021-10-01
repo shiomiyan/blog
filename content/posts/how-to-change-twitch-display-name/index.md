@@ -2,7 +2,7 @@
 date: "2020-03-30 09:31:22 +0000 UTC"
 draft: false
 title: "一度設定してしまった Twitch の表示名を消す方法"
-categories: random
+categories: etc
 tags: ["twitch"]
 hidden: true
 ---

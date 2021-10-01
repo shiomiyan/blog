@@ -2,7 +2,7 @@
 date: "2020-02-01 14:30:04 +0000 UTC"
 draft: false
 title: "Steam アカウントをワンクリックで切り替える"
-categories: software
+categories: etc
 tags: ["steam"]
 author: "shiomiya"
 hidden: true
