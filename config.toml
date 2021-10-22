@@ -1,7 +1,6 @@
 baseurl = "https://www.shiomiya.com"
 languageCode = "ja-jp"
 title = ".umirc"
-googleAnalytics = "UA-139120340-2"
 Paginate = 50 # Number of posts per page
 enableRobotsTXT = true
 hasCJKLanguage = true
