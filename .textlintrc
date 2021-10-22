@@ -7,12 +7,16 @@
       },
       "ja-space-after-exclamation": false,
       "ja-space-after-question": false
+    },
+    "preset-ja-technical-writing": {
+      "ja-no-weak-phrase": false,
+      "no-exclamation-question-mark": false
     }
   },
   "filters": {
     "allowlist": {
       "allow": [
-          "/\{\{\< [\\s\\S]*? \>\}\}/m",
+          "/\\{\\{\\< [\\s\\S]*? \\>\\}\\}/m"
         ]
     }
   }

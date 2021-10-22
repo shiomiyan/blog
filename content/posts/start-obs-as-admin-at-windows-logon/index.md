@@ -31,7 +31,7 @@ tags:
 
 ### スクリプト作成
 
-OBS を起動するバッチファイルと、それをプロンプトに表示させずに実行する VB スクリプトを作成する。
+OBS を起動するバッチファイルと、それをプロンプトなしで実行させる Visual Basic スクリプトを作成する。
 
 任意のディレクトリ（今回は `C:\Users\<username>\Documents\tools`）に以下 2 つのファイルを作成。
 
@@ -53,7 +53,7 @@ Set ws = CreateObject("Wscript.Shell")
 ws.run "cmd /c C:\Users\<username>\Documents\tools\runOBS.bat", vbhide
 ```
 
-バッチファイルのみで再帰的に呼び出すことで実現することも可能なようですが、試していません。
+バッチファイルのみで再帰的に呼び出すことで実現できるようですが、試していません。
 
 ### タスクスケジューラーに登録
 

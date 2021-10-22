@@ -8,7 +8,7 @@ draft: false
 hidden: false
 ---
 
-OS クリーンインストールを頻繁にやるようになったので毎回やってることを書き留めておく。
+OS クリーンインストールを定期的に行っているので、毎回やってることを書き留めておく。
 
 PC は主に趣味での開発、ゲームに使っている。
 
@@ -38,7 +38,7 @@ choco export
 
 ### ドライバ
 
-前もってダウンロードしておくのは以下二つ。マザーボードの型番や GPU の型番を調べて最適なものを探す。
+前もってダウンロードしておくのは以下 2 つ。マザーボードの型番や GPU の型番を調べて最適なものを探す。
 
 - チップセットドライバ
 - LAN ドライバ
@@ -58,10 +58,10 @@ GPU ドライバは NVSlimmer などを使って require なもの以外を省�
 
 [ReviOS WorkSpace](https://www.revi.cc/revios/workspace) から以下をダウンロード。
 
-- disable-windows-update.reg
-- enable-windows-update.reg
-- disable-uac.reg
-- enable-uac.reg
+- `disable-windows-update.reg`
+- `enable-windows-update.reg`
+- `disable-uac.reg`
+- `enable-uac.reg`
 
 併せて、以下も必要に応じてダウンロード。
 

@@ -11,7 +11,7 @@ tags:
 
 ---
 
-Hugo での記事作成時に一緒にブランチを切ってくれる CLI ツールを Rust で書いてみた。
+Hugo での記事作成とブランチ切りを同時にやってくれる CLI ツールを Rust で書いてみた。
 
 [shiomiyan/rugo - GitHub](https://github.com/shiomiyan/rugo)
 
@@ -23,11 +23,11 @@ Hugo でブログを書く際、以下のようなワークフローで記事を
 2. Vim で編集
 3. `master` へ Push
 
-しかし、 `new` の際にパスを間違えたり、reviewdog で校正を行うために記事ごとに PR を作成したいなんて事があって、その辺を楽にする CLI ツールが欲しかった。
+`new` の際にパスを間違えたり、reviewdog で校正するため記事ごとに PR を作成したいなんて事があって、その辺を楽にする CLI ツールが欲しかった。
 
 ## コマンドライン解析
 
-Rust でコマンドライン解析を行う crate はいくつかあるが、機能的にリッチそうな [`clap`](https://github.com/clap-rs/clap) を採用してみた。
+Rust でコマンドライン解析する crate はいくつかあるが、機能的にリッチそうな [`clap`](https://github.com/clap-rs/clap) を採用してみた。
 
 直線的にオプションやサブコマンドを設置できるので、慣れていなくても書きやすかった。
 

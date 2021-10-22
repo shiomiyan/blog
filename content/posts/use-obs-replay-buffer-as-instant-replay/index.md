@@ -66,7 +66,12 @@ NVENC で動きの早いゲームや色味の強いゲームを録画する際�
 
 ![](2021-09-21-17-29-19.png)
 
-余談ですが、自分は起動パラメータに `--startreplaybuffer --minimize-to-tray --collection "default" --profile "default" --scene "replay"` として、プロファイルとシーンコレクション、シーンを明示的に指定してます。
+余談ですが、自分は起動パラメータを以下のように設定しています。
+```
+--startreplaybuffer --minimize-to-tray --collection "default" --profile "default" --scene "replay"
+```
+
+こうしておくことで、プロファイルとシーンコレクション、シーンを明示的に指定できるため、気持ち安心できます。
 
 
 {{< blogcard "https://obsproject.com/wiki/Launch-Parameters" >}}
@@ -75,7 +80,7 @@ NVENC で動きの早いゲームや色味の強いゲームを録画する際�
 
 最後に、PC を再起動して OBS Replay Buffer が走っていることを確認して終了。
 
-Geforce Experience と比べた際のよさそうな点として、ゲーム上にオーバーレイを重ねる必要がない点があげられそう。Steam のオーバーレイと同様、多少なりとも重くなる気がするので。
+Geforce Experience と比べた際のよさそうな点として、ゲーム上にオーバーレイを重ならない点があげられそう。Steam のオーバーレイと同様、多少なりとも重くなる気がするので。
 
 また劣っていると感じる点はゲームごとのフォルダリングができない点。プラグインで何とかできそうっちゃできそうではあるけど。
 

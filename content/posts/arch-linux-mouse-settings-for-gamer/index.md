@@ -10,7 +10,7 @@ tags:
 
 ---
 
-Arch (Manjaro) Linux でゲームができる感じのマウス設定を行う。
+Arch (Manjaro) Linux でゲームをするためのマウス設定。
 
 具体的にやることは以下の２つ。
 
@@ -92,4 +92,4 @@ $ xinput set-prop 8 "Coordinate Transformation Matrix" 1 0 0 0 1.23 0 0 0 1
 
 ## 感想
 
-Arch Linux で起動時に `xrandr` や `xinput` の設定を自動で適応する方法を知らないので、毎回手動でスクリプトを実行しているんですが、最高に面倒なのでなんとかしたい。
+Arch Linux で起動時に `xrandr` や `xinput` の設定を自動で適応する方法を現在模索中。毎回手動でスクリプトを実行しているんですが、最高に面倒なのでなんとかしたい。

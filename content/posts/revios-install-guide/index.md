@@ -41,16 +41,6 @@ hidden: true
 
 公式サイトの [Download](https://www.revi.cc/revios/download) から好きなバージョンの ISO をダウンロードする。
 
-ただ 2020/12/4 現在、ここからダウンロードできるものの中で日本語 IME (Google 日本語入力) が僕の PC で正常に動作したものは **20H2 S1.0**、 **2004S1.0** の 2 つのみだったので、この 2 つのどちらかになりそうです。
-
-Changelog に
-
->FIXED: Input Method Editor for Asian languages
-
-とは書いてあったけど Microsoft の IME は機能しなくて、結局 Google 日本語入力を入れる必要があったのはちょっと不満。Asian Languages とは一体。
-
-https://www.revi.cc/revios/changelog
-
 ### Bootable USB の作成
 
 動画でも使っている Rufus が一番ラクです。多分。
@@ -76,13 +66,11 @@ https://www.revi.cc/revios/changelog
 
 スクリーンショットがないので割愛。
 
-念の為書き込みを考えているドライブ以外をすべて外してから、パーティションをすべて削除。 (Unlocated Space 一つになるはず)
-
-※ 後日追記予定
+念の為書き込みを考えているドライブ以外をすべて外してから、パーティションをすべて削除。 (Unlocated Space が 1 つになるはず)
 
 インストールが終わるといつものように Windows のユーザー名とパスワードを設定するように促されるので、特に困ることはないはず。
 
-一度再起動がかかる場合がある (僕は入った) ので、焦らずゆっくり待ちます。
+一度再起動が入るので、焦らずゆっくり待ちます。
 
 ## インストール後にやること (やったこと)
 
@@ -110,7 +98,7 @@ https://www.revi.cc/revios/changelog
 
 この辺から公式サイトの Post-Install とかぶることが多いので、詳しくはそちらで。
 
-NVCleanInstall か NVSlimmer か、みたいな感じらしいですが、個人的に使いやすかった NVSlimmer を推します。
+NVCleanInstall または NVSlimmer か、みたいな感じらしいですが、個人的に使いやすかった NVSlimmer を推します。
 
 [NVIDIA driver slimming utility v0.10 Download](https://www.guru3d.com/files-get/nvidia-driver-slimming-utility,2.html)
 
@@ -148,7 +136,7 @@ Revision Post-Install を参考にインストール。 Method1 が楽なので�
 
 再起動時やタスクマネージャーを開くとわかりますがバックグラウンドプロセスが少ないせいか起動にかかる時間とかは超爆速。
 
-フレームレートも心做しか平均値が底上げされた気がする。とはいえ、この手のものでこれまで 100FPS 程度しか出せなかった PC が、急に 300FPS 出るようになることはないので、過度な期待はしないでください。
+平均フレームレートは心なしか上昇したような気がする。とはいえ、この手のものでこれまで 100FPS 程度しか出せなかった PC が、急に 300FPS 出るようになることはないので、過度な期待はしないでください。
 
 とはいえ、なんとなくいい環境でできているような気持ちになれる最高のプラシーボは得られます。
 
