@@ -7,8 +7,6 @@ author: shiomiya
 categories: tech
 tags:
   - rust
-  - warp
-  - select.rs
   - scraping
 
 ---
@@ -16,6 +14,18 @@ tags:
 ## やりたいこと
 
 クエリ文字列から URL を受け取って、Open Graph 関連の meta タグを json で返す API サーバー的なものを作る。
+
+使う crate は以下。
+
+```
+tokio = { version = "1", features = ["full"] }
+warp = "0.3"
+reqwest = { version = "0.11", features = ["json", "blocking"] }
+scraper = "0.12.0"
+select = "0.5.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+```
 
 ## とりあえず warp 使ってみる
 
