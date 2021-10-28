@@ -1,16 +1,14 @@
 ---
-title: warp 使ってみる
-date: 2021-10-27T20:38:12+09:00
-description:
-draft: false
+title: 'Rust: warp 使ってみる'
+date: 2021-10-27T20:38:12.000+09:00
+description: 
 author: shiomiya
 categories: tech
 tags:
-  - rust
-  - scraping
+- rust
+- scraping
 
 ---
-
 ## やりたいこと
 
 クエリ文字列から URL を受け取って、Open Graph 関連の meta タグを json で返す API サーバー的なものを作る。
