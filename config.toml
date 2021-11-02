@@ -31,11 +31,11 @@ rss = "index.xml"
 platforms = ["rss"]
 
 [taxonomies]
-tag ="tags"
+tag = "tags"
 category = "categories"
 
 [blackfriday]
 hrefTargetBlank = true
 
 [markup.goldmark.renderer]
-unsafe= true
+unsafe = true
