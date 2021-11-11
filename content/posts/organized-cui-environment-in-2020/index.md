@@ -71,19 +71,19 @@ Plug 'w0rp/ale'
 
 もともとあまりプラグインが入っていなかったけど更に減らした。
 
-`vim-lsp-**` を LSP を使うために導入していたが、 [mattn/vim-lsp-settings](https://github.com/mattn/vim-lsp-settings) を導入して超すっきりした (そのために [`lspconf.vim`](https://github.com/shiomiyan/.dotfiles/blob/master/.vim/userautoload/lspconf.vim) を作って `.vimrc` の肥大化を抑えていたがこれも要らなくなった) 。
+`vim-lsp-**` を LSP を使うために導入していたが、 [mattn/vim-lsp-settings](https://github.com/mattn/vim-lsp-settings) を導入して超すっきりした。(そのために [`lspconf.vim`](https://github.com/shiomiyan/.dotfiles/blob/master/.vim/userautoload/lspconf.vim) を作って `.vimrc` の肥大化を抑えていたがこれも要らなくなった) 。
 
 ファイラはシンプルかつ軽量な dirvish を使っていたけど、標準の netrw で十分そうなのでこれも消した。
 
-その他使用頻度の少なかったプラグインを削除した。
+ついでに、その他使用頻度の少なかったプラグインを削除した。
 
-ちなみにテーマはお気に入りの gruvbox をやめて気分転換に nord にしてみた。
+テーマはお気に入りだった gruvbox から、nord に乗り換えてみた。
 
 ## Shell
 
 ### Zsh
 
-macOS と WSL の両方で開発を行うようになったので、以下のようにしてディストリビューション別に処理を分けるようにした。
+macOS と WSL の両方で開発するようになったので、以下のようにしてディストリビューション別に処理を分けるようにした。
 
 ```sh
 case "$OSTYPE" in
@@ -134,7 +134,7 @@ tig と Git command を併用してたけど、 Rust 製ツール探していた
 
 ### ブラウザ
 
-Firefox + DuckDuckGo のプライバシーに配慮した構成にした。DuckDuckGo にしてから検索結果に個人ブログがたくさん出てくるようになってネットサーフィンが楽しくなった。あと Bang! が意外と便利。
+Firefox + DuckDuckGo に乗り換え。Bang! が意外と便利。
 
 ## おわりに
 

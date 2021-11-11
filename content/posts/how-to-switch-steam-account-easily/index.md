@@ -8,16 +8,16 @@ author: "shiomiya"
 hidden: true
 ---
 
-便利だったので紹介
+便利だったので紹介。
 
 ## 導入
 
 {{< github "danielchalmers/SteamAccountSwitcher" >}}
 
-Releases から最新版の Setup.exe を拾ってインストール.
+Releases から最新版の Setup.exe を拾ってインストール。
 
 ![](20200201142656.jpg)
 
-使いたいときには立ち上げて使いたいアカウントをポチるだけ.
+使いたいときには立ち上げて使いたいアカウントをポチるだけ。
 
-二段階認証は手でやる.
+二段階認証は手でやる。

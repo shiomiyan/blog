@@ -7,7 +7,7 @@ tags: ["windows10","memo"]
 categories: etc
 ---
 
-毎回毎回調べていて面倒だったのでメモ。
+毎回調べていて面倒だったのでメモ。
 
 Windows10 で忌まわしい CapsLock を Ctrl に書き換えるスクリプト。
 

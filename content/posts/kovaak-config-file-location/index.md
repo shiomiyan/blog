@@ -7,7 +7,7 @@ tags: ["kovaak"]
 hidden: true
 ---
 
-PC 初期化にあたって Kovaak の設定を引き継ぎたかったのでメモ｡
+PC 初期化にあたって Kovaak の設定を引き継ぎたかったのでメモ。
 
 ```
 C:\Program Files (x86)\Steam\steamapps\common\FPSAimTrainer\FPSAimTrainer\Saved\SaveGames

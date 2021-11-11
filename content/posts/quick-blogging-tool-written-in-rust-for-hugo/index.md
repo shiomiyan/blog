@@ -15,7 +15,7 @@ Hugo での記事作成とブランチ切りを同時にやってくれる CLI �
 
 [shiomiyan/rugo - GitHub](https://github.com/shiomiyan/rugo)
 
-{{<blogcard "https://github.com/shiomiyan/rugo">}}
+{{< blogcard "https://github.com/shiomiyan/rugo"> }}
 
 ## 背景とか
 
