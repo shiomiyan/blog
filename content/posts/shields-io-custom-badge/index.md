@@ -51,8 +51,8 @@ Feeds API を利用する。
 Hugo の `.Site.RSSLink` を使いたかったけど URL エンコードの関係か、うまくいかなかった。
 
 ```html
-<a href='https://feedly.com/i/subscription/feed/https://www.shiomiya.com/index.xml'  target='blank'>
-  <img alt="Feedly" src="https://img.shields.io/badge/dynamic/json?&style=social&logo=feedly&label=feedly&query=%24.subscribers&url=https%3A%2F%2Fcloud.feedly.com%2Fv3%2Ffeeds%2Ffeed%252Fhttps%253A%252F%252Fwww.shiomiya.com%252Findex.xml">
+<a href='https://feedly.com/i/subscription/feed/https://www.rhpav7.com/index.xml'  target='blank'>
+  <img alt="Feedly" src="https://img.shields.io/badge/dynamic/json?&style=social&logo=feedly&label=feedly&query=%24.subscribers&url=https%3A%2F%2Fcloud.feedly.com%2Fv3%2Ffeeds%2Ffeed%252Fhttps%253A%252F%252Fwww.rhpav7.com%252Findex.xml">
 </a>
 ```
 

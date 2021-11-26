@@ -141,13 +141,13 @@ async fn fetch_meta(url: String) -> Result<impl Reply, Infallible> {
 ゆくゆくはこのブログで使いたいので、適当な記事の meta を取れるか確認。
 
 ```
-PS C:\Users\sk> curl -v http://localhost:3030/api?url=https://www.shiomiya.com/posts/xenics-titan-gx-air-wireless-review/
+PS C:\Users\sk> curl -v http://localhost:3030/api?url=https://www.rhpav7.com/posts/xenics-titan-gx-air-wireless-review/
 *   Trying ::1...
 * TCP_NODELAY set
 *   Trying 127.0.0.1...
 * TCP_NODELAY set
 * Connected to localhost (127.0.0.1) port 3030 (#0)
-> GET /api?url=https://www.shiomiya.com/posts/xenics-titan-gx-air-wireless-review/ HTTP/1.1
+> GET /api?url=https://www.rhpav7.com/posts/xenics-titan-gx-air-wireless-review/ HTTP/1.1
 > Host: localhost:3030
 > User-Agent: curl/7.55.1
 > Accept: */*
@@ -157,7 +157,7 @@ PS C:\Users\sk> curl -v http://localhost:3030/api?url=https://www.shiomiya.com/p
 < content-length: 440
 < date: Wed, 27 Oct 2021 13:03:27 GMT
 <
-{"og_title":"XENICS TITAN GX AIR WIRELESS レビュー - .umirc","og_image":"","og_description":"買いました。 qoo10 で注文して、だいたい 1 週間ちょいくらいで届いた。 2 年近く ZOWIE S2 を使っていて、形も好きだったので S2 クローンでワイヤレスを使ってみた","og_type":"article","og_url":"https://www.shiomiya.com/posts/xenics-titan-gx-air-wireless-review/","og_sitename":".umirc"}* Connection #0 to host localhost left intact
+{"og_title":"XENICS TITAN GX AIR WIRELESS レビュー - .umirc","og_image":"","og_description":"買いました。 qoo10 で注文して、だいたい 1 週間ちょいくらいで届いた。 2 年近く ZOWIE S2 を使っていて、形も好きだったので S2 クローンでワイヤレスを使ってみた","og_type":"article","og_url":"https://www.rhpav7.com/posts/xenics-titan-gx-air-wireless-review/","og_sitename":".umirc"}* Connection #0 to host localhost left intact
 ```
 
 いい感じ！

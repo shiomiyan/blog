@@ -4,7 +4,7 @@ https://keybase.io/shiomiya
 
 I hereby claim:
 
-  * I am an admin of https://www.shiomiya.com
+  * I am an admin of https://www.rhpav7.com
   * I am shiomiya (https://keybase.io/shiomiya) on keybase.
   * I have a public key ASD6VRbM7t7JlpBNrG_40zzNL8XPvhOiJe46sUc5gLrxFAo
 
@@ -27,7 +27,7 @@ To do so, I am signing this object:
     },
     "service": {
       "entropy": "DQUMouazt3BHuBMjRKS5Q9DX",
-      "hostname": "www.shiomiya.com",
+      "hostname": "www.rhpav7.com",
       "protocol": "https:"
     },
     "type": "web_service_binding",

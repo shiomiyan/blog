@@ -1,5 +1,5 @@
 {
-  "name": "www.shiomiya.com",
+  "name": "blog",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shiomiyan/www.shiomiya.com.git"
+    "url": "git+https://github.com/shiomiyan/blog.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shiomiyan/www.shiomiya.com/issues"
+    "url": "https://github.com/shiomiyan/blog/issues"
   },
-  "homepage": "https://github.com/shiomiyan/www.shiomiya.com#readme",
+  "homepage": "https://github.com/shiomiyan/blog#readme",
   "devDependencies": {
     "textlint": "^12.0.0",
     "textlint-filter-rule-allowlist": "^2.0.1",

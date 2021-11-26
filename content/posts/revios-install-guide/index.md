@@ -142,4 +142,4 @@ Revision Post-Install を参考にインストール。 Method1 が楽なので�
 
 反響があればもう少し丁寧に書きます。以上。
 
-責任は負えませんが、記事に不備や不明瞭な点があれば[サイトリポジトリ](https://github.com/shiomiyan/www.shiomiya.com/issues)へ issue を立ててくれると助かります。
+責任は負えませんが、記事に不備や不明瞭な点があれば[サイトリポジトリ](https://github.com/shiomiyan/www.rhpav7.com/issues)へ issue を立ててくれると助かります。
