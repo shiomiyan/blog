@@ -1,4 +1,4 @@
-set shell := [ "cmd.exe", "/c" ]
+set shell := [ "powershell.exe", "-c" ]
 alias n := new
 
 new TITLE:
