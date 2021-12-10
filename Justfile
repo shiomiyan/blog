@@ -8,4 +8,4 @@ serve:
     hugo server -D
 
 lint:
-    ./node_modules/.bin/textlint content/posts/**/*.md
+    node_modules/.bin/textlint content/posts/**/*.md
