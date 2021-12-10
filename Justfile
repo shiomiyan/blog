@@ -1,3 +1,4 @@
+set shell := [ "cmd.exe", "/c" ]
 alias n := new
 
 new TITLE:
