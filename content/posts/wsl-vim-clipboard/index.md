@@ -1,5 +1,5 @@
 ---
-title: WSL の Vim で Windows とのクリップボードを共有する
+title: WSL の Vim/Neovim でホストの Windows とクリップボードを共有する
 date: 2021-05-31T00:40:44+09:00
 description:
 draft: false
@@ -11,50 +11,65 @@ tags:
 
 ---
 
-Xserver を使う方法はたくさんあったのですが、なるべく余計なものは入れたくないので。
+Archlinux on WSL でのセットアップです。Ubuntu でも大体同じでしょう。
 
-## WSL の Vim のバージョンを確認
+## Vim のインストール
 
-{{< blogcard "https://sy-base.com/myrobotics/vim/vim_use_clipboard/" >}}
+`+clipboard` な Vim が必要なので、Vim なら gvim、Neovim は普通に入れて `+clipboard` なので問題なし。
 
-こちらを参考にしました。 `vim --version | grep clip` で `+clipboard` を確認できなかった場合は、まず WSL の Vim をアンインストールします。
-
-```
-sudo apt remove vim
+```sh
+sudo pacman -S gvim neovim
 ```
 
-自分の環境では vim-gnome が入らなかったので、vim-gtk を入れて対応します。
+## win32yank の導入
 
-```
-sudo apt install vim-gtk
+標準の clip.exe だとクリップボードから吐き出しができないので、Windows 側から win32yank をインストールします。
+
+以下のような PowerShell コマンドで、すべて CLI で導入できます。
+
+```powershell
+Invoke-WebRequest `
+    -Uri "https://github.com/equalsraf/win32yank/releases/latest/download/win32yank-x64.zip" `
+    -OutFile C:\win32yank.zip
+
+Expand-Archive C:\win32yank.zip -DestinationPath C:\Tools\win32yank
+
+Remove-Item C:\win32yank.zip
 ```
 
-最後に、以下のように `+clipboard` を確認できれば準備は完了です。
+CLI からでも使いたので、Archlinux 側で win32yank のパスを通します。
 
+WSL2 では `uname -r` の値が `<version>-microsoft-standard-WSL2` となるので、以下のようにして WSL 環境の場合のみ適応するようにします。
+
+```sh
+if [ `uname -r | grep microsoft` ]; then
+  alias win32yank="/mnt/c/Tools/win32yank/win32yank.exe"
+  alias clip="win32yank -i"
+fi
 ```
-❯ vim --version | grep clip
-+clipboard         +keymap            +printer           +vertsplit
-+emacs_tags        +mouse_gpm         -sun_workshop      +xterm_clipboard
-```
+
+これでクリップボードを共有する体制が整いました。例えば CLI から使うなら `echo "hoge fuga" | clip` とすればコピーできます。
 
 ## vimrc に yank 用の keymap を入れる
 
-ここまででペーストは可能なのですが、yank ができませんでした。地味に不便なので yank もできるようにします。
-
 そのために vimrc を編集するのですが、dotfiles で管理している手前他の環境に影響が出ると困るので、WSL 環境でのみ keymap を読み込むよう以下のように記載します。
 
+{{< blogcard "https://superuser.com/a/1557751" >}}
+
 ```vim
-" === WSL setting ===
-if stridx(system('uname -r'), 'microsoft')
-  augroup Yank
-    au!
-    autocmd TextYankPost * :call system('clip.exe', @")
-  augroup END
+if stridx(system('uname -r'), 'microsoft') " if is WSL
+  let g:clipboard = {
+          \   'name': 'win32yank',
+          \   'copy': {
+          \      '+': '/mnt/c/Tools/win32yank/win32yank.exe -i',
+          \      '*': '/mnt/c/Tools/win32yank/win32yank.exe -i',
+          \    },
+          \   'paste': {
+          \      '+': '/mnt/c/Tools/win32yank/win32yank.exe -o',
+          \      '*': '/mnt/c/Tools/win32yank/win32yank.exe -o',
+          \   },
+          \   'cache_enabled': 0,
+          \ }
 endif
 ```
 
-{{< blogcard "https://zenn.dev/zakuro9715/articles/wsl-vim-clipboard" >}}
-
-綺麗にまとまっているので、こちらを参考にさせていただきました。
-
-WSL でも tmux 使いたいですが、一旦我慢してこれで運用します。
