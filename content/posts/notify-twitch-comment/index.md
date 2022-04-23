@@ -2,7 +2,7 @@
 title: ソフトウェアのインストールなしで Twitch のコメントを通知する
 date: 2022-04-23T22:37:56+09:00
 description:
-draft: true
+draft: false
 author: shiomiya
 categories: tech
 tags:
