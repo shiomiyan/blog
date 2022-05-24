@@ -61,7 +61,7 @@ Win + R から、`taskschd.msc` を実行。
 
 タスクスケジューラーライブラリ右側の Create Task を押下。
 
-タスク名を `OBS Studio Replay Buffer` に設定（適宜健康可能だが、後で使うのでそのつもりで）。
+タスク名を `OBS Studio Replay Buffer` に設定（適宜変更可能だが、後で使うのでそのつもりで）。
 
 General タブの Security Options にある「Run with highest privileges」にチェックを入れる。
 
