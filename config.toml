@@ -1,4 +1,4 @@
-baseurl = "https://www.sk736b.moe"
+baseurl = "https://shiomiyan.github.io/blog"
 languageCode = "ja-jp"
 title = ".umirc"
 Paginate = 50 # Number of posts per page
