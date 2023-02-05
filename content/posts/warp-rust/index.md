@@ -1,7 +1,7 @@
 ---
-title: 'Rust: warp 使ってみる'
+title: 'warpでJsonを返すHTTPサーバーを作るやつ'
 date: 2021-10-27T20:38:12.000+09:00
-description: 
+description:
 author: shiomiya
 categories: tech
 tags:
