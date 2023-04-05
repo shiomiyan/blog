@@ -5,6 +5,7 @@
 /resources/
 /assets/bundle.js
 /assets/css/main.css
+/.cache/
 *.log
 .actrc
 .hugo_build.lock

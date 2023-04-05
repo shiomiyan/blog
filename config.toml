@@ -1,4 +1,4 @@
-baseurl = "https://www.rhpav7.com"
+baseurl = "https://blog.736b.moe/"
 languageCode = "ja-jp"
 title = ".umirc"
 Paginate = 50 # Number of posts per page
