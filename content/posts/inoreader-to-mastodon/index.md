@@ -1,0 +1,44 @@
+---
+title: Inoreaderでタグを付けた記事をMastodonに投稿する
+date: 2023-07-18T00:49:36+09:00
+description:
+draft: false
+author: shiomiya
+categories: etc
+tags:
+  - inoreader
+  - mastodon
+  - ifttt
+
+---
+
+## 事前準備
+
+### Mastodon側での準備
+
+「ユーザー設定→開発→新規アプリ」から、アプリを作成しておく。アプリの名前とウェブサイトは適当に設定しておく。
+
+作成したアプリの詳細から、アクセストークンを控えておく。
+
+### Inoreader側での準備
+
+適当にタグを作っておく。
+
+## IFTTTでAppletを作成する
+
+InoreaderのActionがすでにあるので、それを使えば良い。
+
+- If: "New tagged article"
+- Then: "Make a web request"
+
+Thenについては次のようにする。
+
+- URL: `https://infosec.exchange/api/v1/statuses`
+- Method: `POST`
+- Content Type: `application/x-www-form-urlencoded`
+- Additional Headers: `Authorization: Bearer <MASTODON_APP_ACCESS_TOKEN>`
+- Body: `status=[{{ArticleTitle}}]({{ArticleCanonicalURL}})`
+
+---
+
+適当にタグを張ってみて、IFTTTのActivityや実際に投稿されているかを確認する。おわり。
