@@ -1,8 +1,10 @@
+@import url(https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css);
+
 code, pre {
   font-size: 85%;
-  font-family: 'JetBrainsMono',Consolas,'Courier New',monospace;
+  font-family: 'Fira Code', Consolas,'Courier New', sans-serif, monospace;
   font-variant-ligatures: none;
-  font-feature-settings: "zero";
+  font-feature-settings: "cv01", "cv10", "ss08";
 }
 
 code {
@@ -11,6 +13,7 @@ code {
   border-radius: 6px;
   color: #42464c;
   background-color: #f5f7fa;
+  font-weight: normal !important;
 }
 
 pre {
@@ -19,6 +22,7 @@ pre {
   font-size: 100%;
   line-height: 1.45;
   border-radius: 6px;
+  font-weight: normal !important;
 }
 
 kbd {
