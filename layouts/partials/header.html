@@ -32,5 +32,9 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 
+{{ if or (eq .Section "categories") (eq .Section "tags") (.Params.noindex) }}
+<meta name="robots" content="noindex">
+{{ end }}
+
 </head>
 <body>

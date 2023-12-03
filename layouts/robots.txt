@@ -1,5 +1,3 @@
 User-agent: *
-Disallow: /categories/
-Disallow: /tags/
 
 Sitemap: {{ .Site.BaseURL }}/sitemap.xml
