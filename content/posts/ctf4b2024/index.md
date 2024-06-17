@@ -59,7 +59,7 @@ curlが解釈できるURLの形式かつ`file://`以降がPythonの`os.path.exis
 
 `file`URIスキームはホスト名にlocalhostを指定可能であり、たとえば`file:///etc/hosts`は`file://localhost/etc/hosts`と表現できる。
 
-`file://localhost/etc/hosts`をLFIのバリデーションに通すと、`os.path.exists("/localhost/etc/hosts")`のようになり存在しないパスと解釈されるため、このバリデーション処理をバイパスすることができる。
+`file://localhost/etc/hosts`をLFIのバリデーションに通すと、`os.path.exists("localhost/etc/hosts")`のようになり存在しないパスと解釈されるため、このバリデーション処理をバイパスすることができる。
 
 任意のファイルを参照できることがわかり、さらにdocker-compose.ymlからフラグは環境変数にロードされていることがわかるので、[`/proc/self/environ`を参照すれば](https://blog.hamayanhamayan.com/entry/2021/12/08/220449)フラグが得られる。
 
