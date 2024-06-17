@@ -1,6 +1,6 @@
 ---
 title: SECCON Beginners CTF 2024 writeup
-date: 2024-06-17T22:00:00+09:00
+date: 2024-06-16T22:00:00+09:00
 description:
 draft: false
 author: shiomiya
@@ -165,7 +165,7 @@ conn.close()
 
 フラグを検知するClamAVのシグネチャが渡されているので、[regex101で人力解読した](https://regex101.com/r/F1RsXr/1)。
 
-![](./CTF4b%202024.1718512665402.png)
+![](./2024.1718512665402.png)
 
 PCREにおいて`\1`などがグループマッチ箇所を意味することを知らなかった。
 
@@ -214,11 +214,11 @@ adminがトークンを持った状態で歩き回る。
 
 リダイレクトのURLが制御されていないので、ログが読める適当なパブリックなエンドポイントを用意すればいい。（初手ngrokで試したけど一生クローラーからトークンが帰ってこなくて間違っているのかと思い、solveが滑り込みになった）
 
-![](./CTF4b%202024.1718524375637.png)
+![](./2024.1718524375637.png)
 
 調べたらRequestBinが良さそうだったので採用。
 
-![](./CTF4b%202024.1718524442751.png)
+![](./2024.1718524442751.png)
 
 ```
 ▶ curl 'https://wooorker.beginners.seccon.games/flag' -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzE4NTI0MDg5LCJleHAiOjE3MTg1Mjc2ODl9.CoRnOxkyUsf_Vr8JQEs9rdoJwtxh5Bdqh02yKOsI6wA'
