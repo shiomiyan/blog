@@ -171,7 +171,7 @@ PCREにおいて`\1`などがグループマッチ箇所を意味することを
 
 ### misc: commentator
 
-[Pythonのコーデック指定によるコメント行の実行](https://ctftime.org/writeup/28814)なるものを見つけたので、これを試したらフラグが得られた。
+[Pythonのエンコーディング指定によるコメント行の実行](https://ctftime.org/writeup/28814)なるものを見つけたので、これを試したらフラグが得られた。
 
 ```
 ▶ nc commentator.beginners.seccon.games 4444
