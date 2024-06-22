@@ -8,19 +8,62 @@
     {{- else -}}
     {{ $pages = .Pages -}}
     {{- end -}}
-    {{ $paginator := .Paginate (where $pages "Params.hidden" "ne" true) }}
-    {{ range sort .Paginator.Pages }}
+
+    {{ $rss := getJSON "data/rss.json" }}
+
+    {{ $allEntries := slice }}
+
+    {{ range $rss }}
+    {{ $allEntries = $allEntries | append (dict "title" .title "link" .link "pubDate" (.pubDate | time.AsTime) "type"
+    "rss") }}
+    {{ end }}
+
+    {{ range $pages }}
+    {{ if not .Params.hidden }}
+    {{ $allEntries = $allEntries | append (dict "title" .Title "link" .Permalink "pubDate" (.Date) "type" "hugo") }}
+    {{ end }}
+    {{ end }}
+
+    {{ $uniqueEntries := slice }}
+
+    {{ range $allEntries }}
+    {{ $isDuplicate := false }}
+    {{ $currentLink := .link }}
+    {{ range $uniqueEntries }}
+    {{ if eq .link $currentLink }}
+    {{ $isDuplicate = true }}
+    {{ break }}
+    {{ end }}
+    {{ end }}
+    {{ if not $isDuplicate }}
+    {{ $uniqueEntries = $uniqueEntries | append . }}
+    {{ end }}
+    {{ end }}
+
+    {{ $sortedEntries := sort $uniqueEntries "pubDate" "desc" }}
+
+    {{ range $sortedEntries }}
     <article>
       <h1 class="title is-list">
-        <a href="{{ .Permalink }}">
-          {{ .Title }}{{ partial "taxonomies_count" . }}
+        <a href="{{ .link }}" {{ if ne .type "hugo" }} target="_blank" rel="noreferrer" {{ end }}>
+          {{ .title }}
+          {{ if eq .type "hugo" }}
+          {{ partial "taxonomies_count" . }}
           {{ if .Draft }}::Draft{{ end }}
+          {{ end }}
         </a>
       </h1>
       <h2 class="subtitle is-6 date">
-        {{ .Date.Format "January 2, 2006" }}
+        {{ if eq .type "hugo" }}
+        {{ .pubDate.Format "January 2, 2006" }}
         {{ if .Params.categories }}
         {{ partial "categories" .Params.categories }}
+        {{ end }}
+        {{ else }}
+        {{ .pubDate | time.Format ":date_medium" }}
+        {{ if strings.HasPrefix .link "https://qiita.com" }}
+        * from qiita.com
+        {{ end }}
         {{ end }}
       </h2>
     </article>
