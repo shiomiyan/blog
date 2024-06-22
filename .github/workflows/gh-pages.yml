@@ -57,7 +57,7 @@ jobs:
           curl -fsSL https://deno.land/x/install/install.sh | sh
           export DENO_INSTALL="/root/.deno"
           export PATH="$DENO_INSTALL/bin:$PATH"
-          deno run --allow-net --allow-write scripts/rss.ts
+          deno run --allow-net --allow-write ${GITHUB_WORKSPACE}/scripts/rss.ts
       - name: Build with Hugo
         env:
           # For maximum backward compatibility with Hugo modules
