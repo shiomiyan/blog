@@ -51,13 +51,6 @@ jobs:
         uses: actions/configure-pages@v3
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
-      - name: Generate rss.json from other blogging platforms
-        run:
-          # Install Deno and run script
-          curl -fsSL https://deno.land/x/install/install.sh | sh
-          export DENO_INSTALL="/root/.deno"
-          export PATH="$DENO_INSTALL/bin:$PATH"
-          deno run --allow-net --allow-write scripts/rss.ts
       - name: Build with Hugo
         env:
           # For maximum backward compatibility with Hugo modules

@@ -2,11 +2,5 @@
     "files.exclude": {
         "**/.git": false
     },
-    "files.autoSave": "afterDelay",
-    "deno.enable": true,
-    "deno.lint": true,
-    "editor.formatOnSave": true,
-    "[typescript]": {
-        "editor.defaultFormatter": "denoland.vscode-deno"
-    }
+    "files.autoSave": "afterDelay"
 }
