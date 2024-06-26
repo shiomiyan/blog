@@ -9,4 +9,3 @@
 *.log
 .actrc
 .hugo_build.lock
-/data/rss.json
