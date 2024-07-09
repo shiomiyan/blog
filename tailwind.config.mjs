@@ -6,8 +6,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Geist Sans", ...defaultTheme.fontFamily.sans],
-        mono: ["Geist Mono", ...defaultTheme.fontFamily.mono],
+        sans: ["BIZ UDPGothic", ...defaultTheme.fontFamily.sans],
+        mono: ["Fira Code", ...defaultTheme.fontFamily.mono],
       },
     },
   },
