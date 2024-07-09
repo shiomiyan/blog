@@ -19,15 +19,15 @@ export const BLOG: Metadata = {
 
 export const SOCIALS: Socials = [
   {
-    NAME: "X (formerly Twitter)",
-    HREF: "https://twitter.com/boogerbuttcheeks",
+    NAME: "Twitter",
+    HREF: "https://twitter.com/shiomiyan",
   },
   {
     NAME: "GitHub",
-    HREF: "https://github.com/trevortylerlee",
+    HREF: "https://github.com/shiomiyan",
   },
   {
-    NAME: "LinkedIn",
-    HREF: "https://www.linkedin.com/in/trevortylerlee",
+    NAME: "Mastodon",
+    HREF: "https://infosec.exchange/@sk",
   },
 ];
