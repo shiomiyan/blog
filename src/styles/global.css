@@ -64,10 +64,6 @@ article {
   @apply translate-y-0 opacity-100;
 }
 
-html #back-to-top {
-  @apply pointer-events-none opacity-0;
-}
-
 /* shiki config */
 pre {
   @apply border border-black/15 py-5 dark:border-white/20;
