@@ -1,7 +1,6 @@
 export type Site = {
   TITLE: string;
   DESCRIPTION: string;
-  EMAIL: string;
   NUM_POSTS_ON_HOMEPAGE: number;
 };
 
@@ -13,4 +12,5 @@ export type Metadata = {
 export type Socials = {
   NAME: string;
   HREF: string;
+  SVG: string;
 }[];

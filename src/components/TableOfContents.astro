@@ -28,7 +28,6 @@ function buildToc(headings: Heading[]) {
 ---
 
 <details
-  open
   class="animate rounded-lg border border-black/15 dark:border-white/20"
 >
   <summary>Table of Contents</summary>
@@ -41,7 +40,7 @@ function buildToc(headings: Heading[]) {
 
 <style>
   summary {
-    @apply cursor-pointer rounded-t-lg px-3 py-1.5 font-medium transition-colors;
+    @apply cursor-pointer rounded-t-lg px-3 py-1.5 font-mono text-xs transition-colors;
   }
 
   summary:hover {

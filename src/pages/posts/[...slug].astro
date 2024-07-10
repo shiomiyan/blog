@@ -68,9 +68,6 @@ const { Content, headings } = await post.render();
     {headings.length > 0 && <TableOfContents headings={headings} />}
     <article class="animate">
       <Content />
-      <div class="mt-24" data-pagefind-ignore="all">
-        <PostNavigation prevPost={prevPost} nextPost={nextPost} />
-      </div>
     </article>
   </Container>
 </Layout>

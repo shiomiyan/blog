@@ -1,8 +1,7 @@
 ---
 import Container from "@components/Container.astro";
-import { SITE, SOCIALS } from "@consts";
+import { SITE } from "@consts";
 import BackToTop from "@components/BackToTop.astro";
-import Link from "./Link.astro";
 ---
 
 <footer class="animate">
@@ -12,35 +11,8 @@ import Link from "./Link.astro";
         <BackToTop />
       </div>
     </div>
-          <section class="animate space-y-4">
-        <ul class="not-prose flex flex-wrap gap-2">
-          {
-            SOCIALS.map((SOCIAL) => (
-              <li class="flex gap-x-2 text-nowrap">
-                <Link
-                  href={SOCIAL.HREF}
-                  external
-                  aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
-                >
-                  {SOCIAL.NAME}
-                </Link>
-                {"/"}
-              </li>
-            ))
-          }
-          <li class="line-clamp-1">
-            <Link
-              href={`mailto:${SITE.EMAIL}`}
-              aria-label={`Email ${SITE.TITLE}`}
-            >
-              {SITE.EMAIL}
-            </Link>
-          </li>
-        </ul>
-      </section>
-
     <div class="flex items-center justify-between">
-      <div>&copy; {new Date().getFullYear()} • {SITE.TITLE} 🔬</div>
+      <div class="text-xs italic">Copyright &copy; {new Date().getFullYear()} @shiomiyan</div>
       <div class="flex flex-wrap items-center gap-1.5">
         <button
           id="light-theme-button"

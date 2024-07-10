@@ -1,7 +1,7 @@
 ---
 import Container from "@components/Container.astro";
 import Link from "@components/Link.astro";
-import { SITE } from "@consts";
+import { SITE, SOCIALS } from "@consts";
 ---
 
 <header transition:persist>
@@ -9,10 +9,27 @@ import { SITE } from "@consts";
     <div class="flex flex-wrap justify-between gap-y-2">
       <Link href="/" underline={false}>
         <div class="font-semibold">
-          {SITE.TITLE}&nbsp;🔬
+          {SITE.TITLE}
         </div>
       </Link>
-      <nav class="flex items-center gap-1 text-sm">
+      <nav class="flex items-center gap-2 text-sm">
+        {
+          SOCIALS.map((SOCIAL) => (
+              <Link
+                href={SOCIAL.HREF}
+                external
+                aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
+                underline={false}
+              >
+                <Fragment set:html={SOCIAL.SVG} />
+              </Link>
+          ))
+        }
+
+        <Link href="/rss.xml" underline={false}>
+          <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-rss"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M4 4a16 16 0 0 1 16 16" /><path d="M4 11a9 9 0 0 1 9 9" /></svg>
+        </Link>
+
         <button
           id="magnifying-glass"
           aria-label="Search"
