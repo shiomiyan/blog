@@ -82,21 +82,6 @@ const { title, description, image = "/ogp.png" } = Astro.props;
       updateThemeButtons();
     });
 
-    const systemThemeButton = document.getElementById("system-theme-button");
-    systemThemeButton?.addEventListener("click", () => {
-      localStorage.setItem("theme", "system");
-      toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
-      updateThemeButtons();
-    });
-
-    window
-      .matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", (event) => {
-        if (localStorage.theme === "system") {
-          toggleTheme(event.matches);
-        }
-      });
-
     document.addEventListener("scroll", onScroll);
   }
 
@@ -104,7 +89,6 @@ const { title, description, image = "/ogp.png" } = Astro.props;
     const theme = localStorage.getItem("theme");
     const lightThemeButton = document.getElementById("light-theme-button");
     const darkThemeButton = document.getElementById("dark-theme-button");
-    const systemThemeButton = document.getElementById("system-theme-button");
 
     function removeActiveButtonTheme(button) {
       button?.classList.remove("bg-black/5");
@@ -118,14 +102,13 @@ const { title, description, image = "/ogp.png" } = Astro.props;
 
     removeActiveButtonTheme(lightThemeButton);
     removeActiveButtonTheme(darkThemeButton);
-    removeActiveButtonTheme(systemThemeButton);
 
     if (theme === "light") {
       addActiveButtonTheme(lightThemeButton);
     } else if (theme === "dark") {
       addActiveButtonTheme(darkThemeButton);
     } else {
-      addActiveButtonTheme(systemThemeButton);
+      addActiveButtonTheme(lightThemeButton);
     }
   }
 
