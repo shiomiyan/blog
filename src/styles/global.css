@@ -5,7 +5,6 @@
 html {
   overflow-y: auto;
   color-scheme: light;
-  scroll-padding-top: 100px;
 }
 
 html.dark {
@@ -67,10 +66,6 @@ article {
 
 html #back-to-top {
   @apply pointer-events-none opacity-0;
-}
-
-html.scrolled #back-to-top {
-  @apply pointer-events-auto opacity-100;
 }
 
 /* shiki config */
