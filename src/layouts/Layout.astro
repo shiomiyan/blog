@@ -3,7 +3,6 @@ import Head from "@components/Head.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import PageFind from "@components/PageFind.astro";
-import { SITE } from "@consts";
 
 type Props = {
   title: string;
@@ -16,7 +15,7 @@ const { title, description } = Astro.props;
 <!doctype html>
 <html lang="ja">
   <head>
-    <Head title={SITE.TITLE} description={description} />
+    <Head title={title} description={description} />
   </head>
   <body>
     <Header />
@@ -26,7 +25,5 @@ const { title, description } = Astro.props;
     <Footer />
     <PageFind />
   </body>
-  <!-- 100% privacy-first analytics -->
-  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
-  <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7b5d9ade2813460c869f0938cf7cda4b"}'></script><!-- End Cloudflare Web Analytics -->
 </html>
