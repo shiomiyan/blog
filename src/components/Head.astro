@@ -61,9 +61,6 @@ const { title, description, image = "/ogp.png" } = Astro.props;
     updateThemeButtons();
     addCopyCodeButtons();
 
-    const backToPrev = document.getElementById("back-to-prev");
-    backToPrev?.addEventListener("click", () => window.history.back());
-
     const lightThemeButton = document.getElementById("light-theme-button");
     lightThemeButton?.addEventListener("click", () => {
       localStorage.setItem("theme", "light");
