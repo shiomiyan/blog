@@ -7,7 +7,10 @@ export default {
     extend: {
       fontFamily: {
         sans: ["BIZ UDPGothic", ...defaultTheme.fontFamily.sans],
-        mono: ["Fira Code", ...defaultTheme.fontFamily.mono],
+        mono: [["Fira Code Variable", ...defaultTheme.fontFamily.mono], {
+          fontFeatureSettings: '"liga" 0',
+          fontVariationSettings: 'normal',
+        }],
       },
     },
   },
