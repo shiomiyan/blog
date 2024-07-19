@@ -1,0 +1,189 @@
+---
+title: "Javaでtree-sitterを使ってJavaScriptコードを編集する"
+date: "2024-07-18"
+description: ""
+---
+
+## ことの始まり
+
+JavaScriptコードからコメントをいい感じに削除したくなったのでやってみた。
+インプットになるJavaScriptコードは壊れていることもある前提でこういった処理をする場合、柔軟にエラー復帰してくれないと構文エラーをがあると使い物にならなくなってしまうそうで。
+
+[GitHubのCodeQLに関するブログ記事](https://github.blog/2022-02-01-code-scanning-and-ruby-turning-source-code-into-a-queryable-database/)を眺めていたところ、「tree-sitterは良いぞ（雑訳）」みたいなことを言っていたので、試しに使ってみることにした（ところで当のGitHubが使用している[CodeQL for Javaのパーサー](https://github.com/github/codeql/blob/main/javascript/extractor/README.md)はすぐに参考にできる感じではなかった）。
+
+## 環境構築
+
+[tree-sitter公式のJavaバインディング](https://github.com/tree-sitter/java-tree-sitter)が用意されている（用意し始めている）が、Java 22のAPIに依存しているらしく、ちょっとしんどい（それ以外にも共有ライブラリを`java.library.path`に置く必要がありそうなど、まだ出来立てホヤホヤ感がある）。
+
+諸事情でJava 21の範囲で解決したいので、公式からリンクされているAlternativesのうち、GitHubスターの多い[bonede/tree-sitter-ng](https://github.com/bonede/tree-sitter-ng)で試していく。
+
+Gradleよりは使い慣れているので、とりあえずMavenで環境構築をする。
+
+```
+▶ java --version
+openjdk 21.0.3 2024-04-16 LTS
+OpenJDK Runtime Environment Temurin-21.0.3+9 (build 21.0.3+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.3+9 (build 21.0.3+9-LTS, mixed mode)
+
+▶ mvn --version
+Apache Maven 3.9.8 (36645f6c9b5079805ea5009217e36f2cffd34256)
+Maven home: /opt/maven/apache-maven-3.9.8
+Java version: 21.0.3, vendor: Eclipse Adoptium, runtime: /opt/java/jdk-21.0.3+9/Contents/Home
+Default locale: ja_JP, platform encoding: UTF-8
+OS name: "mac os x", version: "14.2.1", arch: "x86_64", family: "mac"
+```
+
+Mavenプロジェクトの生成コマンドあたりはよくわからないため、とりあえず動けばいいのでVS Codeの`Maven: new project`的なコマンドから生成した。
+
+大体[Maven in 5 Minutes](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)に書いてある感じでプロジェクトを構成し、適当なさじ加減で依存関係を追加する。
+
+```xml
+(SNIP)
+    <dependencies>
+        <dependency>
+            <groupId>io.github.bonede</groupId>
+            <artifactId>tree-sitter-javascript</artifactId>
+            <version>0.21.2</version>
+	        <!-- 絵文字などサロゲートペアを正しく処理できないらしいので、0.22.6aを強制する -->
+            <exclusions>
+                <exclusion>
+                    <groupId>io.github.bonede</groupId>
+                    <artifactId>tree-sitter</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.github.bonede</groupId>
+            <artifactId>tree-sitter</artifactId>
+            <version>0.22.6a</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.10.3</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.26.3</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+(SNIP)
+```
+
+Junit経由で実行するほうがお手軽なので、基本的にテスト経由で呼び出す想定で進める。
+
+## ことはじめ
+
+[リポジトリのGetting started](https://github.com/bonede/tree-sitter-ng?tab=readme-ov-file#getting-started)を見ながら、それっぽいコードを書いていく。HTMLパーサーなんかを使ったことがあれば、雰囲気で書けそう。
+
+```java
+// パーサーを初期化してパースしたい言語をセットする
+TSParser parser = new TSParser();
+TSLanguage javascript = new TreeSitterJavascript();
+parser.setLanguage(javascript);
+
+// パース対象のコードを書いておく
+String code = """
+		// COMMENT HERE
+		var s;
+		""";
+
+// パースして
+TSTree tree = parser.parseString(null, code);
+
+// ノードを取得する
+TSNode rootNode = tree.getRootNode();
+```
+
+ざっくりこんな感じにして、`rootNode`の様子を見てみる。
+
+```java
+assertThat(rootNode.getChildCount()).isEqualTo(2);
+
+String syntaxTree = "(program (comment) (variable_declaration (variable_declarator name: (identifier))))";
+assertThat(rootNode.toString()).isEqualTo(syntaxTree);
+```
+
+`rootNode`から見ると、子はコメントと変数`s`の定義の2つになる。
+また、`rootNode.toString()`して得られた文字列は[S-expression（S式）](https://ja.wikipedia.org/wiki/S%E5%BC%8F)と呼ぶらしい。
+S式を確認しても、なんとなく想定通りになっていそう（雑）。
+
+さらに、各ノードは文字列を`byte[]`としたときの始点と終点のインデックスを持っているので、これらを使って部分文字列を得ることもできる。
+
+```java
+String code = """
+		// COMMENT HERE
+		var s;
+		""";
+byte[] codeBytes = code.getBytes(StandardCharsets.UTF_8);
+
+// 最初のノード、つまりはコメントノードを取得する
+TSNode commentNode = rootNode.getChild(0);
+int startByte = commentNode.getStartByte();
+int endByte = commentNode.getEndByte();
+
+byte[] commentBytes = Arrays.copyOfRange(codeBytes, startByte, endByte);
+String comment = new String(commentBytes, StandardCharsets.UTF_8);
+
+assertThat(comment).isEqualTo("// COMMENT HERE");
+```
+
+## ソースコードのコメントを消す
+
+任意のノードからソースコードを引ける事がわかったので、ノードのタイプを判定しながらソースコードコメント以外をくっつけるような処理を書いてみる。
+
+ノードのタイプとはS式で出てきたような`program`、`comment`、`variable_declaration`あたりの識別子のこと。コメントノードのタイプはそのまま`comment`っぽい。
+
+タイプはノードに実装されている`getType()`メソッドで取得できた。
+
+```java
+public class TSPlayground {
+
+    public static String removeComment(TSLanguage lang, String code) throws IOException {
+        TSParser parser = new TSParser();
+        parser.setLanguage(lang);
+        TSTree tree = parser.parseString(null, code);
+        TSNode rootNode = tree.getRootNode();
+
+        try (var out = new ByteArrayOutputStream()) {
+            traverse(rootNode, code.getBytes(StandardCharsets.UTF_8), out, 0);
+            return out.toString(StandardCharsets.UTF_8);
+        }
+    }
+
+    private static int traverse(TSNode node, byte[] code, ByteArrayOutputStream out,
+        int prevEndByte) throws IOException {
+        int currEndByte = node.getEndByte();
+        boolean hasChild = node.getChildCount() > 0;
+
+        if (hasChild) {
+            for (var i = 0; i < node.getChildCount(); i++) {
+                prevEndByte = traverse(node.getChild(i), code, out, prevEndByte);
+            }
+        } else if (!node.getType().equalsIgnoreCase("comment")) {
+            // https://github.com/bonede/tree-sitter-ng/issues/19#issuecomment-2130987620
+            out.write(Arrays.copyOfRange(code, prevEndByte, currEndByte));
+        }
+
+        return currEndByte;
+    }
+}
+```
+
+あまりきれいな実装ができた気がしない...が、とりあえず上記のように実装してみた。
+
+[テストコード](https://github.com/shiomiyan/java-playground/blob/master/src/test/java/com/example/TSPlaygroundTest.java)はここに乗せるにはそこそこ長いので割愛するが、構文エラーがある場合も正しくパースできておりかなり調子が良さそう。
+（当初`TSParser#parseStringEncoding`を使っていたことでサロゲートペアが適切に処理できない問題に当たっており、やや文字に怯えた検証になってしまっている）
+
+## まとめ
+
+- tree-sitterはいいぞ（他の構文解析器を使ったことはない）
+- （たぶん）エラー復帰も優秀そう
+- CodeQLを見習って、次はなんちゃってSASTでも作ってみたいナ
