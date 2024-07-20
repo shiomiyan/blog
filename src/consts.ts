@@ -2,7 +2,7 @@ import type { ExternalFeeds, Site, Socials } from "@types";
 
 export const SITE: Site = {
   TITLE: ".umirc",
-  DESCRIPTION: "",
+  DESCRIPTION: "Technical blog by @shiomiyan.",
   NUM_POSTS_ON_HOMEPAGE: 999,
 };
 
