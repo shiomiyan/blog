@@ -43,6 +43,30 @@ article {
   @apply prose-headings:text-black prose-headings:dark:text-white;
 }
 
+h1::before {
+  content: "# ";
+}
+
+h2::before {
+  content: "## ";
+}
+
+h3::before {
+  content: "### ";
+}
+
+h4::before {
+  content: "#### ";
+}
+
+h5::before {
+  content: "##### ";
+}
+
+h6::before {
+  content: "###### ";
+}
+
 @layer utilities {
   article a {
     @apply font-sans text-current underline underline-offset-[3px];
@@ -109,6 +133,8 @@ pre {
 .copy-code:active {
   @apply scale-90 transition-transform;
 }
-code, pre {
+
+code,
+pre {
   font-variant-ligatures: none;
 }
