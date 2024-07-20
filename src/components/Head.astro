@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import { ViewTransitions } from "astro:transitions";
 
-import "@fontsource/biz-udpgothic";
+import "@fontsource-variable/noto-sans-jp";
 import "@fontsource-variable/fira-code";
 
 interface Props {
@@ -51,6 +51,9 @@ const { title, description, image = "/ogp.png" } = Astro.props;
 <!-- PageFind -->
 <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
 <script is:inline src="/pagefind/pagefind-ui.js"></script>
+
+<!-- Mastodon -->
+<link rel="me" href="https://infosec.exchange/@sk" />
 
 <ViewTransitions />
 
