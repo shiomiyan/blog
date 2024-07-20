@@ -28,7 +28,7 @@ function buildToc(headings: Heading[]) {
 ---
 
 <details
-  class="animate rounded-lg border border-black/15 dark:border-white/20"
+  class="animate rounded-lg border border-black/15"
 >
   <summary>Table of Contents</summary>
   <nav class="">
@@ -44,10 +44,10 @@ function buildToc(headings: Heading[]) {
   }
 
   summary:hover {
-    @apply bg-black/5 dark:bg-white/5;
+    @apply bg-black/5;
   }
 
   details[open] summary {
-    @apply bg-black/5 dark:bg-white/5;
+    @apply bg-black/5;
   }
 </style>
