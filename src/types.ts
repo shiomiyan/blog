@@ -14,3 +14,8 @@ export type Socials = {
   HREF: string;
   SVG: string;
 }[];
+
+export type ExternalFeeds = {
+  NAME: string,
+  URL: string,
+}[];

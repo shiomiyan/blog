@@ -7,6 +7,9 @@ const posts = defineCollection({
     description: z.string(),
     date: z.coerce.date(),
     draft: z.boolean().optional(),
+    url: z.string().url().optional(),
+    platform: z.string().optional(),
+    isExternal: z.boolean().optional(),
   }),
 });
 

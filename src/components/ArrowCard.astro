@@ -9,14 +9,31 @@ const { entry } = Astro.props as Props;
 
 // https://docs.astro.build/en/guides/content-collections/#working-with-dates-in-the-frontmatter
 const datetime = entry.data.date.toISOString().slice(0, 10);
+
+const href = entry.data.isExternal
+  ? entry.data.url
+  : `/${entry.collection}/${entry.slug}`;
 ---
 
 <div class="flex flex-1 flex-col">
-  <time datetime={datetime} class="pe-2 text-xs">
-    {datetime}
-  </time>
+  <div class="text-xs">
+    <time datetime={datetime} class="pe-0.5">
+      {datetime}
+    </time>
+    {
+      () => {
+        if (entry.data.isExternal) {
+          return <div class="ml-1 text-xs inline-flex items-center font-bold leading-sm px-2 rounded-full border border-gray-400">{entry.data.platform}</div>;
+        }
+      }
+    }
+  </div>
   <div class="font-semibold">
-    <a href={`/${entry.collection}/${entry.slug}`}>
+    <a
+      href={href}
+      target={entry.data.isExternal ? "_blank" : "_self"}
+      rel={entry.data.isExternal ? "noopener noreferrer" : undefined}
+    >
       {entry.data.title}
     </a>
   </div>
