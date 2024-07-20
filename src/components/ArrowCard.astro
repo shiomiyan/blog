@@ -23,12 +23,16 @@ const href = entry.data.isExternal
     {
       () => {
         if (entry.data.isExternal) {
-          return <div class="ml-1 text-xs inline-flex items-center font-bold leading-sm px-2 rounded-full border border-gray-400">{entry.data.platform}</div>;
+          return (
+            <div class="leading-sm ml-1 inline-flex items-center rounded-full border border-gray-400 px-2 text-xs font-bold">
+              {entry.data.platform}
+            </div>
+          );
         }
       }
     }
   </div>
-  <div class="font-semibold">
+  <div class="text-lg font-semibold">
     <a
       href={href}
       target={entry.data.isExternal ? "_blank" : "_self"}
