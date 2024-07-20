@@ -33,8 +33,6 @@ Default locale: ja_JP, platform encoding: UTF-8
 OS name: "mac os x", version: "14.2.1", arch: "x86_64", family: "mac"
 ```
 
-Mavenプロジェクトの生成コマンドあたりはよくわからないため、とりあえず動けばいいのでVS Codeの`Maven: new project`的なコマンドから生成した。
-
 大体[Maven in 5 Minutes](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)に書いてある感じでプロジェクトを構成し、適当なさじ加減で依存関係を追加する。
 
 ```xml
@@ -44,7 +42,7 @@ Mavenプロジェクトの生成コマンドあたりはよくわからないた
             <groupId>io.github.bonede</groupId>
             <artifactId>tree-sitter-javascript</artifactId>
             <version>0.21.2</version>
-	        <!-- 絵文字などサロゲートペアを正しく処理できないらしいので、0.22.6aを強制する -->
+            <!-- 絵文字などサロゲートペアを正しく処理できないらしいので、0.22.6aを強制する -->
             <exclusions>
                 <exclusion>
                     <groupId>io.github.bonede</groupId>
@@ -91,9 +89,9 @@ parser.setLanguage(javascript);
 
 // パース対象のコードを書いておく
 String code = """
-		// COMMENT HERE
-		var s;
-		""";
+        // COMMENT HERE
+        var s;
+        """;
 
 // パースして
 TSTree tree = parser.parseString(null, code);
@@ -119,9 +117,9 @@ S式を確認しても、なんとなく想定通りになっていそう（雑�
 
 ```java
 String code = """
-		// COMMENT HERE
-		var s;
-		""";
+        // COMMENT HERE
+        var s;
+        """;
 byte[] codeBytes = code.getBytes(StandardCharsets.UTF_8);
 
 // 最初のノード、つまりはコメントノードを取得する
