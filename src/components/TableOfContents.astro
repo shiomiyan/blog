@@ -11,7 +11,7 @@ export interface Heading {
   text: string;
 }
 
-function buildToc(headings: Heading[]) {
+function buildToc(headings: Heading[]): Heading[] {
   const toc: Heading[] = [];
   const parentHeadings = new Map();
   headings.forEach((h) => {
