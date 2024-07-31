@@ -11,10 +11,7 @@ export default defineConfig({
   integrations: [tailwind(), sitemap(), mdx(), pagefind()],
   markdown: {
     shikiConfig: {
-      themes: {
-        light: "github-light",
-        dark: "github-dark",
-      },
+      theme: 'github-dark-default',
     },
   },
 });
