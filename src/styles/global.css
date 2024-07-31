@@ -7,10 +7,6 @@ html {
   color-scheme: light;
 }
 
-html.dark {
-  color-scheme: dark;
-}
-
 html,
 body {
   @apply size-full;
@@ -69,13 +65,10 @@ h6::before {
 
 @layer utilities {
   article a {
-    @apply font-sans text-current underline underline-offset-[3px];
-    @apply decoration-black/30;
-    @apply transition-colors duration-300 ease-in-out;
+    @apply text-[#0069C2];
   }
-  article a:hover {
-    @apply text-black;
-    @apply decoration-black/50;
+  article a:visited {
+    @apply text-[#551A8B];
   }
 }
 
@@ -86,11 +79,6 @@ h6::before {
 
 .animate.show {
   @apply translate-y-0 opacity-100;
-}
-
-/* shiki config */
-pre {
-  @apply border border-black/15 py-3;
 }
 
 code,
