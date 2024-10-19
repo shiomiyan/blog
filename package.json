@@ -18,7 +18,7 @@
     "@astrojs/tailwind": "^5.1.1",
     "@fontsource-variable/fira-code": "^5.0.18",
     "@fontsource-variable/noto-sans-jp": "^5.0.19",
-    "astro": "^4.15.9",
+    "astro": "^4.16.6",
     "astro-pagefind": "^1.6.0",
     "clsx": "^2.1.1",
     "rss-parser": "^3.13.0",
