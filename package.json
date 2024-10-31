@@ -35,8 +35,5 @@
     "prettier-plugin-tailwindcss": "^0.6.5",
     "textlint": "^14.0.4",
     "textlint-rule-preset-ja-technical-writing": "^10.0.1"
-  },
-  "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.24.3"
   }
 }

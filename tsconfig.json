@@ -8,6 +8,5 @@
     },
     "outDir": "./dist"
   },
-  "exclude": ["dist"],
-  "moduleResolution": "Bundler"
+  "exclude": ["dist"]
 }
