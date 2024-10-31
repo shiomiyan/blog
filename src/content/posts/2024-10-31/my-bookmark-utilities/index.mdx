@@ -21,7 +21,7 @@ description: ""
 
 で、色々考えた結果こんな構成になった。
 
-![ブクマ事情の構成図](ブクマ事情.webp)
+![ブクマ事情の構成図](./architecture.webp)
 
 Obsidianとうまく連携できるRead It Later系のツールということで、Omnivoreを一旦採用し、Inoreaderの自動化機能（たぶんPro限定の機能かも）からOmnivoreのAPIを叩く。というワークフローを想定していたが、Inoreaderの実装している機能（カスタムwebhookのようなもの）ではリクエストヘッダを付けることができない。しかしOmnivoreはAPIキーをヘッダに仕込む必要があるため、なんとかしなければいけない...あとUUIDも付けなければいけない...
 
@@ -46,7 +46,7 @@ Omnivoreは[Obsidian向けの公式プラグイン](https://github.com/omnivore-
 
 Read laterに新着記事が入ったらwebhookをトリガするように構成しておく。このときwebhook URLはWorkersのエンドポイントを指す。
 
-![Inoreaderの自動化設定画面](inoreader.png)
+![Inoreaderの自動化設定画面](./inoreader.png)
 
 Inoreaderのwebhookは宛先のURLに下記のようなJSONをPOSTリクエストする（使ってない部分はゴリッと割愛）。
 
@@ -97,7 +97,7 @@ Omnivore APIはGraphQLを採用しているが、わざわざGraphQLクライア
 
 APIを叩けるエンドポイントの割にガードが甘い気はしているが、せいぜい私のブックマークが爆発する程度の被害だと思うのでヨシ！をした。
 
-![現場猫](現場猫.png)
+![現場猫](./genbaneko.png)
 
 ## 余談
 
