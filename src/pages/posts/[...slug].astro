@@ -38,7 +38,7 @@ const { Content, headings } = await post.render();
       </h1>
     </div>
     {headings.length > 0 && <TableOfContents headings={headings} />}
-    <article class="animate">
+    <article class="animate break-words">
       <Content />
     </article>
   </Container>
