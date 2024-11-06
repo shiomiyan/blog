@@ -6,5 +6,7 @@
     "editor.quickSuggestions": {
       "strings": "on"
     }
-  }
+  },
+  "editor.defaultFormatter": "astro-build.astro-vscode",
+  "astro.content-intellisense": true
 }
