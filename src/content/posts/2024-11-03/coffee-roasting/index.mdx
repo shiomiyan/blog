@@ -1,0 +1,39 @@
+---
+title: コーヒー豆の焙煎温度を計測してみた
+date: "2024-11-05"
+description: ""
+---
+
+コーヒー豆の手鍋焙煎にハマっており、安定した焙煎をするために焙煎温度を計測したくなったので、やってみました。
+
+といっても[CircuitPythonライブラリのチュートリアルみたいなドキュメント](https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/spi-sensors-devices)をなぞっていくだけです。
+
+## 準備したもの
+
+- [Raspberry Pi 4 Model B (RAM 4G)](https://www.switch-science.com/products/6030)
+    - オーバースペック感は否めないが、いつか役に立つと思って...
+- ブレッドボード・ジャンパワイヤ
+- [K型熱電対アンプモジュール（MAX31855）](https://akizukidenshi.com/catalog/g/g108218/)
+- [K型熱電対プローブ](https://www.switch-science.com/products/2976)
+- はんだ、はんだゴテ
+
+まるで初心者なので色々間違えましたが、とりあえずこのあたりが必要でした。
+一通り必要そうなものはスイッチサイエンスで揃えつつ、作業していて必要になったものは秋月電子に買いに行きました。
+
+## ラズパイのセットアップ
+
+SSH、SPI module、I2C moduleを有効化しておきます。
+
+```shell
+sudo raspi-config
+
+# Interface Options -> SSH / SPI / I2C
+```
+
+## 色々繋ぐ
+
+ラズパイのGPIOピンにブレッドボード経由で熱電対アンプモジュールを接続します。
+
+チュートリアルどおりに繋いでいくだけです。
+
+<cite>https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/spi-sensors-devices#wiring-2993466</cite>
