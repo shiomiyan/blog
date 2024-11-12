@@ -36,4 +36,83 @@ sudo raspi-config
 
 チュートリアルどおりに繋いでいくだけです。
 
-<cite>https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/spi-sensors-devices#wiring-2993466</cite>
+>![adafruitのドキュメントで用いられている配線図](./fritzing.png)
+>https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/spi-sensors-devices#wiring-2993466
+
+## 計測する
+
+引き続きチュートリアルに従うだけですが、後で温度変化を確認するためにCSVでそれらしいログを出力します。
+
+```python
+# SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
+# SPDX-License-Identifier: MIT
+
+import time
+import board
+import digitalio
+import adafruit_max31855
+
+
+def main():
+    spi = board.SPI()
+    cs = digitalio.DigitalInOut(board.D5)
+    max31855 = adafruit_max31855.MAX31855(spi, cs)
+
+    start = time.time()
+    data = []
+    try:
+        while True:
+            try:
+                tempC = max31855.temperature
+            except RuntimeError:
+                # Ignore `short circuit to ground` error 🔥
+                pass
+            else:
+                now = time.time()
+                data.append([now, tempC])
+                print(f"Temperature: {tempC} C")
+                print(
+                    f"Elapsed: {int(now - start) // 60} min {int(now - start) % 60} sec"
+                )
+                time.sleep(1.0)
+
+    except KeyboardInterrupt:
+        import csv
+
+        filename = f"data/roasting_{int(time.time())}.csv"
+        with open(filename, mode="w", encoding="utf-8") as file:
+            writer = csv.writer(file)
+            writer.writerows(data)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+何度かテストしていると`RuntimeError: short circuit to ground`が頻発するようになったので、握りつぶしました。  
+デバイスにはあまり良くなさそうですが、人が死ぬわけではないので...
+
+## 結果をグラフに出力する
+
+Jupyter環境を用意してグラフにします。Jupyterじゃなくてもいいのですが、必要なライブラリ群がサクッと揃って楽なので。
+
+Docker導入済みなので、適当にcomposeファイルを用意して立ち上げます。
+
+```yaml
+services:
+  jupyter:
+    image: quay.io/jupyter/scipy-notebook:2024-10-07
+    ports:
+      - 10000:10000
+    command:
+      - start-notebook.sh
+      - --NotebookApp.token=''
+      - --NotebookApp.disable_check_xsrf=True
+    environment:
+      - JUPYTER_PORT=10000
+    volumes:
+      - ./jupyter:/home/jovyan/work
+      - ./data:/home/jovyan/data
+```
+
+![温度センサのテスト](./graph.png)
