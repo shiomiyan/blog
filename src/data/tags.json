@@ -1,0 +1,16 @@
+{
+    "tags": [
+        {
+            "name": "はてなブログ",
+            "slug": "hatenablog"
+        },
+        {
+            "name": "Qiita",
+            "slug": "qiita"
+        },
+        {
+            "name": "セキュリティ",
+            "slug": "security"
+        }
+    ]
+}

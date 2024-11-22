@@ -35,6 +35,7 @@ export async function fetchExternalFeed(): Promise<CollectionEntry<"posts">[]> {
 						url: item.link,
 						platform: dataSource.NAME,
 						isExternal: true,
+						tags: [dataSource.TAG],
 					},
 				}) as CollectionEntry<"posts">,
 		);

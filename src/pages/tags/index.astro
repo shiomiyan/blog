@@ -1,0 +1,58 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import { getAllPosts } from "@lib/utils";
+import tagData from "@data/tags.json";
+
+const posts = await getAllPosts(true);
+
+const tagCounts = posts
+	.flatMap((post) => post.data.tags)
+	.reduce(
+		(acc, tag) => {
+			acc[tag] = (acc[tag] || 0) + 1;
+			return acc;
+		},
+		{} as Record<string, number>,
+	);
+
+const tags = tagData.tags
+	.map((tag) => ({
+		name: tag.name,
+		slug: tag.slug,
+		count: tagCounts[tag.slug] || 0,
+	}))
+	.filter((tag) => tag.count > 0);
+
+const meta = {
+	description: "A list of all tags",
+	title: "tag index",
+};
+---
+
+<Layout title={meta.title} description={meta.description}>
+	<Container>
+		<div class="space-y-10" data-pagefind-ignore="all">
+			<div class="space-y-4">
+				<section class="animate space-y-4">
+					<ul
+						class="list-none grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2"
+					>
+						{
+							tags.map((tag) => (
+								<li>
+									<a
+										href={`/tags/${tag.slug}`}
+										class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+									>
+										{tag.name} ({tag.count})
+									</a>
+								</li>
+							))
+						}
+					</ul>
+				</section>
+			</div>
+		</div>
+	</Container>
+</Layout>
