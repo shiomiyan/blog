@@ -3,35 +3,11 @@ import { type CollectionEntry, getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import ArrowCard from "@components/ArrowCard.astro";
-import { SITE, EXTERNAL_FEEDS } from "@consts";
-
-import Parser from "rss-parser";
-
-async function fetchFeed(): Promise<CollectionEntry<"posts">[]> {
-  const parser = new Parser();
-  const items: CollectionEntry<"posts">[] = [];
-
-  for (const dataSource of EXTERNAL_FEEDS) {
-    const feed = await parser.parseURL(dataSource.URL);
-    const feedItems = feed.items.map(
-      item =>
-        ({
-          data: {
-            title: item.title,
-            date: item.pubDate ? new Date(item.pubDate) : new Date(),
-            url: item.link,
-            platform: dataSource.NAME,
-            isExternal: true,
-          },
-        }) as CollectionEntry<"posts">
-    );
-    items.push(...feedItems);
-  }
-  return items;
-}
+import { SITE } from "@consts";
+import { fetchExternalFeed } from "@lib/utils";
 
 const data = (await getCollection("posts")).filter((post) => !post.data.draft);
-const rssData = await fetchFeed();
+const rssData = await fetchExternalFeed();
 data.push(...rssData);
 data.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
