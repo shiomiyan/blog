@@ -1,4 +1,4 @@
-// .prettierrc.mjs
+// .prettierrc.mts
 /** @type {import("prettier").Config} */
 export default {
   plugins: [

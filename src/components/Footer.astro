@@ -3,10 +3,18 @@ import Container from "@components/Container.astro";
 ---
 
 <footer class="animate">
-  <Container>
-    <div class="flex items-center justify-between">
-      <div class="text-xs italic">Copyright &copy; {new Date().getFullYear()} @shiomiyan</div>
-    </div>
-  </Container>
-  <!-- Cloudflare Web Analytics --><script is:inline defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7b5d9ade2813460c869f0938cf7cda4b"}'></script><!-- End Cloudflare Web Analytics -->
+	<Container>
+		<div class="flex items-center justify-between">
+			<div class="text-xs italic">
+				Copyright &copy; {new Date().getFullYear()} @shiomiyan
+			</div>
+		</div>
+	</Container>
+	<!-- Cloudflare Web Analytics -->
+	<script
+		is:inline
+		defer
+		src="https://static.cloudflareinsights.com/beacon.min.js"
+		data-cf-beacon='{"token": "7b5d9ade2813460c869f0938cf7cda4b"}'
+	></script><!-- End Cloudflare Web Analytics -->
 </footer>

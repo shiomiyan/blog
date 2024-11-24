@@ -34,7 +34,7 @@ footer {
 }
 
 article {
-  @apply prose prose-neutral max-w-full prose-img:mx-auto prose-img:my-auto;
+  @apply prose prose-neutral prose-img:mx-auto prose-img:my-auto max-w-full;
   @apply prose-headings:font-semibold;
   @apply prose-headings:text-black;
 }

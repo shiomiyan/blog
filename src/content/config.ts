@@ -1,5 +1,5 @@
-import { defineCollection, z } from "astro:content";
 import json from "@data/tags.json";
+import { defineCollection, z } from "astro:content";
 
 const tags = json.tags.map((tag) => tag.slug);
 

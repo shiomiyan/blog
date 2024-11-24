@@ -36,14 +36,14 @@ const meta = {
 			<div class="space-y-4">
 				<section class="animate space-y-4">
 					<ul
-						class="list-none grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2"
+						class="grid list-none grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4"
 					>
 						{
 							tags.map((tag) => (
 								<li>
 									<a
 										href={`/tags/${tag.slug}`}
-										class="text-xs rounded-lg border border-black/15 px-2 py-0.5 hover:bg-gray-200"
+										class="rounded-lg border border-black/15 px-2 py-0.5 text-xs hover:bg-gray-200"
 									>
 										{tag.name} ({tag.count})
 									</a>
