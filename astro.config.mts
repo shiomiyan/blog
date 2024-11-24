@@ -9,6 +9,7 @@ import rehypeExternalLinks from "rehype-external-links";
 // https://astro.build/config
 export default defineConfig({
   site: "https://blog.736b.moe",
+  output: "static",
   integrations: [tailwind(), sitemap(), mdx(), pagefind()],
   markdown: {
     shikiConfig: {
