@@ -2,39 +2,48 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
-import FormattedDate from "@components/FormattedDate.astro";
 import TableOfContents from "@components/TableOfContents.astro";
+import Tags from "@components/Tags.astro";
 
 export async function getStaticPaths() {
-  const posts = (await getCollection("posts"))
-    .filter((post) => !post.data.draft)
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: post,
-  }));
+	const posts = (await getCollection("posts"))
+		.filter((post) => !post.data.draft)
+		.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+		props: post,
+	}));
 }
 type Props = CollectionEntry<"posts">;
 
 const post = Astro.props;
+const date = post.data.date;
 const { Content, headings } = await post.render();
 ---
 
 <Layout title={post.data.title} description={post.data.description}>
-  <Container>
-    <div class="my-10 space-y-1">
-      <div class="animate flex items-center gap-1.5">
-        <div class="font-base text-sm">
-          <FormattedDate date={post.data.date} />
-        </div>
-      </div>
-      <h1 class="animate text-3xl font-bold text-black">
-        {post.data.title}
-      </h1>
-    </div>
-    {headings.length > 0 && <TableOfContents headings={headings} />}
-    <article class="animate break-words">
-      <Content />
-    </article>
-  </Container>
+	<Container>
+		<div class="my-10 space-y-1">
+			<div class="animate flex items-center gap-2">
+				<time datetime={date.toISOString()} class="text-sm">
+					{
+						date.toLocaleDateString("ja-JP", {
+							month: "long",
+							day: "2-digit",
+							year: "numeric",
+						})
+					}
+				</time>
+
+				<Tags tags={post.data.tags} />
+			</div>
+			<h1 class="animate text-3xl font-bold text-black">
+				{post.data.title}
+			</h1>
+		</div>
+		{headings.length > 0 && <TableOfContents headings={headings} />}
+		<article class="animate break-words">
+			<Content />
+		</article>
+	</Container>
 </Layout>

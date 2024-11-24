@@ -2,6 +2,9 @@
 title: "ブログをHugoからAstroに移行した"
 date: "2024-07-10"
 description: ""
+tags:
+  - random
+  - astro
 ---
 
 このブログで利用している静的サイトジェネレータをHugoから[Astro](https://astro.build/)に乗り換えた。
@@ -11,18 +14,18 @@ description: ""
 ## モチベーション
 
 - Hugoが採用しているテンプレートだとエディタ補完が効かず、気合いで拡張していくのが辛かった
-    - 辛いので、なにかやろうと思っても諦めがち
-        - 外部データをほんのチョット取り込んでブログに入れたいときなどでも、わざわざスクリプトを書いてCIで実行されるようにして...みたいになってつらい
-- 既存のテーマをイジって運用していたが、CSS周りがスパゲッティ状態で手に負えなくなった（自分のせい）
+  - 辛いので、なにかやろうと思っても諦めがち
+    - 例えば、外部データをほんのチョット取り込んでブログに入れたいときなどでも、わざわざスクリプトを書いてCIで実行されるようにして...みたいになってつらい（他プラットフォームで書いた記事をRSSから引っ張ってきて記事一覧に差し込む、など）
+- 既存のテーマをイジって運用していたが、CSS周りがスパゲッティ状態で手に負えなくなった（自分のせい、移行したから解消するものではないが）
 - ~~暇だった~~他の技術領域に触れてみたかった
 
-## 移行に際して
+## Astroへの移行作業
 
 執筆の習慣がなく、ブログの記事数はたいしたことないので、手作業で拡張子を変更し、フロントマターもよしなに修正した。
 
 また、既存のブログレイアウトは捨てた。
-~~ゼロからUIを考えるほどのやる気はないので~~やはり先人たちの知恵を有効活用するべきなので、[Astro Micro](https://astro.build/themes/details/astro-micro/)というテーマをベースにパッチを当てて使用している。  
-とはいえ、もうほとんど原型はない気もする。
+とはいえ、~~ゼロからUIを考えるほどのやる気はないので~~やはり先人たちの知恵を有効活用するべきなので、[Astro Micro](https://astro.build/themes/details/astro-micro/)というテーマをベースにパッチを当てて使用している。  
+なお、もうほとんど原型はない気もする。
 
 だいたい次のようなことをしている。
 
@@ -30,20 +33,22 @@ description: ""
 - Pagefindが日本語に対応できるように`<html lang="ja">`した（ハマった）
 - なぜかPagefindのビルド済みファイルがpublicフォルダに置かれていたので、ビルド時にdistへ出力するようにした
 - よしなにフォントを変えた
-    - sans: [Noto Sans JP](https://fontsource.org/fonts/noto-sans-jp)
-    - mono: [Fira Code](https://fontsource.org/fonts/fira-code)
-        - いまいち日本語との相性が悪い気もするが、好みなので
+  - sans: [Noto Sans JP](https://fontsource.org/fonts/noto-sans-jp)
+  - mono: [Fira Code](https://fontsource.org/fonts/fira-code)
+    - いまいち日本語との相性が悪い気もするが、好みなので
 - [別のブログプラットフォームで公開した記事を一覧に表示させた](https://github.com/shiomiyan/blog/commit/7471d44b2de73cf437ca0c51b97a2ab78ad3808b)
-    - こういうのがHugoだとしんどかった
+  - こういうのがHugoだとしんどかった
+- アイコンを整備した（Tabler Icons）
+  - あとから知ったが、[@astrojs/preact](https://docs.astro.build/en/guides/integrations-guide/preact/)を使えばコンポーネントで使えるらしい
+    - 大した数のアイコンを使っていないので`svg`タグをベタ書きのままにした
+- タグ機能を実装した
 
-大したことはしていないが、JS系フレームワークを触るのも、CSSフレームワークを触るのも初めてなので、総じて雰囲気で調整している。
+JS系フレームワークを触るのも、CSSフレームワークを触るのも初めてなので、総じて雰囲気で調整している。
 
 ## 移行してみて
 
-柔軟性がありそうで、よい（語彙）。
-
-CSS周りに知見がなくつらいのだが、幸いCSSフレームワーク（tailwindcss）の恩恵を得られており、なんかわかった気になって調整できている。
-
-以前のブログ（HTML + CSSのみ）に比べるとややパフォーマンス面で劣っているような気もしている。
-
-[PageSpeedInsightsの結果](https://pagespeed.web.dev/analysis/https-blog-736b-moe/wg7qt18ser)を見ると、とりあえず満点に近いスコアになったので、いったんしばらくはこのままでいいか...
+- データを好きにコネコネできていい
+- AstroのContent Collectionsのおかげで、mdxのフロントマターを簡単にバリデーションできるのが気に入っている
+- CSS周りに知見がなく相変わらず辛いのだが、Tailwind CSSがよしなにしてくれてる気がしており、なんかわかった気になって調整できている
+- View Transition APIを理解できていない（遷移時のアニメーションを消したいが、消すと遷移時にチラつく、タスケテ）
+- [PageSpeedInsightsの結果](https://pagespeed.web.dev/analysis/https-blog-736b-moe/wg7qt18ser)を見ると、とりあえず満点に近いスコアになったので、とりあえずヨシ

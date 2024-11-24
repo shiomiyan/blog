@@ -11,6 +11,22 @@
         {
             "name": "セキュリティ",
             "slug": "security"
+        },
+        {
+            "name": "雑記",
+            "slug": "random"
+        },
+        {
+            "name": "Tree-sitter",
+            "slug": "tree-sitter"
+        },
+        {
+            "name": "Astro",
+            "slug": "astro"
+        },
+        {
+            "name": "Cloudflare Workers",
+            "slug": "cloudflare-workers"
         }
     ]
 }

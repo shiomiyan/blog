@@ -1,0 +1,27 @@
+---
+import tagData from "@data/tags.json";
+
+type Props = {
+	tags: string[];
+};
+
+const { tags } = Astro.props;
+
+function tagName(slug: string) {
+	return tagData.tags.find((t) => t.slug === slug)?.name;
+}
+---
+
+<div class="flex flex-wrap gap-2">
+	{
+		tags.map((tag) => (
+			<a
+				href={`/tags/${tag}`}
+				class="text-xs rounded-lg border border-black/15 px-2 py-0.5 hover:bg-gray-200"
+				aria-label={`tag: ${tag}`}
+			>
+				{tagName(tag)}
+			</a>
+		))
+	}
+</div>

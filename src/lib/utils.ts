@@ -21,7 +21,7 @@ export function formatDate(date: Date) {
  * @returns RSS entries defined in {@link EXTERNAL_FEEDS}
  */
 export async function fetchExternalFeed(): Promise<CollectionEntry<"posts">[]> {
-	const parser = new Parser();
+	const parser = new Parser({ timeout: 3000 });
 	const items: CollectionEntry<"posts">[] = [];
 
 	for (const dataSource of EXTERNAL_FEEDS) {
