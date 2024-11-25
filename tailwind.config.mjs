@@ -5,26 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: [
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "'Hiragino Kaku Gothic ProN'",
-          "'Hiragino Sans'",
-          "Meiryo",
-          "sans-serif",
-          "'Segoe UI Emoji'"
-        ],
-        mono: [
-          "SFMono-Regular",
-          "Consolas",
-          "'Liberation Mono'",
-          "Menlo",
-          "monospace",
-          "'Apple Color Emoji'",
-          "'Segoe UI Emoji'",
-          "'Segoe UI Symbol'",
-          "'Noto Color Emoji'"
-        ],
+        sans: ['ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji"'],
+        mono: ['ui-monospace,SFMono-Regular,Consolas,Menlo,Monaco,Liberation Mono,Courier New,monospace'],
       },
     },
   },
