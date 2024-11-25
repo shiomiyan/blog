@@ -2,7 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 
 type Props = {
-  entry: CollectionEntry<"posts">;
+	entry: CollectionEntry<"posts">;
 };
 
 const { entry } = Astro.props as Props;
@@ -11,53 +11,51 @@ const { entry } = Astro.props as Props;
 const datetime = entry.data.date.toISOString().slice(0, 10);
 
 const href = entry.data.isExternal
-  ? entry.data.url
-  : `/${entry.collection}/${entry.slug}`;
+	? entry.data.url
+	: `/${entry.collection}/${entry.slug}`;
 ---
 
 <div class="flex flex-1 flex-col">
-  <div class="flex text-xs">
-    <time datetime={datetime} class="pe-1.5">
-      {datetime}
-    </time>
-    {
-      () => {
-        if (entry.data.isExternal) {
-          return (
-            <div class="flex">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="icon icon-tabler icons-tabler-outline icon-tabler-external-link"
-              >
-                <>
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
-                  <path d="M11 13l9 -9" />
-                  <path d="M15 4h5v5" />
-                </>
-              </svg>
-              {entry.data.platform}
-            </div>
-          );
-        }
-      }
-    }
-  </div>
-  <div class="text-lg font-semibold">
-    <a
-      href={href}
-      target={entry.data.isExternal ? "_blank" : "_self"}
-      rel={entry.data.isExternal ? "noopener noreferrer" : undefined}
-    >
-      {entry.data.title}
-    </a>
-  </div>
+	<div class="flex text-xs">
+		<time datetime={datetime} class="pe-1.5">
+			{datetime}
+		</time>
+		{
+			() => {
+				if (entry.data.isExternal) {
+					return (
+						<div class="flex">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="16"
+								height="16"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="icon icon-tabler icons-tabler-outline icon-tabler-external-link"
+							>
+								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+								<path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
+								<path d="M11 13l9 -9" />
+								<path d="M15 4h5v5" />
+							</svg>
+							{entry.data.platform}
+						</div>
+					);
+				}
+			}
+		}
+	</div>
+	<div class="text-lg font-semibold">
+		<a
+			href={href}
+			target={entry.data.isExternal ? "_blank" : "_self"}
+			rel={entry.data.isExternal ? "noopener noreferrer" : undefined}
+		>
+			{entry.data.title}
+		</a>
+	</div>
 </div>

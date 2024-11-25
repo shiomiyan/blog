@@ -1,76 +1,31 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import ArrowCard from "@components/ArrowCard.astro";
-import { SITE, EXTERNAL_FEEDS } from "@consts";
+import { SITE } from "@consts";
+import { getAllPosts } from "@lib/utils";
 
-import Parser from "rss-parser";
-
-async function fetchFeed(): Promise<CollectionEntry<"posts">[]> {
-  const parser = new Parser();
-  const items: CollectionEntry<"posts">[] = [];
-
-  for (const dataSource of EXTERNAL_FEEDS) {
-    const feed = await parser.parseURL(dataSource.URL);
-    const feedItems = feed.items.map(
-      item =>
-        ({
-          data: {
-            title: item.title,
-            date: item.pubDate ? new Date(item.pubDate) : new Date(),
-            url: item.link,
-            platform: dataSource.NAME,
-            isExternal: true,
-          },
-        }) as CollectionEntry<"posts">
-    );
-    items.push(...feedItems);
-  }
-  return items;
-}
-
-const data = (await getCollection("posts")).filter((post) => !post.data.draft);
-const rssData = await fetchFeed();
-data.push(...rssData);
-data.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-type Acc = {
-  [year: string]: CollectionEntry<"posts">[];
-};
-
-const posts = data.reduce((acc: Acc, post) => {
-  const year = post.data.date.getFullYear().toString();
-  if (!acc[year]) {
-    acc[year] = [];
-  }
-  acc[year].push(post);
-  return acc;
-}, {});
-
-const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a));
+const posts = await getAllPosts(true);
 ---
 
 <Layout title={SITE.TITLE} description={SITE.DESCRIPTION}>
-  <Container>
-    <div class="space-y-10" data-pagefind-ignore="all">
-      <div class="space-y-4">
-        {
-          years.map((year) => (
-            <section class="animate space-y-4">
-              <div>
-                <ul class="not-prose flex flex-col gap-4">
-                  {posts[year].map((post) => (
-                    <li>
-                      <ArrowCard entry={post} />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </section>
-          ))
-        }
-      </div>
-    </div>
-  </Container>
+	<Container>
+		<div class="space-y-10" data-pagefind-ignore="all">
+			<div class="space-y-4">
+				<section class="space-y-4">
+					<div>
+						<ul class="not-prose flex flex-col gap-4">
+							{
+								posts.map((post) => (
+									<li>
+										<ArrowCard entry={post} />
+									</li>
+								))
+							}
+						</ul>
+					</div>
+				</section>
+			</div>
+		</div>
+	</Container>
 </Layout>

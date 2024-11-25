@@ -2,6 +2,9 @@
 title: "私のブクマ事情: 初めてのCloudflare Workers"
 date: "2024-10-31"
 description: ""
+tags:
+  - random
+  - cloudflare-workers
 ---
 
 ウェブリソースのブックマークは[こんな感じのbookmarklet](https://gist.github.com/kepano/90c05f162c37cf730abb8ff027987ca3)を用意してブラウザからトリガしてObsidianに保存、というスタイルを取っていた。
@@ -9,7 +12,7 @@ description: ""
 プラグインに依存しなくてよいという点でそれなりに気に入っていたものの、次のような点が気になってきた。
 
 - 当たり前だがブラウザが必須で、モバイルだと体験が悪い
-	- 任意のアプリの「共有」ボタンからブクマ、とかできない
+  - 任意のアプリの「共有」ボタンからブクマ、とかできない
 - Obsidianの起動を挟むので、スッとブクマできない
 - Inoreaderと微妙に統合できておらず辛い（Proユーザー）
 
@@ -74,7 +77,7 @@ content-type: application/json
 
 ### InoreaderからJSONを受け取りOmnivoreにリクエストする
 
-Workersの実装はこんな感じになった。  
+Workersの実装はこんな感じになった。
 
 https://github.com/shiomiyan/omnivore-workers/blob/master/src/index.ts
 
@@ -89,7 +92,6 @@ npx wrangler secret put OMNIVORE_API_KEY
 また、Omnivore APIリクエスト時にはUUID（`clientRequestId`）が必要なので、UUIDを適当に生成してリクエストする。
 
 Omnivore APIはGraphQLを採用しているが、わざわざGraphQLクライアントを使うほどではないよな...となっていたところ、WorkersのRuntime APIに[fetch APIが用意されていた](https://developers.cloudflare.com/workers/runtime-apis/fetch/)ので、これを使うことにした。
-
 
 ## おわり
 
@@ -108,7 +110,6 @@ Omnivoreは記事保存用のGETエンドポイントを用意しているので
 > https://docs.omnivore.app/integrations/api.html
 
 ただこれだとOmnivoreとInoreaderで保存した記事を自動で同期することはできないので、採用を見送った（あとポップアップがウザいなど）。
-
 
 ## 追記
 

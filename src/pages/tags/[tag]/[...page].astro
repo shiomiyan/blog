@@ -1,0 +1,50 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import ArrowCard from "@components/ArrowCard.astro";
+import { getAllPosts } from "@lib/utils";
+import tagData from "@data/tags.json";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+	const posts = await getAllPosts(true);
+	const tags = posts.flatMap((post) => {
+		return [...post.data.tags];
+	});
+	return tags.map((tag) => ({ params: { tag } }));
+};
+
+const params = Astro.params;
+const tag = params.tag as string;
+const posts = (await getAllPosts(true)).filter((post) =>
+	post.data.tags.includes(tag)
+);
+
+const tagName = tagData.tags.find((t) => t.slug === tag)?.name;
+const meta = {
+	description: `Posts tagged with ${tag}`,
+	title: `tag: ${tagName}`,
+};
+---
+
+<Layout title={meta.title} description={meta.description}>
+	<Container>
+		<div class="space-y-10" data-pagefind-ignore="all">
+			<div class="space-y-4">
+				<section class="space-y-4">
+					<div>
+						<ul class="not-prose flex flex-col gap-4">
+							{
+								posts.map((post) => (
+									<li>
+										<ArrowCard entry={post} />
+									</li>
+								))
+							}
+						</ul>
+					</div>
+				</section>
+			</div>
+		</div>
+	</Container>
+</Layout>

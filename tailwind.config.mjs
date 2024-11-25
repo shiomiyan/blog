@@ -1,4 +1,3 @@
-import defaultTheme from "tailwindcss/defaultTheme";
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: "class",
@@ -6,8 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["'Noto Sans JP Variable'", ...defaultTheme.fontFamily.sans],
-        mono: ["Fira Code Variable", ...defaultTheme.fontFamily.mono],
+        sans: ['ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji"'],
+        mono: ['ui-monospace,SFMono-Regular,Consolas,Menlo,Monaco,Liberation Mono,Courier New,monospace'],
       },
     },
   },

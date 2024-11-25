@@ -7,6 +7,13 @@
       "strings": "on"
     }
   },
-  "editor.defaultFormatter": "astro-build.astro-vscode",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode",
+    "editor.formatOnSave": true
+  },
   "astro.content-intellisense": true
 }

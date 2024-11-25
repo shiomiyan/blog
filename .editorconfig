@@ -3,5 +3,15 @@ root = true
 [*]
 insert_final_newline = true
 
+[*.astro]
+indent_style = tab
+tab_width = 2
+
 [*.md]
 trim_trailing_whitespace = false
+indent_style = tab
+tab_width = 2
+
+[*.ts]
+indent_style = tab
+tab_width = 2
