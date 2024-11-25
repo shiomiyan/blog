@@ -72,15 +72,6 @@ h6::before {
   }
 }
 
-.animate {
-  @apply -translate-y-3 opacity-0;
-  @apply duration-300;
-}
-
-.animate.show {
-  @apply translate-y-0 opacity-100;
-}
-
 code,
 pre {
   font-variant-ligatures: none;

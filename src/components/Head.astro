@@ -1,7 +1,5 @@
 ---
 import "../styles/global.css";
-import { ViewTransitions } from "astro:transitions";
-
 import "@fontsource-variable/noto-sans-jp";
 import "@fontsource-variable/fira-code";
 
@@ -51,24 +49,3 @@ const { title, description, image = "/ogp.png" } = Astro.props;
 <!-- Mastodon -->
 <link rel="me" href="https://infosec.exchange/@sk" />
 <meta name="fediverse:creator" content="@sk@infosec.exchange" />
-
-<ViewTransitions />
-
-<script is:inline>
-	function init() {
-		animate();
-	}
-
-	function animate() {
-		const animateElements = document.querySelectorAll(".animate");
-
-		animateElements.forEach((element, index) => {
-			setTimeout(() => {
-				element.classList.add("show");
-			}, index * 100);
-		});
-	}
-
-	document.addEventListener("DOMContentLoaded", () => init());
-	document.addEventListener("astro:after-swap", () => init());
-</script>

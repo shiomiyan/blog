@@ -26,7 +26,7 @@ export const SOCIALS: Socials = [
 
 export const EXTERNAL_FEEDS: ExternalFeeds = [
 	{
-		NAME: "qiita",
+		NAME: "Qiita",
 		URL: "https://qiita.com/736b/feed",
 		TAG: "qiita",
 	},

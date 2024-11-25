@@ -24,7 +24,7 @@ const { Content, headings } = await post.render();
 <Layout title={post.data.title} description={post.data.description}>
 	<Container>
 		<div class="my-10 space-y-1">
-			<div class="animate flex items-center gap-2">
+			<div class="flex items-center gap-2">
 				<time datetime={date.toISOString()} class="text-sm">
 					{
 						date.toLocaleDateString("ja-JP", {
@@ -37,12 +37,12 @@ const { Content, headings } = await post.render();
 
 				<Tags tags={post.data.tags} />
 			</div>
-			<h1 class="animate text-3xl font-bold text-black">
+			<h1 class="text-3xl font-bold text-black">
 				{post.data.title}
 			</h1>
 		</div>
 		{headings.length > 0 && <TableOfContents headings={headings} />}
-		<article class="animate break-words">
+		<article class="break-words">
 			<Content />
 		</article>
 	</Container>
