@@ -7,7 +7,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["'Noto Sans JP Variable'", ...defaultTheme.fontFamily.sans],
-        mono: ["Fira Code Variable", ...defaultTheme.fontFamily.mono],
+        mono: ["'Fira Code Variable'", ...defaultTheme.fontFamily.mono],
       },
     },
   },
