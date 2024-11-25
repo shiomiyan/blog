@@ -1,31 +1,30 @@
 ---
 import Container from "@components/Container.astro";
-import Link from "@components/Link.astro";
 import { SITE, SOCIALS } from "@consts";
 ---
 
 <header transition:persist>
 	<Container>
 		<div class="flex flex-wrap justify-between gap-y-2">
-			<Link href="/" underline={false}>
+			<a href="/">
 				<div class="font-semibold">
 					{SITE.TITLE}
 				</div>
-			</Link>
+			</a>
 			<nav class="flex items-center gap-2 text-sm">
 				{
 					SOCIALS.map((SOCIAL) => (
-						<Link
+						<a
 							href={SOCIAL.HREF}
-							external
 							aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
-							underline={false}
+							target="_blank"
+							rel="noopener noreferer"
 						>
 							<Fragment set:html={SOCIAL.SVG} />
-						</Link>
+						</a>
 					))
 				}
-				<Link href="/tags" aria-label="All tags on this site" underline={false}>
+				<a href="/tags" aria-label="All tags on this site">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="20"
@@ -43,13 +42,9 @@ import { SITE, SOCIALS } from "@consts";
 							d="M18 19l1.592 -1.592a4.82 4.82 0 0 0 0 -6.816l-4.592 -4.592"
 						></path><path d="M7 10h-.01"></path></svg
 					>
-				</Link>
+				</a>
 
-				<Link
-					href="/rss.xml"
-					aria-label="RSS feed for blog.736b.moe"
-					underline={false}
-				>
+				<a href="/rss.xml" aria-label="RSS feed for blog.736b.moe">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="20"
@@ -66,7 +61,7 @@ import { SITE, SOCIALS } from "@consts";
 							d="M4 4a16 16 0 0 1 16 16"></path><path d="M4 11a9 9 0 0 1 9 9"
 						></path></svg
 					>
-				</Link>
+				</a>
 
 				<button
 					id="magnifying-glass"
