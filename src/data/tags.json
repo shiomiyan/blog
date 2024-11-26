@@ -27,6 +27,10 @@
     {
       "name": "Cloudflare Workers",
       "slug": "cloudflare-workers"
+    },
+    {
+      "name": "Raspberry Pi",
+      "slug": "raspberry-pi"
     }
   ]
 }

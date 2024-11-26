@@ -2,9 +2,17 @@
 title: コーヒー豆の焙煎温度を計測してみた
 date: "2024-11-05"
 description: ""
+tags:
+  - raspberry-pi
 ---
+import { Image, Picture } from "astro:assets";
+import img_20241121_222830 from "./20241121_222830.jpg";
+import img_20241121_222851 from "./20241121_222851.jpg";
+import img_fritzing from "./fritzing.png";
 
-コーヒー豆の手鍋焙煎にハマっており、安定した焙煎をするために焙煎温度を計測したくなったので、やってみました。
+コーヒー豆の手鍋焙煎にハマっており、安定した焙煎をするために（？）焙煎温度を計測したくなったので、やってみました。
+
+<Image src={img_20241121_222830} alt="焙煎する直前の様子" class="w-auto h-[400px] object-contain" />
 
 といっても[CircuitPythonライブラリのチュートリアルみたいなドキュメント](https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/spi-sensors-devices)をなぞっていくだけです。
 
@@ -17,8 +25,7 @@ description: ""
 - [K型熱電対プローブ](https://www.switch-science.com/products/2976)
 - はんだ、はんだゴテ
 
-まるで初心者なので色々間違えましたが、とりあえずこのあたりが必要でした。
-一通り必要そうなものはスイッチサイエンスで揃えつつ、作業していて必要になったものは秋月電子に買いに行きました。
+一通り必要そうなものはスイッチサイエンスで揃えつつ、作業していて必要になったものは秋月電子に買いに行きました（色々間違えて日に2度も秋月電子に足を運ぶことになりました）。
 
 ## ラズパイのセットアップ
 
@@ -34,14 +41,26 @@ sudo raspi-config
 
 ラズパイのGPIOピンにブレッドボード経由で熱電対アンプモジュールを接続します。
 
-チュートリアルどおりに繋いでいくだけです。
+[チュートリアルの配線図](https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/spi-sensors-devices#wiring-2993466)通りに繋いでいくだけです。
 
->![adafruitのドキュメントで用いられている配線図](./fritzing.png)
->https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/spi-sensors-devices#wiring-2993466
+<Image src={img_fritzing} alt="adafruitのドキュメントで用いられている配線図" class="w-auto h-[400px] object-contain" />
+
+というわけで、つなぎました。
+
+<Image src={img_20241121_222851} alt="ラズパイにMAX31855を接続した様子" class="w-auto h-[400px] object-contain" />
 
 ## 計測する
 
-引き続きチュートリアルに従うだけですが、後で温度変化を確認するためにCSVでそれらしいログを出力します。
+MAX31855を利用するうえで必要なライブラリは`pip`で導入できますが、[グローバルインストールしようとすると怒られる](https://zenn.dev/tanny/articles/ce010edd69d56a)ので、仮想環境を使います。  
+また、globalに入っているライブラリ（`board`とか）を仮想環境内から参照するために、`--system-site-package`オプションをつけます。
+
+```shell
+python -m venv .venv --system-site-package
+source .venv/bin/activate
+pip3 install adafruit-circuitpython-max31855
+```
+
+あとは引き続きチュートリアルに従うだけですが、後で温度変化を確認するためにCSVでそれらしいログを出力します。
 
 ```python
 # SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
@@ -96,7 +115,7 @@ if __name__ == "__main__":
 
 Jupyter環境を用意してグラフにします。Jupyterじゃなくてもいいのですが、必要なライブラリ群がサクッと揃って楽なので。
 
-Docker導入済みなので、適当にcomposeファイルを用意して立ち上げます。
+購入したRaspberry Piはメモリが4GBもあるので、arm64のOSを使えばDockerが普通に動きます。適当にcomposeファイルを用意してJupyter Notebookを立ち上げます。
 
 ```yaml
 services:
@@ -115,4 +134,16 @@ services:
       - ./data:/home/jovyan/data
 ```
 
-![温度センサのテスト](./graph.png)
+で、よしなに可視化してみると、こんな感じでした。
+
+![可視化してみた](./graph.png)
+
+10分付近にある温度変化は、カセットコンロのガスが切れてしまったことによるものです😢  
+おかげで焙煎時間がめちゃめちゃ伸びてしまいました。
+
+## 感想など
+
+流石に固定方法が甘く（テープで蓋の穴に固定しているだけ）、計測ノイズが酷かったと思います。製品の信頼性みたいなところはわからないですが、[固定しやすそうな熱電対も売っている](https://www.amazon.co.jp/dp/B00FVREP12)ので、これを買って鍋に固定してもいいかもしれません。
+
+あと、この記事を書きながら、[同じようなこと](https://youtu.be/9vaDTce4eK4)をしている人を見つけました。  
+[artisan](https://artisan-scope.org/)という焙煎専用のオープンソース可視化ツールがあるみたいなので、そっちを使うでも良かったかもしれません（ただし、対応しているロガーに制限があるっぽい）。
