@@ -10,6 +10,8 @@ import img_20241121_222830 from "./20241121_222830.jpg";
 import img_20241121_222851 from "./20241121_222851.jpg";
 import img_fritzing from "./fritzing.png";
 
+[Raspberry Pi Advent Calendar 2024](https://adventar.org/calendars/10003)の4日目の記事です。
+
 コーヒー豆の手鍋焙煎にハマっており、安定した焙煎をするために（？）焙煎温度を計測したくなったので、やってみました。
 
 <Image src={img_20241121_222830} alt="焙煎する直前の様子" class="w-auto h-[400px] object-contain" />
@@ -19,7 +21,7 @@ import img_fritzing from "./fritzing.png";
 ## 準備したもの
 
 - [Raspberry Pi 4 Model B (RAM 4G)](https://www.switch-science.com/products/6030)
-    - オーバースペック感は否めないが、いつか役に立つと思って...
+    - オーバースペックでしかないですが、いつか役に立つと思って...
 - ブレッドボード・ジャンパワイヤ
 - [K型熱電対アンプモジュール（MAX31855）](https://akizukidenshi.com/catalog/g/g108218/)
 - [K型熱電対プローブ](https://www.switch-science.com/products/2976)
@@ -143,7 +145,8 @@ services:
 
 ## 感想など
 
-流石に固定方法が甘く（テープで蓋の穴に固定しているだけ）、計測ノイズが酷かったと思います。製品の信頼性みたいなところはわからないですが、[固定しやすそうな熱電対も売っている](https://www.amazon.co.jp/dp/B00FVREP12)ので、これを買って鍋に固定してもいいかもしれません。
-
-あと、この記事を書きながら、[同じようなこと](https://youtu.be/9vaDTce4eK4)をしている人を見つけました。  
-[artisan](https://artisan-scope.org/)という焙煎専用のオープンソース可視化ツールがあるみたいなので、そっちを使うでも良かったかもしれません（ただし、対応しているロガーに制限があるっぽい）。
+- 流石に固定方法が甘く（テープで蓋の穴に固定しているだけ）、計測ノイズが酷かった
+  - 製品の信頼性みたいなところはわからないですが、[固定しやすそうな熱電対も売っている](https://www.amazon.co.jp/dp/B00FVREP12)ので、これを買って鍋に固定してもいいかもしれない
+    - [こんな感じ](https://youtu.be/9vaDTce4eK4)
+- [artisan](https://artisan-scope.org/)という焙煎専用のオープンソース可視化ツールがあるみたいなので、そっちを使うでも良かったかも（対応しているロガーに制限はあるっぽい）
+- 普通に赤字
