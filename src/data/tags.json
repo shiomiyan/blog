@@ -31,6 +31,10 @@
     {
       "name": "Raspberry Pi",
       "slug": "raspberry-pi"
+    },
+    {
+      "name": "Puppeteer",
+      "slug": "puppeteer"
     }
   ]
 }
