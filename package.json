@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "textlint": "textlint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "create-post": "tsx bin/create-post.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
