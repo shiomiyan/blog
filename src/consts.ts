@@ -30,9 +30,4 @@ export const EXTERNAL_FEEDS: ExternalFeeds = [
 		URL: "https://qiita.com/736b/feed",
 		TAG: "qiita",
 	},
-	{
-		NAME: "はてなブログ",
-		URL: "https://i32.hatenablog.com/feed",
-		TAG: "hatenablog",
-	},
 ];
