@@ -1,4 +1,3 @@
-import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 
 import mdx from "@astrojs/mdx";
@@ -6,11 +5,13 @@ import sitemap from "@astrojs/sitemap";
 import pagefind from "astro-pagefind";
 import rehypeExternalLinks from "rehype-external-links";
 
+import tailwindcss from "@tailwindcss/vite";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://blog.736b.moe",
   output: "static",
-  integrations: [tailwind(), sitemap(), mdx(), pagefind()],
+  integrations: [sitemap(), mdx(), pagefind()],
   markdown: {
     shikiConfig: {
       theme: "github-dark-default",
@@ -21,5 +22,8 @@ export default defineConfig({
         { target: "_blank", rel: ["noopener", "noreferrer"] },
       ],
     ],
+  },
+  vite: {
+    plugins: [tailwindcss()],
   },
 });
