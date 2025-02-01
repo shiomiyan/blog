@@ -1,0 +1,46 @@
+---
+title: DenoとHonoでペライチウェブ開発
+date: 2025-02-01T14:05:02.515Z
+description: ""
+tags:
+  - deno
+  - typescript
+---
+
+ブラウザ機能だとかの検証のために、サクッとウェブアプリを作りたいときにDenoとHonoの組み合わせが便利でした。次のような感じでサクッとアプリを書けます。
+
+```tsx
+/** @jsxImportSource jsr:@hono/hono@4.6.8/jsx */
+import { Hono } from "jsr:@hono/hono@4.6.18";
+import { FC } from "jsr:@hono/hono@4.6.8/jsx";
+
+const app = new Hono();
+
+const MyComponent: FC<{ message: string }> = (props) => {
+    return <h1>{props.message}</h1>;
+};
+
+app.get("/", (c) => {
+    return c.html(
+        <html>
+            <MyComponent message="Foo Bar" />
+        </html>,
+    );
+});
+
+Deno.serve({ port: 3000 }, app.fetch);
+```
+
+Docker (Apache) + PHPをよく使っていましたが、やりたいことが小さい割にプロジェクトがデカいな...となりがちでした。見ての通り、Deno + Honoならコードベースも小さいですし、次のような点も気に入っています。
+
+- サーバーとしての機能がリッチで、コードベースで設定できる
+- JSXが使える（≒生のHTMLを書かなくて済む）
+- 依存関係も含めて`.tsx`ファイル1つで配布できる
+  - 雑に書いてもまとまる
+  - PHPだとエンドポイントの数だけファイル作ってたので配布が面倒
+- 書き心地がモダン
+
+## 余談
+
+- なんならHonoすらいらないことも多いかもしれない
+  - https://docs.deno.com/runtime/reference/jsx/

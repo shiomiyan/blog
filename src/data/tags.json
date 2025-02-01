@@ -35,6 +35,14 @@
     {
       "name": "Puppeteer",
       "slug": "puppeteer"
+    },
+    {
+      "name": "TypeScript",
+      "slug": "typescript"
+    },
+    {
+      "name": "Deno",
+      "slug": "deno"
     }
   ]
 }
