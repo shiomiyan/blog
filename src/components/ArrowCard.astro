@@ -15,45 +15,29 @@ const href = entry.data.isExternal
 	: `/${entry.collection}/${entry.slug}`;
 ---
 
-<div class="flex flex-1 flex-col">
-	<div class="flex text-xs">
-		<time datetime={datetime} class="pe-1.5">
+<div class="space-y-1">
+	<div class="flex items-center gap-2 text-xs text-gray-600">
+		<time datetime={datetime}>
 			{datetime}
 		</time>
 		{
 			() => {
 				if (entry.data.isExternal) {
 					return (
-						<div class="flex">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="16"
-								height="16"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="icon icon-tabler icons-tabler-outline icon-tabler-external-link"
-							>
-								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-								<path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
-								<path d="M11 13l9 -9" />
-								<path d="M15 4h5v5" />
-							</svg>
-							{entry.data.platform}
+						<div class="items-center gap-1">
+							<span class="text-xs">🌐&nbsp;{entry.data.platform}</span>
 						</div>
 					);
 				}
 			}
 		}
 	</div>
-	<div class="text-lg font-semibold">
+	<div class="text-base font-semibold">
 		<a
 			href={href}
 			target={entry.data.isExternal ? "_blank" : "_self"}
 			rel={entry.data.isExternal ? "noopener noreferrer" : undefined}
+			class="hover:underline"
 		>
 			{entry.data.title}
 		</a>
