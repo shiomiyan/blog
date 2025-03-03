@@ -15,21 +15,17 @@ const href = entry.data.isExternal
 	: `/${entry.collection}/${entry.slug}`;
 ---
 
-<div class="space-y-1">
+<div class="">
 	<div class="flex items-center gap-2 text-xs text-gray-600">
 		<time datetime={datetime}>
 			{datetime}
 		</time>
 		{
-			() => {
-				if (entry.data.isExternal) {
-					return (
-						<div class="items-center gap-1">
-							<span class="text-xs">🌐&nbsp;{entry.data.platform}</span>
-						</div>
-					);
-				}
-			}
+			entry.data.isExternal && (
+				<div class="items-center gap-1">
+					<span class="text-xs">🌐&nbsp;{entry.data.platform}</span>
+				</div>
+			)
 		}
 	</div>
 	<div class="text-base font-semibold">
