@@ -13,6 +13,25 @@ const datetime = entry.data.date.toISOString().slice(0, 10);
 const href = entry.data.isExternal
 	? entry.data.url
 	: `/${entry.collection}/${entry.slug}`;
+
+/**
+ * duckduckgoのfavicon apiから外部サイトのfaviconを取ってきてbase64 data uriにする
+ */
+async function getFavicon(url: string): Promise<string> {
+	try {
+		const hostname = new URL(url).hostname;
+		const faviconUrl = `https://icons.duckduckgo.com/ip3/${hostname}.ico`;
+		const res = await fetch(faviconUrl);
+		const arrayBuffer = await res.arrayBuffer();
+		const base64 = Buffer.from(arrayBuffer).toString("base64");
+		return `data:image/png;base64,${base64}`;
+	} catch (e) {
+		console.error("Error fetching favicon:", e);
+		return "";
+	}
+}
+
+const favicon = entry.data.isExternal && href ? await getFavicon(href) : "";
 ---
 
 <div class="">
@@ -20,15 +39,10 @@ const href = entry.data.isExternal
 		<time datetime={datetime}>
 			{datetime}
 		</time>
-		{
-			entry.data.isExternal && (
-				<div class="items-center gap-1">
-					<span class="text-xs">🌐&nbsp;{entry.data.platform}</span>
-				</div>
-			)
-		}
 	</div>
-	<div class="text-base font-semibold">
+	<div
+		class="inline-flex items-center gap-1 text-base font-semibold whitespace-nowrap"
+	>
 		<a
 			href={href}
 			target={entry.data.isExternal ? "_blank" : "_self"}
@@ -37,5 +51,15 @@ const href = entry.data.isExternal
 		>
 			{entry.data.title}
 		</a>
+		{
+			entry.data.isExternal && favicon && (
+				<img
+					src={favicon}
+					alt="favicon"
+					title={entry.data.platform}
+					class="h-4 w-4"
+				/>
+			)
+		}
 	</div>
 </div>
