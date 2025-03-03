@@ -1,8 +1,8 @@
 import type { ExternalFeeds, Site, Socials } from "@types";
 
 export const SITE: Site = {
-	TITLE: `'"><img src/onerror=alert()>`,
-	DESCRIPTION: "Technical blog by @shiomiyan.",
+	TITLE: `blog.736b.moe`,
+	DESCRIPTION: "Blog by @shiomiyan.",
 	NUM_POSTS_ON_HOMEPAGE: 999,
 };
 
