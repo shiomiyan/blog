@@ -34,32 +34,28 @@ async function getFavicon(url: string): Promise<string> {
 const favicon = entry.data.isExternal && href ? await getFavicon(href) : "";
 ---
 
-<div class="">
-	<div class="flex items-center gap-2 text-xs text-gray-600">
-		<time datetime={datetime}>
-			{datetime}
-		</time>
-	</div>
-	<div
-		class="inline-flex items-center gap-1 text-base font-semibold whitespace-nowrap"
+<div class="flex items-center gap-2 text-xs text-gray-600">
+	<time datetime={datetime}>
+		{datetime}
+	</time>
+</div>
+<div class="items-center">
+	<a
+		href={href}
+		target={entry.data.isExternal ? "_blank" : "_self"}
+		rel={entry.data.isExternal ? "noopener noreferrer" : undefined}
+		class="text-base font-semibold hover:underline"
 	>
-		<a
-			href={href}
-			target={entry.data.isExternal ? "_blank" : "_self"}
-			rel={entry.data.isExternal ? "noopener noreferrer" : undefined}
-			class="hover:underline"
-		>
-			{entry.data.title}
-		</a>
-		{
-			entry.data.isExternal && favicon && (
-				<img
-					src={favicon}
-					alt="favicon"
-					title={entry.data.platform}
-					class="h-4 w-4"
-				/>
-			)
-		}
-	</div>
+		{entry.data.title}
+	</a>
+	{
+		entry.data.isExternal && favicon && (
+			<img
+				src={favicon}
+				alt="favicon"
+				title={entry.data.platform}
+				class="relative -top-[2px] inline h-5 w-5"
+			/>
+		)
+	}
 </div>
