@@ -43,6 +43,10 @@
     {
       "name": "Deno",
       "slug": "deno"
+    },
+    {
+      "name": "HTTP",
+      "slug": "http"
     }
   ]
 }
