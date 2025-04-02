@@ -48,6 +48,8 @@ Firefoxのソースコードを見るに、次のような日時書式はパー�
 > ```
 >
 > https://searchfox.org/mozilla-central/source/nsprpub/pr/src/misc/prtime.c#930-944
+>
+> （Chrumiumだと[このへん](https://source.chromium.org/chromium/chromium/src/+/main:net/cookies/cookie_util.cc;l=481)かな？）
 
 PHPで適当なCookieを発行するページを作って検証します。検証日時は2025年4月1日なので、すべて未来の日付です。
 
@@ -81,7 +83,7 @@ foreach ($cookies as $cookie) {
 echo "test";
 ```
 
-### Firefox (ver. 137.0)
+### Firefox 137
 
 ![firefox.png](firefox.png)
 
@@ -103,32 +105,40 @@ Set-Cookie: IMF-fixdate-GMT=1; Expires=Fri, 06 Aug 2025 08:00:00 GMT
 Set-Cookie: IMF-fixdate-JST=1; Expires=Fri, 06 Aug 2025 08:00:00 JST
 ```
 
-### Safari
+### Safari 18.2
 
 ![safari.png](safari.png)
 
 Safariもそれなりに寛容です。
 
-Safariは日付をパースできない場合、Session Cookieとして受け入れるようです。
+パースできない場合、Session Cookieとして受け入れるようです。
 
-### Chrome
+### Chrome 134
 
 ![chrome.png](chrome.png)
 
 最も日付書式が厳しく実装されています。
 
-RFC 9110で言うところのIMF-fixdateとRFC 850 formatに近い形式ならパースできていそうな感じです。
+RFC 9110で言うところのIMF-fixdateとRFC 850 formatに近い形式ならパースできていそうな感じに見えます。
 
-またSafariと同様、日付をパースできない場合はSession Cookieとして受け入れるようです。
+またSafariと同様、パースできない場合はSession Cookieとして受け入れるようです。
 
-## おまけ: それ、Puppeteerでテストしたら楽そうじゃない？
+## まとめ
+
+思ったよりもブラウザによって日時書式の解釈が異なることがわかりました。
+
+誰得情報でした。
+
+## おまけ: Puppeteerでブラウザの挙動をテストする
+
+レスポンスをインターセプトすることで、上記のようなブラウザの挙動をテストできそうだったので、やりました。
 
 ```typescript
 import * as puppeteer from "npm:puppeteer@24.5.0";
 
 async function useBrowserContext() {
 	const browser = await puppeteer.launch({
-		browser: "chrome",
+		browser: "firefox",
 		headless: false,
 	});
 	const page = (await browser.pages())[0];
@@ -141,24 +151,8 @@ async function useBrowserContext() {
 				headers: {
 					"content-type": "text/html",
 					"set-cookie": [
-						"fmt01=1; Expires=01 Aug 25 08:00:00",
-						"fmt02=1; Expires=01 Aug 25 08:00 GMT",
-						"fmt03=1; Expires=Fri, 01 Aug 25 8:00:00",
-						"fmt04=1; Expires=Fri, 01 Aug 25 8:00 GMT",
-						"fmt05=1; Expires=Fri Aug 01 08:00 GMT 2025",
-						"fmt06=1; Expires=Fri Aug 01 08:00 +0000 2025",
-						"fmt07=1; Expires=1 Aug 2025 08:00-GMT (Friday)",
-						"fmt08=1; Expires=01-Aug-2025 08:00:00.00",
-						"fmt09=1; Expires=01-Aug-2025 08:00pm",
-						"fmt10=1; Expires=01-Aug-2025 08:00am",
-						"fmt11=1; Expires=01-Aug-2025 08:00 PM",
-						"fmt12=1; Expires=Friday, August 01, 2025 8:00 PM",
-						"fmt13=1; Expires=08/01/25 08:00:00 PM",
-						"fmt14=1; Expires=30/08/25 08:00",
-						"fmt15=1; Expires=98-12-08 19:32:48 GMT",
-						"IMF-fixdate=1; Expires=Fri, 06 Aug 2025 08:00:00 GMT",
-						"RFC850=1; Expires=Friday, 06-Aug-25 08:00:00 GMT",
-						"ANSI-C=1; Expires=Fri Aug  6 08:00:00 2025",
+						"IMF-fixdate-GMT=1; Expires=Fri, 06 Aug 2025 08:00:00 GMT",
+						"IMF-fixdate-JST=1; Expires=Fri, 06 Aug 2025 08:00:00 JST",
 					],
 				},
 				body: "Expires datetime test",
@@ -184,32 +178,14 @@ if (import.meta.main) {
 	});
 
 	const cookies = await ctx.browser.cookies();
-	console.log(cookies.length);
 	for (const cookie of cookies) {
-		console.log(cookie.name, cookie.expires);
+		console.log(cookie.name, new Date(cookie.expires * 1000));
 	}
 }
 
 // ▶ deno run -A expires-datetime-test.deno.ts
-// 18
-// fmt01 1754035200
-// fmt02 -1
-// fmt03 1754035200
-// fmt04 -1
-// fmt05 -1
-// fmt06 -1
-// fmt07 -1
-// fmt08 1754035200
-// fmt09 -1
-// fmt10 -1
-// fmt11 -1
-// fmt12 -1
-// fmt13 -1
-// fmt14 -1
-// fmt15 -1
-// IMF-fixdate 1754467200
-// RFC850 1754467200
-// ANSI-C 1754467200
+// IMF-fixdate-GMT 2025-08-06T08:00:00.000Z
+// IMF-fixdate-JST 2025-08-05T23:00:00.000Z
 ```
 
-よさそう。
+FirefoxでJSTからGMTに変換され、`IMF-fixdate-JST`では9時間前の日時が設定されることが確認できました。
