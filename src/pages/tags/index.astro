@@ -2,7 +2,7 @@
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import { getAllPosts } from "@lib/utils";
-import tagData from "@data/tags.json";
+import { getAllTagSlug, getTagDisplayName } from "@lib/tags";
 
 const posts = await getAllPosts(true);
 
@@ -13,14 +13,14 @@ const tagCounts = posts
 			acc[tag] = (acc[tag] || 0) + 1;
 			return acc;
 		},
-		{} as Record<string, number>
+		{} as Record<string, number>,
 	);
 
-const tags = tagData.tags
-	.map((tag) => ({
-		name: tag.name,
-		slug: tag.slug,
-		count: tagCounts[tag.slug] || 0,
+const tags = getAllTagSlug()
+	.map((slug) => ({
+		name: getTagDisplayName(slug),
+		slug,
+		count: tagCounts[slug] || 0,
 	}))
 	.filter((tag) => tag.count > 0);
 

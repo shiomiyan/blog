@@ -1,7 +1,7 @@
-import json from "@data/tags.json";
 import { defineCollection, z } from "astro:content";
+import { getAllTagSlug } from "@lib/tags";
 
-const tags = json.tags.map((tag) => tag.slug);
+const validTags = getAllTagSlug();
 
 const posts = defineCollection({
 	type: "content",
@@ -16,8 +16,8 @@ const posts = defineCollection({
 		tags: z
 			.array(z.string())
 			.default([])
-			.refine((arr) => arr.every((tag) => tags.includes(tag)), {
-				message: `Invalid tag specified. Use: ${tags}`,
+			.refine((arr) => arr.every((tag) => validTags.includes(tag)), {
+				message: `Invalid tag specified. Use: ${validTags.join(", ")}`,
 			}),
 	}),
 });

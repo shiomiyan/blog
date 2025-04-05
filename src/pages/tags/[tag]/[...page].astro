@@ -4,7 +4,7 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import ArrowCard from "@components/ArrowCard.astro";
 import { getAllPosts } from "@lib/utils";
-import tagData from "@data/tags.json";
+import { getTagDisplayName } from "@lib/tags";
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	const posts = await getAllPosts(true);
@@ -17,10 +17,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 const params = Astro.params;
 const tag = params.tag as string;
 const posts = (await getAllPosts(true)).filter((post) =>
-	post.data.tags.includes(tag)
+	post.data.tags.includes(tag),
 );
 
-const tagName = tagData.tags.find((t) => t.slug === tag)?.name;
+const tagName = getTagDisplayName(tag);
 const meta = {
 	description: `Posts tagged with ${tag}`,
 	title: `tag: ${tagName}`,
