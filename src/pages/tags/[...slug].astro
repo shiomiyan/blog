@@ -4,18 +4,15 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import ArrowCard from "@components/ArrowCard.astro";
 import { getAllPosts } from "@lib/utils";
-import { getTagDisplayName } from "@lib/tags";
+import { getAllTagSlug, getTagDisplayName } from "@lib/tags";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const posts = await getAllPosts(true);
-	const tags = posts.flatMap((post) => {
-		return [...post.data.tags];
-	});
-	return tags.map((tag) => ({ params: { tag } }));
+	const allTags = getAllTagSlug();
+	return allTags.map((tag) => ({ params: { slug: tag } }));
 };
 
-const params = Astro.params;
-const tag = params.tag as string;
+const { slug } = Astro.params;
+const tag = slug as string;
 const posts = (await getAllPosts(true)).filter((post) =>
 	post.data.tags.includes(tag),
 );
@@ -31,17 +28,24 @@ const meta = {
 	<Container>
 		<div class="space-y-10" data-pagefind-ignore="all">
 			<div class="space-y-4">
+				<h1 class="text-3xl font-bold text-black">
+					{tagName}
+				</h1>
 				<section class="space-y-4">
 					<div>
-						<ul class="not-prose flex flex-col gap-4">
-							{
-								posts.map((post) => (
-									<li>
-										<ArrowCard entry={post} />
-									</li>
-								))
-							}
-						</ul>
+						{
+							posts.length === 0 ? (
+								<p>このタグが付いた記事はありません。</p>
+							) : (
+								<ul class="not-prose flex flex-col gap-4">
+									{posts.map((post) => (
+										<li>
+											<ArrowCard entry={post} />
+										</li>
+									))}
+								</ul>
+							)
+						}
 					</div>
 				</section>
 			</div>
