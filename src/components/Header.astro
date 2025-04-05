@@ -1,6 +1,21 @@
 ---
 import Container from "@components/Container.astro";
 import { SITE, SOCIALS } from "@consts";
+
+import TwitterIcon from "../assets/icons/twitter.svg";
+import GitHubIcon from "../assets/icons/github.svg";
+import MastodonIcon from "../assets/icons/mastodon.svg";
+import BlueskyIcon from "../assets/icons/bluesky.svg";
+import TagsIcon from "../assets/icons/tags.svg";
+import RssIcon from "../assets/icons/rss.svg";
+import SearchIcon from "../assets/icons/search.svg";
+
+const SVGComponents: Record<string, any> = {
+	twitter: TwitterIcon,
+	github: GitHubIcon,
+	mastodon: MastodonIcon,
+	bluesky: BlueskyIcon,
+};
 ---
 
 <header transition:persist>
@@ -13,54 +28,26 @@ import { SITE, SOCIALS } from "@consts";
 			</a>
 			<nav class="flex items-center gap-2 text-sm">
 				{
-					SOCIALS.map((SOCIAL) => (
-						<a
-							href={SOCIAL.HREF}
-							aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
-							target="_blank"
-							rel="noopener noreferer"
-						>
-							<Fragment set:html={SOCIAL.SVG} />
-						</a>
-					))
+					SOCIALS.map((SOCIAL) => {
+						const SVGComponent = SVGComponents[SOCIAL.SVG_NAME];
+						return (
+							<a
+								href={SOCIAL.HREF}
+								aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
+								target="_blank"
+								rel="noopener noreferer"
+							>
+								<SVGComponent width={20} height={20} />
+							</a>
+						);
+					})
 				}
 				<a href="/tags" aria-label="All tags on this site">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="20"
-						height="20"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class="icon icon-tabler icons-tabler-outline icon-tabler-tags"
-						><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
-							d="M3 8v4.172a2 2 0 0 0 .586 1.414l5.71 5.71a2.41 2.41 0 0 0 3.408 0l3.592 -3.592a2.41 2.41 0 0 0 0 -3.408l-5.71 -5.71a2 2 0 0 0 -1.414 -.586h-4.172a2 2 0 0 0 -2 2z"
-						></path><path
-							d="M18 19l1.592 -1.592a4.82 4.82 0 0 0 0 -6.816l-4.592 -4.592"
-						></path><path d="M7 10h-.01"></path></svg
-					>
+					<TagsIcon width={20} height={20} />
 				</a>
 
 				<a href="/rss.xml" aria-label="RSS feed for blog.736b.moe">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="20"
-						height="20"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class="icon icon-tabler icons-tabler-outline icon-tabler-rss"
-						><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
-							d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path
-							d="M4 4a16 16 0 0 1 16 16"></path><path d="M4 11a9 9 0 0 1 9 9"
-						></path></svg
-					>
+					<RssIcon width={20} height={20} />
 				</a>
 
 				<button
@@ -68,18 +55,7 @@ import { SITE, SOCIALS } from "@consts";
 					aria-label="Search"
 					class="flex items-center rounded-sm border border-black/15 bg-neutral-100 px-2 py-1 text-xs transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black"
 				>
-					<svg
-						height="16"
-						stroke-linejoin="round"
-						viewBox="0 0 16 16"
-						width="16"
-						style="color: currentcolor;"
-						><path
-							fill-rule="evenodd"
-							clip-rule="evenodd"
-							d="M3.5 7C3.5 5.067 5.067 3.5 7 3.5C8.933 3.5 10.5 5.067 10.5 7C10.5 7.88461 10.1718 8.69256 9.63058 9.30876L9.30876 9.63058C8.69256 10.1718 7.88461 10.5 7 10.5C5.067 10.5 3.5 8.933 3.5 7ZM9.96544 11.0261C9.13578 11.6382 8.11014 12 7 12C4.23858 12 2 9.76142 2 7C2 4.23858 4.23858 2 7 2C9.76142 2 12 4.23858 12 7C12 8.11014 11.6382 9.13578 11.0261 9.96544L14.0303 12.9697L14.5607 13.5L13.5 14.5607L12.9697 14.0303L9.96544 11.0261Z"
-							fill="currentColor"></path></svg
-					>
+					<SearchIcon width={16} height={16} />
 					&nbsp;Search
 				</button>
 			</nav>

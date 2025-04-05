@@ -12,7 +12,7 @@ export type Metadata = {
 export type Socials = {
 	NAME: string;
 	HREF: string;
-	SVG: string;
+	SVG_NAME: string;
 }[];
 
 export type ExternalFeeds = {
