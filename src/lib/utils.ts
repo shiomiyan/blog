@@ -2,6 +2,11 @@ import { EXTERNAL_FEEDS } from "@consts";
 import { getCollection, type CollectionEntry } from "astro:content";
 import Parser from "rss-parser";
 
+/**
+ * Format date to YYYY-MM-DD
+ * @param date Date
+ * @returns Formatted date
+ */
 export function formatDate(date: Date) {
 	return Intl.DateTimeFormat("en-US", {
 		year: "numeric",

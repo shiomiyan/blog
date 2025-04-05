@@ -1,7 +1,7 @@
 import type { ExternalFeeds, Site, Socials } from "@types";
 
 export const SITE: Site = {
-	TITLE: `blog.736b.moe`,
+	TITLE: "blog.736b.moe",
 	DESCRIPTION: "Blog by @shiomiyan.",
 	NUM_POSTS_ON_HOMEPAGE: 999,
 } as const;
