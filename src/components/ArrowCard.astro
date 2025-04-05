@@ -20,10 +20,8 @@ const href = entry.data.isExternal
 async function getFavicon(url: string): Promise<string> {
 	try {
 		const hostname = new URL(url).hostname;
-		const faviconUrl = `https://icons.duckduckgo.com/ip3/${hostname}.ico`;
-		const res = await fetch(faviconUrl);
-		const arrayBuffer = await res.arrayBuffer();
-		const base64 = Buffer.from(arrayBuffer).toString("base64");
+		const res = await fetch(`https://icons.duckduckgo.com/ip3/${hostname}.ico`);
+		const base64 = Buffer.from(await res.arrayBuffer()).toString("base64");
 		return `data:image/png;base64,${base64}`;
 	} catch (e) {
 		console.error("Error fetching favicon:", e);
