@@ -19,7 +19,7 @@ Sunday, 06-Nov-94 08:49:37 GMT   ; obsolete RFC 850 format
 Sun Nov  6 08:49:37 1994         ; ANSI C's asctime() format
 ```
 
-これらはFirefoxでもChromeでもSafariでも、正しく日付を解釈できます。
+これらは、少なくともFirefox、Chrome、Safariで正しく解釈されます。
 
 問題はこれら以外の書式をどの程度解釈できるのか。確認も容易なのと、別に目的もあったので、CookieのExpires属性を使って検証を進めます。
 
@@ -125,7 +125,7 @@ RFC 9110で言うところのIMF-fixdateとRFC 850 formatに近い形式なら�
 
 ## まとめ
 
-思ったよりもブラウザによって日時書式の解釈が異なることがわかりました。
+ブラウザによって、日時書式の解釈は異なることがわかりました。
 
 誰得情報でした。
 
@@ -188,4 +188,4 @@ if (import.meta.main) {
 // IMF-fixdate-JST 2025-08-05T23:00:00.000Z
 ```
 
-FirefoxでJSTからGMTに変換され、`IMF-fixdate-JST`では9時間前の日時が設定されることが確認できました。
+FirefoxでJSTからGMTに変換され、`IMF-fixdate-JST`では9時間前の日時が設定されることを確認できました。
