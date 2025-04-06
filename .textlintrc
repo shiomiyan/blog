@@ -6,5 +6,12 @@
     "@textlint/markdown": {
       "extensions": [".mdx"]
     }
+  },
+  "filters": {
+    "allowlist": {
+      "allow": [
+        "/「[\\s\\S]+?」/i"
+      ]
+    }
   }
 }
