@@ -13,6 +13,7 @@ const posts = defineCollection({
 		url: z.string().url().optional(),
 		platform: z.string().optional(),
 		isExternal: z.boolean().optional(),
+		ulid: z.string().optional(),
 		tags: z
 			.array(z.string())
 			.default([])

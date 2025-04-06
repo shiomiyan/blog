@@ -15,6 +15,7 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
+import { ulid } from "ulid";
 
 const nowISO = new Date().toISOString();
 const suffix = nowISO.split("T")[0].replace(/-/g, "");
@@ -26,11 +27,13 @@ if (slug.match(/[^a-z0-9\-]/g)) {
 	process.exit(1);
 }
 
+const postUlid = ulid();
 const target = `src/content/posts/${suffix}-${slug}/index.mdx`;
 const content = `---
 title: ${title}
 date: ${nowISO}
 description: ""
+ulid: ${postUlid}
 tags:
   - random
 ---
