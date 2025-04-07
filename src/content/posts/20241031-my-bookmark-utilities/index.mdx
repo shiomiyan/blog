@@ -27,7 +27,11 @@ tags:
 
 ![ブクマ事情の構成図](./architecture.webp)
 
-Obsidianとうまく連携できるRead It Later系のツールということで、Omnivoreを一旦採用し、Inoreaderの自動化機能（たぶんPro限定の機能かも）からOmnivoreのAPIを叩く。というワークフローを想定していたが、Inoreaderの実装している機能（カスタムwebhookのようなもの）ではリクエストヘッダを付けることができない。しかしOmnivoreはAPIキーをヘッダに仕込む必要があるため、なんとかしなければいけない...あとUUIDも付けなければいけない...
+Obsidianとうまく連携できるRead It Later系のツールということで、Omnivoreを一旦採用し、Inoreaderの自動化機能（たぶんPro限定の機能かも）からOmnivoreのAPIを叩く。というワークフローを想定していたが、Inoreaderの実装している機能（カスタムwebhookのようなもの）では次のような問題があった。
+
+- リクエストヘッダを付けることができない
+  - OmnivoreはAPIキーをヘッダに仕込む必要があるため、なんとかしなければいけない
+- リクエストボディにUUIDも付けなければいけない
 
 ということで、いい機会なのでCloudflare Workersを採用し、微妙に噛み合わない部分の橋渡しとして動いてもらうことにした。
 
