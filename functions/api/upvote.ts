@@ -1,7 +1,3 @@
-interface Env {
-	BLOG_736B_MOE_UPVOTE_COUNTER: KVNamespace;
-}
-
 /**
  * Request handler for POST requests.
  * Increment the upvote count for a post.
