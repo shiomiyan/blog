@@ -4,6 +4,7 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import Tags from "@components/Tags.astro";
+import Upvote from "@components/Upvote.astro";
 
 export async function getStaticPaths() {
 	const posts = (await getCollection("posts"))
@@ -19,6 +20,9 @@ type Props = CollectionEntry<"posts">;
 const post = Astro.props;
 const date = post.data.date;
 const { Content, headings } = await post.render();
+
+// ulidが未定義の場合はスラグをIDとして使用
+const postId = post.data.ulid || post.slug;
 ---
 
 <Layout title={post.data.title} description={post.data.description}>
@@ -45,5 +49,6 @@ const { Content, headings } = await post.render();
 		<article class="break-words">
 			<Content />
 		</article>
+		<Upvote postId={postId} />
 	</Container>
 </Layout>

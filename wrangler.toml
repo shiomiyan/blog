@@ -6,3 +6,8 @@ pages_build_output_dir = "dist"
 
 [env.production.vars]
 FUNCTIONS_CORS_ORIGIN = "https://blog.736b.moe"
+
+[[kv_namespaces]]
+binding = "blog_736b_moe_upvote_counter"
+id = "9eef4e388daa458d902f58ff4b97211f"
+preview_id = "773f51d700ed4b7b85c9e1d9ef8b8805"

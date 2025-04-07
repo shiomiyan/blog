@@ -1,0 +1,95 @@
+---
+// ブログ記事のULIDを受け取るためのprops
+interface Props {
+	postId?: string;
+}
+
+const { postId } = Astro.props;
+---
+
+<div
+	class="mt-8 inline-flex items-center gap-2 rounded-lg border border-black/15 px-3 py-1.5 transition-colors hover:bg-gray-200"
+>
+	<button
+		id="upvote-button"
+		class="cursor-pointer text-2xl transition-opacity hover:opacity-70"
+		aria-label="この記事に👍する">👍</button
+	>
+	<span id="upvote-count" class="text-sm font-medium text-gray-600">0</span>
+</div>
+
+<script is:inline define:vars={{ postId }}>
+	console.log("Upvote component loaded");
+
+	// postIdが未定義の場合の処理
+	if (!postId) {
+		console.warn("No postId provided to Upvote component");
+		document.getElementById("upvote-button").disabled = true;
+		document.getElementById("upvote-count").textContent = "-";
+	} else {
+		// ページ読み込み時に現在のupvote数を取得
+		const fetchUpvoteCount = async () => {
+			try {
+				const response = await fetch(`/api/upvote?post_id=${postId}`);
+				if (response.ok) {
+					const data = await response.json();
+					document.getElementById("upvote-count").textContent =
+						data.upvotes.toString();
+				}
+			} catch (error) {
+				console.error("Upvote count fetch error:", error);
+			}
+		};
+
+		// upvoteボタンクリック時の処理
+		const handleUpvote = async () => {
+			try {
+				const button = document.getElementById("upvote-button");
+				button.disabled = true;
+
+				const response = await fetch("/api/upvote", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ post_id: postId }),
+				});
+
+				if (response.ok) {
+					const data = await response.json();
+					document.getElementById("upvote-count").textContent =
+						data.upvotes.toString();
+
+					// クリック後に一時的なアニメーションを追加
+					button.classList.add("scale-125");
+					setTimeout(() => {
+						button.classList.remove("scale-125");
+						button.disabled = false;
+					}, 300);
+				} else {
+					button.disabled = false;
+				}
+			} catch (error) {
+				console.error("Upvote error:", error);
+				document.getElementById("upvote-button").disabled = false;
+			}
+		};
+
+		// イベントリスナーを設定
+		document.addEventListener("DOMContentLoaded", () => {
+			fetchUpvoteCount();
+			document
+				.getElementById("upvote-button")
+				.addEventListener("click", handleUpvote);
+		});
+	}
+</script>
+
+<style>
+	#upvote-button {
+		transition: transform 0.3s ease;
+	}
+	#upvote-button:disabled {
+		opacity: 0.5;
+	}
+</style>

@@ -9,7 +9,7 @@ export const onRequestOptions: PagesFunction<Env> = async (context) => {
     headers: {
       "Access-Control-Allow-Origin": context.env.FUNCTIONS_CORS_ORIGIN,
       "Access-Control-Allow-Headers": "*",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
       "Access-Control-Max-Age": "86400",
     },
   });
