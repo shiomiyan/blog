@@ -6,7 +6,10 @@
     "paths": {
       "@*": ["./src/*"]
     },
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "types": [
+      "./worker-configuration.d.ts"
+    ]
   },
   "exclude": ["dist"]
 }

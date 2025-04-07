@@ -11,7 +11,9 @@
     "astro": "astro",
     "textlint": "textlint",
     "format": "prettier --write .",
-    "create-post": "tsx bin/create-post.ts"
+    "create-post": "tsx bin/create-post.ts",
+    "wrangler:types": "wrangler types",
+    "wrangler:dev": "npm run build && wrangler pages dev --port 4321 ./dist"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -36,6 +38,7 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "textlint": "^14.4.2",
     "textlint-filter-rule-allowlist": "^4.0.0",
-    "textlint-rule-preset-ja-technical-writing": "^12.0.2"
+    "textlint-rule-preset-ja-technical-writing": "^12.0.2",
+    "wrangler": "^4.7.2"
   }
 }
