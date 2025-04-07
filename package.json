@@ -4,16 +4,15 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
-    "preview": "astro preview",
+    "dev": "wrangler types && astro dev",
+    "build": "wrangler types && astro check && astro build",
+    "preview": "wrangler pages dev ./dist",
     "astro": "astro",
     "textlint": "textlint",
     "format": "prettier --write .",
     "create-post": "tsx bin/create-post.ts",
     "wrangler:types": "wrangler types ./worker-configuration.d.ts",
-    "wrangler:dev": "npm run build && wrangler pages dev --live-reload --port 4321 ./dist"
+    "wrangler:dev": "npm run build && wrangler pages dev --live-reload ./dist"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

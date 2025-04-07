@@ -15,3 +15,6 @@ id = "1839db5b272840018387728603b94304"
 
 [env.production.vars]
 FUNCTIONS_CORS_ORIGIN = "https://blog.736b.moe"
+
+[dev]
+port = 4321
