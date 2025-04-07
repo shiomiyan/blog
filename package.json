@@ -12,7 +12,7 @@
     "textlint": "textlint",
     "format": "prettier --write .",
     "create-post": "tsx bin/create-post.ts",
-    "wrangler:types": "wrangler types",
+    "wrangler:types": "wrangler types -c worker-configuration.d.ts",
     "wrangler:dev": "npm run build && wrangler pages dev --port 4321 ./dist"
   },
   "dependencies": {
