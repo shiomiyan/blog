@@ -1,5 +1,5 @@
 interface Env {
-	blog_736b_moe_upvote_counter: KVNamespace;
+	BLOG_736B_MOE_UPVOTE_COUNTER: KVNamespace;
 }
 
 /**
@@ -21,7 +21,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 			});
 		}
 
-		const kv = context.env.blog_736b_moe_upvote_counter;
+		const kv = context.env.BLOG_736B_MOE_UPVOTE_COUNTER;
 		// Get upvote count from KV
 		const currentUpvotes = parseInt((await kv.get(post_id)) || "1");
 
@@ -77,7 +77,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 			);
 		}
 
-		const kv = context.env.blog_736b_moe_upvote_counter;
+		const kv = context.env.BLOG_736B_MOE_UPVOTE_COUNTER;
 
 		// Get upvote count from KV
 		const upvotes = parseInt((await kv.get(post_id)) || "1");

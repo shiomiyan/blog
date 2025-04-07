@@ -2,12 +2,12 @@
 name = "blog-736b-moe"
 compatibility_date = "2025-03-04"
 
-pages_build_output_dir = "dist"
+pages_build_output_dir = "./dist"
 
 [env.production.vars]
 FUNCTIONS_CORS_ORIGIN = "https://blog.736b.moe"
 
 [[kv_namespaces]]
-binding = "blog_736b_moe_upvote_counter"
-id = "9eef4e388daa458d902f58ff4b97211f"
-preview_id = "773f51d700ed4b7b85c9e1d9ef8b8805"
+binding = "BLOG_736B_MOE_UPVOTE_COUNTER"
+id = "1839db5b272840018387728603b94304"
+preview_id = "c7c1c539ec8f4b268c319635b0853d40"
