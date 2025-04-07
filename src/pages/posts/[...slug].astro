@@ -19,10 +19,8 @@ type Props = CollectionEntry<"posts">;
 
 const post = Astro.props;
 const date = post.data.date;
+const postId = post.data.ulid;
 const { Content, headings } = await post.render();
-
-// ulidが未定義の場合はスラグをIDとして使用
-const postId = post.data.ulid || post.slug;
 ---
 
 <Layout title={post.data.title} description={post.data.description}>

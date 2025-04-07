@@ -8,26 +8,22 @@ const { postId } = Astro.props;
 ---
 
 <div
-	class="mt-8 inline-flex items-center gap-2 rounded-lg border border-black/15 px-3 py-1.5 transition-colors hover:bg-gray-200"
+	id="upvote-container"
+	class="mt-8 inline-flex cursor-pointer items-center gap-2 rounded-lg border border-black/15 px-3 py-1.5 transition-colors hover:bg-gray-200"
+	aria-label="この記事に👍する"
 >
-	<button
-		id="upvote-button"
-		class="cursor-pointer text-2xl transition-opacity hover:opacity-70"
-		aria-label="この記事に👍する">👍</button
-	>
+	<span id="upvote-button" class="text-2xl transition-opacity">👍</span>
 	<span id="upvote-count" class="text-sm font-medium text-gray-600">0</span>
 </div>
 
 <script is:inline define:vars={{ postId }}>
 	console.log("Upvote component loaded");
 
-	// postIdが未定義の場合の処理
+	// Handle the case where postId is not specified.
 	if (!postId) {
-		console.warn("No postId provided to Upvote component");
-		document.getElementById("upvote-button").disabled = true;
-		document.getElementById("upvote-count").textContent = "-";
+		console.warn("No postId is specified with this post.");
 	} else {
-		// ページ読み込み時に現在のupvote数を取得
+		// Get the current upvote count when the page is loaded
 		const fetchUpvoteCount = async () => {
 			try {
 				const response = await fetch(`/api/upvote?post_id=${postId}`);
@@ -35,17 +31,20 @@ const { postId } = Astro.props;
 					const data = await response.json();
 					document.getElementById("upvote-count").textContent =
 						data.upvotes.toString();
+				} else {
+					console.error("Failed to fetch upvote count:", response.status);
 				}
 			} catch (error) {
 				console.error("Upvote count fetch error:", error);
 			}
 		};
 
-		// upvoteボタンクリック時の処理
+		// Handle the case where the upvote button is clicked
 		const handleUpvote = async () => {
 			try {
+				const container = document.getElementById("upvote-container");
 				const button = document.getElementById("upvote-button");
-				button.disabled = true;
+				container.classList.add("pointer-events-none");
 
 				const response = await fetch("/api/upvote", {
 					method: "POST",
@@ -60,26 +59,28 @@ const { postId } = Astro.props;
 					document.getElementById("upvote-count").textContent =
 						data.upvotes.toString();
 
-					// クリック後に一時的なアニメーションを追加
 					button.classList.add("scale-125");
 					setTimeout(() => {
 						button.classList.remove("scale-125");
-						button.disabled = false;
+						container.classList.remove("pointer-events-none");
 					}, 300);
 				} else {
-					button.disabled = false;
+					console.error("Failed to update upvote:", response.status);
+					container.classList.remove("pointer-events-none");
 				}
 			} catch (error) {
 				console.error("Upvote error:", error);
-				document.getElementById("upvote-button").disabled = false;
+				document
+					.getElementById("upvote-container")
+					.classList.remove("pointer-events-none");
 			}
 		};
 
-		// イベントリスナーを設定
+		// Set event listeners
 		document.addEventListener("DOMContentLoaded", () => {
 			fetchUpvoteCount();
 			document
-				.getElementById("upvote-button")
+				.getElementById("upvote-container")
 				.addEventListener("click", handleUpvote);
 		});
 	}
@@ -89,7 +90,8 @@ const { postId } = Astro.props;
 	#upvote-button {
 		transition: transform 0.3s ease;
 	}
-	#upvote-button:disabled {
+	#upvote-container.pointer-events-none {
 		opacity: 0.5;
+		pointer-events: none;
 	}
 </style>
