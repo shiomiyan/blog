@@ -1,5 +1,4 @@
 ---
-// ブログ記事のULIDを受け取るためのprops
 interface Props {
 	postId?: string;
 }
@@ -10,15 +9,13 @@ const { postId } = Astro.props;
 <div
 	id="upvote-container"
 	class="mt-8 inline-flex cursor-pointer items-center gap-2 rounded-lg border border-black/15 px-3 py-1.5 transition-colors hover:bg-gray-200"
-	aria-label="この記事に👍する"
+	aria-label="upvote this article"
 >
 	<span id="upvote-button" class="text-2xl transition-opacity">👍</span>
 	<span id="upvote-count" class="text-sm font-medium text-gray-600">0</span>
 </div>
 
 <script is:inline define:vars={{ postId }}>
-	console.log("Upvote component loaded");
-
 	// Handle the case where postId is not specified.
 	if (!postId) {
 		console.warn("No postId is specified with this post.");
