@@ -7,7 +7,6 @@ pages_build_output_dir = "./dist"
 [[kv_namespaces]]
 binding = "BLOG_736B_MOE_UPVOTE_COUNTER"
 id = "1839db5b272840018387728603b94304"
-preview_id = "c7c1c539ec8f4b268c319635b0853d40"
 
 [[env.production.kv_namespaces]]
 binding = "BLOG_736B_MOE_UPVOTE_COUNTER"
