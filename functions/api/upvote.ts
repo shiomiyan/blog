@@ -15,15 +15,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
 		// リクエストにpost_idがない場合はエラーレスポンスを返す
 		if (!postId) {
-			return new Response(
-				JSON.stringify({ error: ERROR_MESSAGE_POST_ID_REQUIRED }),
-				{
-					status: 400,
-					headers: {
-						"Content-Type": "application/json",
-					},
-				},
-			);
+			throw new Error(ERROR_MESSAGE_POST_ID_REQUIRED);
 		}
 
 		// ビルド時に生成したulids.jsonをHTTP経由で取得する
@@ -31,35 +23,19 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 		const dataResponse = await fetch(
 			context.env.FUNCTIONS_CORS_ORIGIN + "/data/ulids.json",
 		);
-		// ulids.jsonに存在しないpost_idが指定されていたらエラーレスポンスを返す
 		if (!dataResponse.ok) {
-			return new Response(
-				JSON.stringify({ error: ERROR_MESSAGE_FAILED_TO_FETCH_ULIDS }),
-				{
-					status: 500,
-					headers: {
-						"Content-Type": "application/json",
-					},
-				},
-			);
+			throw new Error(ERROR_MESSAGE_FAILED_TO_FETCH_ULIDS);
 		}
 
 		const json = await dataResponse.json<{ ulid: string[] }>();
+		// ulids.jsonに存在しないpost_idが指定されていたらエラーレスポンスを返す
 		const ulids = json.ulid;
 		if (!ulids.includes(postId)) {
-			return new Response(
-				JSON.stringify({ error: ERROR_MESSAGE_INVALID_ULID }),
-				{
-					status: 400,
-					headers: {
-						"Content-Type": "application/json",
-					},
-				},
-			);
+			throw new Error(ERROR_MESSAGE_INVALID_ULID);
 		}
 
-		const kv = context.env.BLOG_736B_MOE_UPVOTE_COUNTER;
 		// Get upvote count from KV
+		const kv = context.env.BLOG_736B_MOE_UPVOTE_COUNTER;
 		const currentUpvotes = parseInt((await kv.get(postId)) || "1");
 
 		// Increment upvote count
@@ -81,8 +57,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 			},
 		);
 	} catch (error) {
-		console.error("Error processing upvote:", error);
-		return new Response(JSON.stringify({ error: "Internal Server Error" }), {
+		return new Response(JSON.stringify({ error: error.message }), {
 			status: 500,
 			headers: {
 				"Content-Type": "application/json",
@@ -101,22 +76,12 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 	try {
 		const url = new URL(context.request.url);
 		const post_id = url.searchParams.get("post_id");
-
 		if (!post_id) {
-			return new Response(
-				JSON.stringify({ error: ERROR_MESSAGE_POST_ID_REQUIRED }),
-				{
-					status: 400,
-					headers: {
-						"Content-Type": "application/json",
-					},
-				},
-			);
+			throw new Error(ERROR_MESSAGE_POST_ID_REQUIRED);
 		}
 
-		const kv = context.env.BLOG_736B_MOE_UPVOTE_COUNTER;
-
 		// Get upvote count from KV
+		const kv = context.env.BLOG_736B_MOE_UPVOTE_COUNTER;
 		const upvotes = parseInt((await kv.get(post_id)) || "1");
 
 		return new Response(
@@ -132,7 +97,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 			},
 		);
 	} catch (error) {
-		return new Response(JSON.stringify({ error: "Internal Server Error" }), {
+		return new Response(JSON.stringify({ error: error.message }), {
 			status: 500,
 			headers: {
 				"Content-Type": "application/json",
