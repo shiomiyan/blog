@@ -35,4 +35,9 @@ export const EXTERNAL_FEEDS: ExternalFeeds = [
 		URL: "https://qiita.com/736b/feed",
 		TAG: "qiita",
 	},
+	{
+		NAME: "Zenn",
+		URL: "https://zenn.dev/736b/feed",
+		TAG: "zenn",
+	},
 ] as const;
