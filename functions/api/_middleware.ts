@@ -17,6 +17,18 @@ export const onRequestOptions: PagesFunction<Env> = async (context) => {
 
 // Set CORS to all /api responses
 export const onRequest: PagesFunction<Env> = async (context) => {
+	const origin = context.request.headers.get("Origin");
+
+	// Error if origin does not match
+	if (origin && origin !== context.env.FUNCTIONS_CORS_ORIGIN) {
+		return new Response("Forbidden", {
+			status: 403,
+			headers: {
+				"Content-Type": "text/plain",
+			},
+		});
+	}
+
 	const response = await context.next();
 	response.headers.set(
 		"Access-Control-Allow-Origin",
