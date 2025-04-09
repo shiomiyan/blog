@@ -6,6 +6,7 @@ export type TagDefinition = {
 /**
  * Mapping of tag definitions used in posts.
  */
+// prettier-ignore
 export const TAGS: Record<string, TagDefinition> = {
 	HATENABLOG: { slug: "hatenablog", displayName: "はてなブログ" },
 	QIITA: { slug: "qiita", displayName: "Qiita" },
@@ -14,10 +15,7 @@ export const TAGS: Record<string, TagDefinition> = {
 	RANDOM: { slug: "random", displayName: "雑記" },
 	TREE_SITTER: { slug: "tree-sitter", displayName: "Tree-sitter" },
 	ASTRO: { slug: "astro", displayName: "Astro" },
-	CLOUDFLARE_WORKERS: {
-		slug: "cloudflare-workers",
-		displayName: "Cloudflare Workers",
-	},
+	CLOUDFLARE_WORKERS: {	slug: "cloudflare-workers",	displayName: "Cloudflare Workers" },
 	RASPBERRY_PI: { slug: "raspberry-pi", displayName: "Raspberry Pi" },
 	PUPPETEER: { slug: "puppeteer", displayName: "Puppeteer" },
 	TYPESCRIPT: { slug: "typescript", displayName: "TypeScript" },
