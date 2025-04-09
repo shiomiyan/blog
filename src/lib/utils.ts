@@ -19,7 +19,7 @@ export function formatDate(date: Date) {
  * Get posts from other platform RSS.
  * @returns RSS entries defined in {@link EXTERNAL_FEEDS}
  */
-export async function fetchExternalFeed(): Promise<CollectionEntry<"posts">[]> {
+async function fetchExternalPosts(): Promise<CollectionEntry<"posts">[]> {
 	const parser = new Parser({ timeout: 3000 });
 	const items: CollectionEntry<"posts">[] = [];
 
@@ -44,20 +44,15 @@ export async function fetchExternalFeed(): Promise<CollectionEntry<"posts">[]> {
 }
 
 /**
- * Retrieve posts data.
- * @param includeExternalPosts Include external posts or not
- * @returns Posts collection
+ * Retrieve all posts data including external posts.
+ * @returns Posts collection sorted by date (newest first)
  */
-export async function getAllPosts(
-	includeExternalPosts: boolean,
-): Promise<CollectionEntry<"posts">[]> {
+export async function getAllPosts(): Promise<CollectionEntry<"posts">[]> {
 	const posts = (await getCollection("posts")).filter(
 		(post) => !post.data.draft,
 	);
-	if (includeExternalPosts) {
-		const rssPosts = await fetchExternalFeed();
-		posts.push(...rssPosts);
-	}
+	const rssPosts = await fetchExternalPosts();
+	posts.push(...rssPosts);
 	posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 	return posts;
 }

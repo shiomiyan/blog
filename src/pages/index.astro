@@ -5,7 +5,7 @@ import ArrowCard from "@components/ArrowCard.astro";
 import { SITE } from "@consts";
 import { getAllPosts } from "@lib/utils";
 
-const posts = await getAllPosts(true);
+const posts = await getAllPosts();
 ---
 
 <Layout title={SITE.TITLE} description={SITE.DESCRIPTION}>
