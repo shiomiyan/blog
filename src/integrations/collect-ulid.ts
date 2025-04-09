@@ -11,7 +11,7 @@ const collectUlid = (): AstroIntegration => {
 		name: "collect-ulid",
 		hooks: {
 			"astro:build:done": async ({ dir, logger }) => {
-				logger.info("♻️  Collecting ULIDs from all posts...");
+				logger.info("Collecting ULIDs from all posts...");
 
 				// Collect all posts from src/content/posts/**/index.mdx
 				const contentDir = path.resolve(process.cwd(), "src/content/posts");
@@ -42,8 +42,7 @@ const collectUlid = (): AstroIntegration => {
 				// Write JSON file
 				const outputPath = path.join(outputDir, "ulids.json");
 				fs.writeFileSync(outputPath, JSON.stringify({ ulid: ulids }, null, 2));
-
-				logger.info(`✅ ULIDs collected and written to ${outputPath}`);
+				logger.info(`Finished collecting ULIDs, wrote json to ${outputPath}`);
 			},
 		},
 	};
