@@ -3,7 +3,7 @@ import { type CollectionEntry, getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import TableOfContents from "@components/TableOfContents.astro";
-import Tags from "@components/Tags.astro";
+import Tag from "@components/Tag.astro";
 import Upvote from "@components/Upvote.astro";
 
 export async function getStaticPaths() {
@@ -37,7 +37,9 @@ const { Content, headings } = await post.render();
 					}
 				</time>
 
-				<Tags tags={post.data.tags} />
+				<div class="flex flex-wrap gap-2">
+					{post.data.tags.map((tag) => <Tag tag={tag} />)}
+				</div>
 			</div>
 			<h1 class="text-3xl font-bold text-black">
 				{post.data.title}

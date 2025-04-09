@@ -1,6 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
+import Tag from "@components/Tag.astro";
 import { getAllPosts } from "@lib/utils";
 import { getAllTagSlug, getTagDisplayName } from "@lib/tags";
 
@@ -22,7 +23,8 @@ const tags = getAllTagSlug()
 		slug,
 		count: tagCounts[slug] || 0,
 	}))
-	.filter((tag) => tag.count > 0);
+	.filter((tag) => tag.count > 0)
+	.sort((a, b) => a.name.localeCompare(b.name));
 
 const meta = {
 	description: "A list of all tags",
@@ -41,12 +43,7 @@ const meta = {
 						{
 							tags.map((tag) => (
 								<li>
-									<a
-										href={`/tags/${tag.slug}`}
-										class="rounded-lg border border-black/15 px-2 py-0.5 text-xs hover:bg-gray-200"
-									>
-										{tag.name} ({tag.count})
-									</a>
+									<Tag tag={tag.slug} count={tag.count} />
 								</li>
 							))
 						}
