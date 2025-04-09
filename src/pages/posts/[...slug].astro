@@ -6,7 +6,7 @@ import TableOfContents from "@components/TableOfContents.astro";
 import Tag from "@components/Tag.astro";
 import Upvote from "@components/Upvote.astro";
 
-export async function getStaticPaths() {
+export const getStaticPaths = async () => {
 	const posts = (await getCollection("posts"))
 		.filter((post) => !post.data.draft)
 		.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -14,16 +14,15 @@ export async function getStaticPaths() {
 		params: { slug: post.slug },
 		props: post,
 	}));
-}
-type Props = CollectionEntry<"posts">;
+};
 
+type Props = CollectionEntry<"posts">;
 const post = Astro.props;
-const date = post.data.date;
-const postId = post.data.ulid;
+const { date, title, description, tags, ulid } = post["data"];
 const { Content, headings } = await post.render();
 ---
 
-<Layout title={post.data.title} description={post.data.description}>
+<Layout title={title} description={description}>
 	<Container>
 		<div class="my-10 space-y-1">
 			<div class="flex items-center gap-2">
@@ -38,17 +37,17 @@ const { Content, headings } = await post.render();
 				</time>
 
 				<div class="flex flex-wrap gap-2">
-					{post.data.tags.map((tag) => <Tag tag={tag} />)}
+					{tags.map((tag) => <Tag tag={tag} />)}
 				</div>
 			</div>
 			<h1 class="text-3xl font-bold text-black">
-				{post.data.title}
+				{title}
 			</h1>
 		</div>
 		{headings.length > 0 && <TableOfContents headings={headings} />}
 		<article class="break-words">
 			<Content />
 		</article>
-		<Upvote postId={postId} />
+		<Upvote postId={ulid} />
 	</Container>
 </Layout>
