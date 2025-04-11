@@ -6,9 +6,9 @@ import path from "node:path";
 /**
  * Collect all ULIDs from all posts and write them to a JSON file for Cloudflare Pages Functions.
  */
-const collectUlid = (): AstroIntegration => {
+const ulidgen = (): AstroIntegration => {
 	return {
-		name: "collect-ulid",
+		name: "ulidgen",
 		hooks: {
 			"astro:build:done": async ({ dir, logger }) => {
 				logger.info("Collecting ULIDs from all posts...");
@@ -48,4 +48,4 @@ const collectUlid = (): AstroIntegration => {
 	};
 };
 
-export default collectUlid;
+export default ulidgen;
