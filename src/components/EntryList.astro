@@ -1,0 +1,29 @@
+---
+import Container from "@components/Container.astro";
+import EntryCard from "@components/EntryCard.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+	entries: CollectionEntry<"posts">[];
+}
+
+const { entries } = Astro.props;
+---
+
+<Container>
+	<div class="space-y-10" data-pagefind-ignore="all">
+		<div class="space-y-4">
+			<section class="space-y-4">
+				<ul class="not-prose flex flex-col gap-4">
+					{
+						entries.map((entry) => (
+							<li>
+								<EntryCard entry={entry} />
+							</li>
+						))
+					}
+				</ul>
+			</section>
+		</div>
+	</div>
+</Container>

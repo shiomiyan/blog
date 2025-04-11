@@ -1,8 +1,7 @@
 ---
 import type { GetStaticPaths } from "astro";
 import Layout from "@layouts/Layout.astro";
-import Container from "@components/Container.astro";
-import EntryCard from "@components/EntryCard.astro";
+import EntryList from "@components/EntryList.astro";
 import { getAllPosts } from "@lib/utils";
 import { getAllTagSlug, getTagDisplayName } from "@lib/tags";
 
@@ -25,21 +24,5 @@ const meta = {
 ---
 
 <Layout title={meta.title} description={meta.description}>
-	<Container>
-		<div class="space-y-10" data-pagefind-ignore="all">
-			<div class="space-y-4">
-				<section class="space-y-4">
-					<ul class="not-prose flex flex-col gap-4">
-						{
-							posts.map((post) => (
-								<li>
-									<EntryCard entry={post} />
-								</li>
-							))
-						}
-					</ul>
-				</section>
-			</div>
-		</div>
-	</Container>
+	<EntryList entries={posts} />
 </Layout>
