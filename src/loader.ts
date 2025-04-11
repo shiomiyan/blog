@@ -2,7 +2,7 @@ import type { Loader } from "astro/loaders";
 import { z } from "astro:content";
 import Parser from "rss-parser";
 
-export function rssLoader(options: { url: string; slug: string }): Loader {
+export const rssLoader = (options: { url: string; slug: string }): Loader => {
 	return {
 		name: "rss-loader",
 		load: async ({
@@ -27,6 +27,7 @@ export function rssLoader(options: { url: string; slug: string }): Loader {
 		schema: z.object({
 			title: z.string(),
 			link: z.string(),
+			pubdate: z.string(),
 		}),
 	};
-}
+};
