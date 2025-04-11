@@ -28,25 +28,16 @@ const meta = {
 	<Container>
 		<div class="space-y-10" data-pagefind-ignore="all">
 			<div class="space-y-4">
-				<h1 class="text-3xl font-bold text-black">
-					{tagName}
-				</h1>
 				<section class="space-y-4">
-					<div>
+					<ul class="not-prose flex flex-col gap-4">
 						{
-							posts.length === 0 ? (
-								<p>このタグが付いた記事はありません。</p>
-							) : (
-								<ul class="not-prose flex flex-col gap-4">
-									{posts.map((post) => (
-										<li>
-											<EntryCard entry={post} />
-										</li>
-									))}
-								</ul>
-							)
+							posts.map((post) => (
+								<li>
+									<EntryCard entry={post} />
+								</li>
+							))
 						}
-					</div>
+					</ul>
 				</section>
 			</div>
 		</div>
