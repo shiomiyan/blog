@@ -1,13 +1,13 @@
-export type TagDefinition = {
-	slug: string;
-	displayName: string;
+type TagDefinition = {
+	readonly slug: string;
+	readonly displayName: string;
 };
 
 /**
- * Mapping of tag definitions used in posts.
+ * Mapping of tag definitions can be used in posts.
  */
 // prettier-ignore
-export const TAGS: Record<string, TagDefinition> = {
+const TAGS: Record<string, TagDefinition> = {
 	HATENABLOG: { slug: "hatenablog", displayName: "はてなブログ" },
 	QIITA: { slug: "qiita", displayName: "Qiita" },
 	ZENN: { slug: "zenn", displayName: "Zenn" },
@@ -36,11 +36,4 @@ export const getAllTagSlug = (): string[] => {
 export const getTagDisplayName = (slug: string): string => {
 	const tag = Object.values(TAGS).find((tag) => tag.slug === slug);
 	return tag?.displayName || slug;
-};
-
-/**
- * Get the tag definition from a key.
- */
-export const getTag = <K extends keyof typeof TAGS>(key: K): TagDefinition => {
-	return TAGS[key];
 };
