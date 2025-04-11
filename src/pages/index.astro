@@ -1,7 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
-import ArrowCard from "@components/ArrowCard.astro";
+import EntryCard from "@components/EntryCard.astro";
 import { SITE } from "@consts";
 import { getAllPosts } from "@lib/utils";
 
@@ -17,7 +17,7 @@ const posts = await getAllPosts();
 						{
 							posts.map((post) => (
 								<li>
-									<ArrowCard entry={post} />
+									<EntryCard entry={post} />
 								</li>
 							))
 						}

@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
-import ArrowCard from "@components/ArrowCard.astro";
+import EntryCard from "@components/EntryCard.astro";
 import { getAllPosts } from "@lib/utils";
 import { getAllTagSlug, getTagDisplayName } from "@lib/tags";
 
@@ -40,7 +40,7 @@ const meta = {
 								<ul class="not-prose flex flex-col gap-4">
 									{posts.map((post) => (
 										<li>
-											<ArrowCard entry={post} />
+											<EntryCard entry={post} />
 										</li>
 									))}
 								</ul>
