@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji"'],
+        sans: ['ui-sans-serif,sans-serif,system-ui,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji"'],
         mono: ['ui-monospace,SFMono-Regular,Consolas,Menlo,Monaco,Liberation Mono,Courier New,monospace'],
       },
     },
