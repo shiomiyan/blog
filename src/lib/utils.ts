@@ -14,6 +14,21 @@ export function formatDate(date: Date) {
 }
 
 /**
+ * duckduckgoのfavicon apiから外部サイトのfaviconを取ってきてbase64 data uriにする
+ */
+export const getFavicon = async (url: string): Promise<string | null> => {
+	try {
+		const hostname = new URL(url).hostname;
+		const res = await fetch(`https://icons.duckduckgo.com/ip3/${hostname}.ico`);
+		const base64 = Buffer.from(await res.arrayBuffer()).toString("base64");
+		return `data:image/png;base64,${base64}`;
+	} catch (e) {
+		console.error(`Error while fetching ${url}\n`, e);
+		return null;
+	}
+};
+
+/**
  * Retrieve all posts data including external posts.
  * @returns Posts collection sorted by date (newest first)
  */

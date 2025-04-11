@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { getFavicon } from "@lib/utils";
 
 type Props = {
 	entry: CollectionEntry<"posts">;
@@ -13,21 +14,6 @@ const datetime = entry.data.date.toISOString().slice(0, 10);
 const href = entry.data.isExternal
 	? entry.data.url
 	: `/${entry.collection}/${entry.slug}`;
-
-/**
- * duckduckgoのfavicon apiから外部サイトのfaviconを取ってきてbase64 data uriにする
- */
-async function getFavicon(url: string): Promise<string | null> {
-	try {
-		const hostname = new URL(url).hostname;
-		const res = await fetch(`https://icons.duckduckgo.com/ip3/${hostname}.ico`);
-		const base64 = Buffer.from(await res.arrayBuffer()).toString("base64");
-		return `data:image/png;base64,${base64}`;
-	} catch (e) {
-		console.error(`Error while fetching ${url}\n`, e);
-		return null;
-	}
-}
 
 const favicon = entry.data.isExternal && href ? await getFavicon(href) : "";
 ---

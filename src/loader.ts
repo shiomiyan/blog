@@ -2,6 +2,12 @@ import type { Loader } from "astro/loaders";
 import { z } from "astro:content";
 import Parser from "rss-parser";
 
+const rssSchema = z.object({
+	title: z.string(),
+	link: z.string(),
+	pubdate: z.string(),
+});
+
 export const rssLoader = (options: { url: string; slug: string }): Loader => {
 	return {
 		name: "rss-loader",
@@ -30,10 +36,6 @@ export const rssLoader = (options: { url: string; slug: string }): Loader => {
 				store.set({ id: itemId, data });
 			}
 		},
-		schema: z.object({
-			title: z.string(),
-			link: z.string(),
-			pubdate: z.string(),
-		}),
+		schema: rssSchema,
 	};
 };
