@@ -17,15 +17,15 @@ const href = entry.data.isExternal
 /**
  * duckduckgoのfavicon apiから外部サイトのfaviconを取ってきてbase64 data uriにする
  */
-async function getFavicon(url: string): Promise<string> {
+async function getFavicon(url: string): Promise<string | null> {
 	try {
 		const hostname = new URL(url).hostname;
 		const res = await fetch(`https://icons.duckduckgo.com/ip3/${hostname}.ico`);
 		const base64 = Buffer.from(await res.arrayBuffer()).toString("base64");
 		return `data:image/png;base64,${base64}`;
 	} catch (e) {
-		console.error("Error fetching favicon:", e);
-		return "";
+		console.error(`Error while fetching ${url}\n`, e);
+		return null;
 	}
 }
 
