@@ -1,6 +1,4 @@
-import { EXTERNAL_FEEDS } from "@consts";
 import { getCollection, type CollectionEntry } from "astro:content";
-import Parser from "rss-parser";
 
 /**
  * Format date to YYYY-MM-DD
@@ -16,43 +14,36 @@ export function formatDate(date: Date) {
 }
 
 /**
- * Get posts from other platform RSS.
- * @returns RSS entries defined in {@link EXTERNAL_FEEDS}
- */
-async function fetchExternalPosts(): Promise<CollectionEntry<"posts">[]> {
-	const parser = new Parser({ timeout: 3000 });
-	const items: CollectionEntry<"posts">[] = [];
-
-	for (const dataSource of EXTERNAL_FEEDS) {
-		const feed = await parser.parseURL(dataSource.URL);
-		const feedItems = feed.items.map(
-			(item) =>
-				({
-					data: {
-						title: item.title,
-						date: item.pubDate ? new Date(item.pubDate) : new Date(),
-						url: item.link,
-						platform: dataSource.NAME,
-						isExternal: true,
-						tags: [dataSource.TAG],
-					},
-				}) as CollectionEntry<"posts">,
-		);
-		items.push(...feedItems);
-	}
-	return items;
-}
-
-/**
  * Retrieve all posts data including external posts.
  * @returns Posts collection sorted by date (newest first)
  */
 export async function getAllPosts(): Promise<CollectionEntry<"posts">[]> {
-	const posts = (await getCollection("posts")).filter(
-		(post) => !post.data.draft,
-	);
-	const rssPosts = await fetchExternalPosts();
-	posts.push(...rssPosts);
+	const posts = await getCollection("posts", ({ data }) => {
+		return data.draft !== true;
+	});
+
+	// Get Zenn and Qiita posts from Content Collections
+	const zennPosts = await getCollection("zenn");
+	const qiitaPosts = await getCollection("qiita");
+
+	// Convert external posts to the same format as regular posts
+	const externalPosts = [...zennPosts, ...qiitaPosts].map((item) => {
+		return {
+			id: item.id,
+			slug: item.id,
+			collection: "posts",
+			data: {
+				title: item.data.title,
+				date: new Date(item.data.pubdate),
+				url: item.data.link,
+				platform: item.collection === "zenn" ? "Zenn" : "Qiita",
+				isExternal: true,
+				tags: [item.collection],
+			},
+		} as unknown as CollectionEntry<"posts">;
+	});
+
+	posts.push(...externalPosts);
 	posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 	return posts;
 }

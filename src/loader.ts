@@ -16,12 +16,18 @@ export const rssLoader = (options: { url: string; slug: string }): Loader => {
 			const parser = new Parser();
 			const feed = await parser.parseURL(options.url);
 			for (const item of feed.items) {
-				if (!item.guid) continue;
+				const itemId = item.guid || item.id;
+				if (!itemId) continue;
+
 				const data = await parseData({
-					id: item.guid,
-					data: item,
+					id: itemId,
+					data: {
+						title: item.title,
+						link: item.link,
+						pubdate: item.pubDate,
+					},
 				});
-				store.set({ id: item.guid, data });
+				store.set({ id: itemId, data });
 			}
 		},
 		schema: z.object({
