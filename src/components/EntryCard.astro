@@ -9,7 +9,8 @@ type Props = {
 const { entry } = Astro.props as Props;
 
 // https://docs.astro.build/en/guides/content-collections/#working-with-dates-in-the-frontmatter
-const datetime = entry.data.date.toISOString().slice(0, 10);
+const isoDateTime = entry.data.date.toISOString();
+const date = isoDateTime.slice(0, 10);
 
 const href = entry.data.isExternal
 	? entry.data.url
@@ -19,8 +20,8 @@ const favicon = entry.data.isExternal && href ? await getFavicon(href) : "";
 ---
 
 <div class="flex items-center gap-2 text-xs text-gray-600">
-	<time datetime={datetime}>
-		{datetime}
+	<time datetime={isoDateTime}>
+		{date}
 	</time>
 </div>
 <div class="items-center">
