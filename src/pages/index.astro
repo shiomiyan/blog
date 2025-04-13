@@ -2,9 +2,9 @@
 import Layout from "@layouts/Layout.astro";
 import EntryList from "@components/EntryList.astro";
 import { SITE } from "@consts";
-import { getPostsByCollectionKeys } from "@lib/utils";
+import { getCollectionByCollectionKeys } from "@lib/utils";
 
-const posts = await getPostsByCollectionKeys("posts", "zenn", "qiita");
+const posts = await getCollectionByCollectionKeys("posts", "zenn", "qiita");
 ---
 
 <Layout title={SITE.TITLE} description={SITE.DESCRIPTION}>

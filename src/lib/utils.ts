@@ -36,9 +36,11 @@ export const getFavicon = async (url: string): Promise<string | undefined> => {
  * Retrieve all posts data including external posts.
  * @returns Posts collection sorted by date (newest first)
  */
-export async function getPostsByCollectionKeys<C extends keyof AnyEntryMap>(
+export const getCollectionByCollectionKeys = async <
+	C extends keyof AnyEntryMap,
+>(
 	...collections: C[]
-): Promise<CollectionEntry<C>[]> {
+): Promise<CollectionEntry<C>[]> => {
 	const result: CollectionEntry<C>[] = [];
 	for (const collection of collections) {
 		const posts = await getCollection(collection);
@@ -46,4 +48,4 @@ export async function getPostsByCollectionKeys<C extends keyof AnyEntryMap>(
 	}
 	result.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 	return result;
-}
+};

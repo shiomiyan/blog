@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import Layout from "@layouts/Layout.astro";
 import EntryList from "@components/EntryList.astro";
-import { getPostsByCollectionKeys } from "@lib/utils";
+import { getCollectionByCollectionKeys } from "@lib/utils";
 import { TAGS } from "@lib/tags";
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -11,9 +11,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 const { slug } = Astro.params as { slug: keyof typeof TAGS };
-const posts = (await getPostsByCollectionKeys("posts", "zenn", "qiita")).filter(
-	(post) => post.data.tags?.includes(slug)
-);
+const posts = (
+	await getCollectionByCollectionKeys("posts", "zenn", "qiita")
+).filter((post) => post.data.tags?.includes(slug));
 
 const tagDisplayName = TAGS[slug];
 const meta = {
