@@ -1,13 +1,13 @@
 ---
-import { getTagDisplayName } from "@lib/tags";
+import { TAGS } from "@lib/tags";
 
 type Props = {
-	tag: string;
+	tag: keyof typeof TAGS;
 	count?: number;
 };
 
 const { tag, count } = Astro.props;
-const displayName = getTagDisplayName(tag);
+const displayName = TAGS[tag];
 ---
 
 <a

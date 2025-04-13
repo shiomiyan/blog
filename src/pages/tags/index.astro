@@ -3,7 +3,7 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import Tag from "@components/Tag.astro";
 import { getPostsByCollectionKeys } from "@lib/utils";
-import { getAllTagSlug, getTagDisplayName } from "@lib/tags";
+import { TAGS } from "@lib/tags";
 
 const posts = await getPostsByCollectionKeys("posts", "zenn", "qiita");
 
@@ -19,9 +19,9 @@ const tagCounts = posts
 		{} as Record<string, number>
 	);
 
-const tags = getAllTagSlug()
+const tags = Object.keys(TAGS)
 	.map((slug) => ({
-		name: getTagDisplayName(slug),
+		name: TAGS[slug as keyof typeof TAGS],
 		slug,
 		count: tagCounts[slug] || 0,
 	}))
@@ -45,7 +45,7 @@ const meta = {
 						{
 							tags.map((tag) => (
 								<li>
-									<Tag tag={tag.slug} count={tag.count} />
+									<Tag tag={tag.slug as keyof typeof TAGS} count={tag.count} />
 								</li>
 							))
 						}

@@ -8,11 +8,11 @@ const posts = defineCollection({
 });
 
 const zenn = defineCollection({
-	loader: rssLoader({ url: "https://zenn.dev/736b/feed", slug: "zenn" }),
+	loader: rssLoader({ url: "https://zenn.dev/736b/feed", tag: "zenn" }),
 });
 
 const qiita = defineCollection({
-	loader: rssLoader({ url: "https://qiita.com/736b/feed", slug: "qiita" }),
+	loader: rssLoader({ url: "https://qiita.com/736b/feed", tag: "qiita" }),
 });
 
 export const collections = { posts, zenn, qiita };

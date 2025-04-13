@@ -5,6 +5,7 @@ import Container from "@components/Container.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import Tag from "@components/Tag.astro";
 import Upvote from "@components/Upvote.astro";
+import { TAGS } from "@lib/tags";
 
 export const getStaticPaths = async () => {
 	const posts = (await getCollection("posts"))
@@ -17,7 +18,7 @@ export const getStaticPaths = async () => {
 };
 
 type Props = CollectionEntry<"posts">;
-const post = Astro.props;
+const post = Astro.props as Props;
 const { date, title, description, tags, ulid } = post["data"];
 const { Content, headings } = await post.render();
 ---
@@ -37,7 +38,7 @@ const { Content, headings } = await post.render();
 				</time>
 
 				<div class="flex flex-wrap gap-2">
-					{tags.map((tag) => <Tag tag={tag} />)}
+					{tags.map((tag) => <Tag tag={tag as keyof typeof TAGS} />)}
 				</div>
 			</div>
 			<h1 class="text-3xl font-bold text-black">

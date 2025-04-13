@@ -1,12 +1,9 @@
-import { getAllTagSlug } from "@lib/tags";
+import { TAGS } from "@lib/tags";
 import { z } from "astro:content";
 
 const tagSchema = z
-	.array(z.string())
-	.default([])
-	.refine((arr) => arr.every((tag) => getAllTagSlug().includes(tag)), {
-		message: `Invalid tag specified. Use: ${getAllTagSlug().join(", ")}`,
-	});
+	.array(z.enum(Object.keys(TAGS) as [string, ...string[]]))
+	.default([]);
 
 export const postSchema = z.object({
 	title: z.string(),

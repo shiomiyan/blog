@@ -2,7 +2,7 @@ import { rssSchema } from "@content/schema";
 import type { Loader } from "astro/loaders";
 import Parser from "rss-parser";
 
-export const rssLoader = (options: { url: string; slug: string }): Loader => {
+export const rssLoader = (options: { url: string; tag: string }): Loader => {
 	return {
 		name: "rss-loader",
 		load: async ({ store, logger, parseData }): Promise<void> => {
@@ -20,7 +20,7 @@ export const rssLoader = (options: { url: string; slug: string }): Loader => {
 						title: item.title,
 						link: item.link,
 						date: new Date(item.pubDate || ""),
-						tags: [options.slug],
+						tags: [options.tag],
 					},
 				});
 				store.set({ id: itemId, data });

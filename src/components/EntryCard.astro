@@ -7,7 +7,7 @@ type Props = {
 	entry: CollectionEntry<CollectionKey>;
 };
 
-const { entry } = Astro.props as Props;
+const { entry } = Astro.props;
 
 // https://docs.astro.build/en/guides/content-collections/#working-with-dates-in-the-frontmatter
 const isoDateTime = entry.data.date.toISOString();
