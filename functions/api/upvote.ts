@@ -21,15 +21,14 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 		// ビルド時に生成したulids.jsonをHTTP経由で取得する
 		// わざわざ取りに行かない方法はないものだろうか...
 		const dataResponse = await fetch(
-			context.env.FUNCTIONS_CORS_ORIGIN + "/data/ulids.json",
+			context.env.FUNCTIONS_CORS_ORIGIN + "/ulid.json",
 		);
 		if (!dataResponse.ok) {
 			throw new Error(ERROR_MESSAGE_FAILED_TO_FETCH_ULIDS);
 		}
 
-		const json = await dataResponse.json<{ ulid: string[] }>();
+		const ulids = await dataResponse.json<string[]>();
 		// ulids.jsonに存在しないpost_idが指定されていたらエラーレスポンスを返す
-		const ulids = json.ulid;
 		if (!ulids.includes(postId)) {
 			throw new Error(ERROR_MESSAGE_INVALID_ULID);
 		}

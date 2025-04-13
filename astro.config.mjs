@@ -10,7 +10,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   site: "https://blog.736b.moe",
   output: "static",
-  integrations: [sitemap(), mdx(), pagefind(), ulidgen()],
+  integrations: [sitemap(), mdx(), pagefind()],
   markdown: {
     shikiConfig: {
       theme: "github-dark-default",

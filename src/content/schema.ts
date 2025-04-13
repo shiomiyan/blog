@@ -10,7 +10,7 @@ export const postSchema = z.object({
 	description: z.string(),
 	date: z.coerce.date(),
 	draft: z.boolean().optional(),
-	ulid: z.string().optional(),
+	ulid: z.string(),
 	tags: tagSchema,
 });
 
