@@ -1,25 +1,14 @@
+import { rssSchema } from "@content/schema";
 import type { Loader } from "astro/loaders";
-import { z } from "astro:content";
 import Parser from "rss-parser";
-
-const rssSchema = z.object({
-	title: z.string(),
-	link: z.string(),
-	pubdate: z.string(),
-});
 
 export const rssLoader = (options: { url: string; slug: string }): Loader => {
 	return {
 		name: "rss-loader",
-		load: async ({
-			store,
-			logger,
-			parseData,
-			meta,
-			generateDigest,
-		}): Promise<void> => {
+		load: async ({ store, logger, parseData }): Promise<void> => {
 			logger.info(`Loading RSS feed from ${options.url}`);
-			const parser = new Parser();
+			type itemDef = { title: string; link: string; pubDate: Date };
+			const parser = new Parser<{ item: itemDef[] }>();
 			const feed = await parser.parseURL(options.url);
 			for (const item of feed.items) {
 				const itemId = item.guid || item.id;
@@ -30,7 +19,8 @@ export const rssLoader = (options: { url: string; slug: string }): Loader => {
 					data: {
 						title: item.title,
 						link: item.link,
-						pubdate: item.pubDate,
+						date: new Date(item.pubDate || ""),
+						tags: [options.slug],
 					},
 				});
 				store.set({ id: itemId, data });

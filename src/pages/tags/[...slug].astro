@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import Layout from "@layouts/Layout.astro";
 import EntryList from "@components/EntryList.astro";
-import { getAllPosts } from "@lib/utils";
+import { getPostsByCollectionKeys } from "@lib/utils";
 import { getAllTagSlug, getTagDisplayName } from "@lib/tags";
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -12,8 +12,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 const { slug } = Astro.params;
 const tag = slug as string;
-const posts = (await getAllPosts()).filter((post) =>
-	post.data.tags.includes(tag)
+const posts = (await getPostsByCollectionKeys("posts", "zenn", "qiita")).filter(
+	(post) => post.data.tags?.includes(tag)
 );
 
 const tagName = getTagDisplayName(tag);

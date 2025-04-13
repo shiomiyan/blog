@@ -1,9 +1,10 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { getFavicon } from "@lib/utils";
+import type { CollectionKey } from "astro:content";
 
 type Props = {
-	entry: CollectionEntry<"posts">;
+	entry: CollectionEntry<CollectionKey>;
 };
 
 const { entry } = Astro.props as Props;
@@ -12,11 +13,12 @@ const { entry } = Astro.props as Props;
 const isoDateTime = entry.data.date.toISOString();
 const date = isoDateTime.slice(0, 10);
 
-const href = entry.data.isExternal
-	? entry.data.url
-	: `/${entry.collection}/${entry.slug}`;
+const href =
+	entry.collection === "posts"
+		? `/${entry.collection}/${entry.slug}`
+		: entry.data.link;
 
-const favicon = entry.data.isExternal && href ? await getFavicon(href) : "";
+const favicon = entry.collection !== "posts" ? await getFavicon(href) : "";
 ---
 
 <div class="flex items-center gap-2 text-xs text-gray-600">
@@ -25,20 +27,15 @@ const favicon = entry.data.isExternal && href ? await getFavicon(href) : "";
 	</time>
 </div>
 <div class="items-center">
-	<a
-		href={href}
-		target={entry.data.isExternal ? "_blank" : "_self"}
-		rel={entry.data.isExternal ? "noopener noreferrer" : undefined}
-		class="text-base font-semibold hover:underline"
-	>
+	<a href={href} class="text-base font-semibold hover:underline">
 		{entry.data.title}
 	</a>
 	{
-		entry.data.isExternal && favicon && (
+		entry.collection !== "posts" && favicon && (
 			<img
 				src={favicon}
 				alt="favicon"
-				title={entry.data.platform}
+				title={entry.collection}
 				class="relative -top-[2px] inline h-5 w-5"
 			/>
 		)

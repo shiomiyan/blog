@@ -2,16 +2,18 @@
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import Tag from "@components/Tag.astro";
-import { getAllPosts } from "@lib/utils";
+import { getPostsByCollectionKeys } from "@lib/utils";
 import { getAllTagSlug, getTagDisplayName } from "@lib/tags";
 
-const posts = await getAllPosts();
+const posts = await getPostsByCollectionKeys("posts", "zenn", "qiita");
 
 const tagCounts = posts
 	.flatMap((post) => post.data.tags)
 	.reduce(
 		(acc, tag) => {
-			acc[tag] = (acc[tag] || 0) + 1;
+			if (tag) {
+				acc[tag] = (acc[tag] || 0) + 1;
+			}
 			return acc;
 		},
 		{} as Record<string, number>

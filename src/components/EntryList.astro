@@ -1,10 +1,10 @@
 ---
 import Container from "@components/Container.astro";
 import EntryCard from "@components/EntryCard.astro";
-import type { CollectionEntry } from "astro:content";
+import type { CollectionEntry, CollectionKey } from "astro:content";
 
 interface Props {
-	entries: CollectionEntry<"posts">[];
+	entries: CollectionEntry<CollectionKey>[];
 }
 
 const { entries } = Astro.props;
