@@ -19,7 +19,7 @@ body {
 }
 
 header {
-  @apply sticky top-0 z-50 py-6;
+  @apply static top-0 z-50 py-6;
   @apply bg-neutral-100/75;
   @apply saturate-200 backdrop-blur-xs;
 }
