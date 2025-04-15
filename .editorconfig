@@ -1,23 +1,13 @@
 root = true
 
 [*]
+charset = utf-8
+indent_style = tab
+indent_size = 2
+tab_width = 2
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.astro]
-indent_style = tab
-tab_width = 2
-
-[*.md]
+[{.*,*.md,*.mdx}]
+indent_style = space
 trim_trailing_whitespace = false
-indent_style = tab
-tab_width = 2
-
-[*.mdx]
-trim_trailing_whitespace = false
-indent_style = tab
-tab_width = 2
-
-[*.ts]
-indent_style = tab
-tab_width = 2
