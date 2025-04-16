@@ -1,0 +1,36 @@
+---
+import Container from "@components/Container.astro";
+import Layout from "@layouts/Layout.astro";
+import "@pagefind/default-ui/css/ui.css";
+
+const meta = {
+	description: "Search for blog.736b.moe",
+	title: "Search",
+};
+---
+
+<Layout title={meta.title} description={meta.description}>
+	<Container>
+		<div id="search" class="search-container"></div>
+	</Container>
+</Layout>
+
+<script>
+	import { PagefindUI } from "@pagefind/default-ui";
+
+	window.addEventListener("DOMContentLoaded", () => {
+		new PagefindUI({ element: "#search", showSubResults: true });
+	});
+</script>
+
+<style>
+	.search-container {
+		margin-top: 2rem;
+	}
+
+	:root {
+		--pagefind-ui-scale: 0.75;
+		--pagefind-ui-border-width: 1px;
+		--pagefind-ui-border-radius: 2px;
+	}
+</style>
