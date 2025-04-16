@@ -1,10 +1,14 @@
 import rss from "@astrojs/rss";
 import { SITE } from "@consts";
 import { getCollection } from "astro:content";
+import MarkdownIt from "markdown-it";
+import sanitizeHtml from "sanitize-html";
 
 type Context = {
 	site: string;
 };
+
+const parser = new MarkdownIt();
 
 export async function GET(context: Context) {
 	const posts = (await getCollection("posts")).filter(
@@ -24,6 +28,7 @@ export async function GET(context: Context) {
 			description: item.data.description,
 			pubDate: item.data.date,
 			link: `/${item.collection}/${item.slug}/`,
+			content: sanitizeHtml(parser.render(item.body)),
 		})),
 	});
 }
