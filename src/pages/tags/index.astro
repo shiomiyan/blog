@@ -5,36 +5,32 @@ import Tag from "@components/Tag.astro";
 import { getCollectionByCollectionKeys } from "@lib/utils";
 import { TAGS } from "@/constants";
 
-const posts = await getCollectionByCollectionKeys("posts", "zenn", "qiita");
+const posts = (
+	await getCollectionByCollectionKeys("posts", "zenn", "qiita")
+).filter((post) => post.data.tags);
+const tagCounts = {} as Record<keyof typeof TAGS, number>;
 
-const tagCounts = posts
-	.flatMap((post) => post.data.tags)
-	.reduce(
-		(acc, tag) => {
-			if (tag) {
-				acc[tag] = (acc[tag] || 0) + 1;
-			}
-			return acc;
-		},
-		{} as Record<string, number>
-	);
+for (const { data } of posts) {
+	// TODO: data.tagsはundefinedになりえないと思うが、型推論がうまくいってない...？
+	for (const tag of data.tags ?? []) {
+		tagCounts[tag] = (tagCounts[tag] ?? 0) + 1;
+	}
+}
 
-const tags = Object.keys(TAGS)
-	.map((slug) => ({
-		name: TAGS[slug as keyof typeof TAGS],
-		slug,
-		count: tagCounts[slug] || 0,
+const tags = Object.entries(tagCounts)
+	.map<{ slug: keyof typeof TAGS; count: number }>(([slug, count]) => ({
+		slug: slug as keyof typeof TAGS,
+		count,
 	}))
-	.filter((tag) => tag.count > 0)
-	.sort((a, b) => a.name.localeCompare(b.name));
+	.sort((a, b) => a.slug.localeCompare(b.slug));
 
 const meta = {
 	description: "A list of all tags",
-	title: "tag index",
+	title: "Tags",
 };
 ---
 
-<Layout title={meta.title} description={meta.description}>
+<Layout {...meta}>
 	<Container>
 		<div class="space-y-10" data-pagefind-ignore="all">
 			<div class="space-y-4">
@@ -45,7 +41,7 @@ const meta = {
 						{
 							tags.map((tag) => (
 								<li>
-									<Tag tag={tag.slug as keyof typeof TAGS} count={tag.count} />
+									<Tag tag={tag.slug} count={tag.count} />
 								</li>
 							))
 						}

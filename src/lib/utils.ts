@@ -39,13 +39,12 @@ export const getFavicon = async (url: string): Promise<string | undefined> => {
 export const getCollectionByCollectionKeys = async <
 	C extends keyof AnyEntryMap,
 >(
-	...collections: C[]
+	...collectionKeys: C[]
 ): Promise<CollectionEntry<C>[]> => {
-	const result: CollectionEntry<C>[] = [];
-	for (const collection of collections) {
-		const posts = await getCollection(collection);
-		result.push(...posts);
-	}
-	result.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-	return result;
+	const promises = collectionKeys.map((collectionKey) =>
+		getCollection(collectionKey),
+	);
+	const collections = (await Promise.all(promises)).flat();
+	collections.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+	return collections;
 };
