@@ -1,5 +1,5 @@
 /**
- * Mapping of tag definitions can be used in posts.
+ * Mapping of tag definitions can be used in this site.
  */
 // prettier-ignore
 export const TAGS = {
