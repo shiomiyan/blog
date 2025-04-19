@@ -1,4 +1,4 @@
-import { rssSchema } from "@content/schema";
+import { rssSchema } from "@schema";
 import type { Loader } from "astro/loaders";
 import Parser from "rss-parser";
 

@@ -1,6 +1,6 @@
 import { rssLoader } from "@loader";
 import { defineCollection } from "astro:content";
-import { postSchema } from "./schema";
+import { postSchema } from "../schema";
 
 const posts = defineCollection({
 	type: "content",
