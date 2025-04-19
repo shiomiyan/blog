@@ -1,94 +1,70 @@
 ---
 interface Props {
-	postId?: string;
+	postId: string;
 }
 
 const { postId } = Astro.props;
 ---
 
-<div
-	id="upvote-container"
-	class="mt-8 inline-flex cursor-pointer items-center gap-2 rounded-lg border border-black/15 px-3 py-1.5 transition-colors hover:bg-gray-200"
-	aria-label="upvote this article"
->
-	<span id="upvote-button" class="text-2xl transition-opacity">👍</span>
-	<span id="upvote-count" class="text-sm font-medium text-gray-600">0</span>
-</div>
+<upvote-button data-post-id={postId} title="Click to upvote this post!">
+	<button
+		class="cursor-pointer rounded-lg border border-black/15 px-3 py-0.5 font-mono hover:bg-gray-200"
+		>👍&nbsp;<span>0</span></button
+	>
+</upvote-button>
 
-<script is:inline define:vars={{ postId }}>
-	// Handle the case where postId is not specified.
-	if (!postId) {
-		console.warn("No postId is specified with this post.");
-	} else {
-		// Get the current upvote count when the page is loaded
-		const fetchUpvoteCount = async () => {
+<script>
+	class UpvoteButton extends HTMLElement {
+		constructor() {
+			super();
+
+			const postId = this.dataset.postId;
+			const button = this.querySelector("button");
+			const count = this.querySelector("span");
+
+			if (!button || !count) {
+				throw new Error("Upvote button or count element not found");
+			}
+
+			button.addEventListener("click", async () => {
+				try {
+					const response = await fetch("/api/upvote", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({ post_id: postId }),
+					});
+
+					if (!response.ok) {
+						throw new Error("Failed to update upvote");
+					}
+
+					const updated = await response.json();
+					count.textContent = updated.upvotes;
+				} catch (error) {
+					console.error(error);
+				}
+			});
+		}
+
+		async connectedCallback() {
+			const postId = this.dataset.postId;
+			const count = this.querySelector("span");
+
+			if (!count) return;
+
 			try {
 				const response = await fetch(`/api/upvote?post_id=${postId}`);
-				if (response.ok) {
-					const data = await response.json();
-					document.getElementById("upvote-count").textContent =
-						data.upvotes.toString();
-				} else {
-					console.error("Failed to fetch upvote count:", response.status);
+				if (!response.ok) {
+					throw new Error("Failed to GET upvote count");
 				}
+				const data = await response.json();
+				count.textContent = data.upvotes;
 			} catch (error) {
-				console.error("Upvote count fetch error:", error);
+				console.error(error);
 			}
-		};
-
-		// Handle the case where the upvote button is clicked
-		const handleUpvote = async () => {
-			try {
-				const container = document.getElementById("upvote-container");
-				const button = document.getElementById("upvote-button");
-				container.classList.add("pointer-events-none");
-
-				const response = await fetch("/api/upvote", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({ post_id: postId }),
-				});
-
-				if (response.ok) {
-					const data = await response.json();
-					document.getElementById("upvote-count").textContent =
-						data.upvotes.toString();
-
-					button.classList.add("scale-125");
-					setTimeout(() => {
-						button.classList.remove("scale-125");
-						container.classList.remove("pointer-events-none");
-					}, 300);
-				} else {
-					console.error("Failed to update upvote:", response.status);
-					container.classList.remove("pointer-events-none");
-				}
-			} catch (error) {
-				console.error("Upvote error:", error);
-				document
-					.getElementById("upvote-container")
-					.classList.remove("pointer-events-none");
-			}
-		};
-
-		// Set event listeners
-		document.addEventListener("DOMContentLoaded", () => {
-			fetchUpvoteCount();
-			document
-				.getElementById("upvote-container")
-				.addEventListener("click", handleUpvote);
-		});
+		}
 	}
+	customElements.define("upvote-button", UpvoteButton);
 </script>
-
-<style>
-	#upvote-button {
-		transition: transform 0.3s ease;
-	}
-	#upvote-container.pointer-events-none {
-		opacity: 0.5;
-		pointer-events: none;
-	}
-</style>
