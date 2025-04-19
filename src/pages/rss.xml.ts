@@ -1,5 +1,5 @@
 import rss from "@astrojs/rss";
-import { SITE } from "@consts";
+import { SITE } from "@constants";
 import { getCollection } from "astro:content";
 import { marked } from "marked";
 import sanitizeHtml from "sanitize-html";
