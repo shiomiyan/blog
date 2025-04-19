@@ -28,7 +28,7 @@ if (slug.match(/[^a-z0-9\-]/g)) {
 }
 
 const postUlid = ulid();
-const target = `src/content/posts/${suffix}-${slug}/index.mdx`;
+const target = `src/content/posts/${suffix}-${slug}/index.md`;
 const content = `---
 title: ${title}
 date: ${nowISO}
