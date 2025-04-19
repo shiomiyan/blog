@@ -1,4 +1,4 @@
-import { TAGS } from "@lib/tags";
+import { TAGS } from "@/constants";
 import { z } from "astro:content";
 
 const tagSchema = z

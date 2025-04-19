@@ -5,7 +5,7 @@ import Container from "@components/Container.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import Tag from "@components/Tag.astro";
 import Upvote from "@components/Upvote.astro";
-import { TAGS } from "@lib/tags";
+import { TAGS } from "@/constants";
 
 export const getStaticPaths = async () => {
 	const posts = (await getCollection("posts"))

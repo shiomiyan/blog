@@ -3,7 +3,7 @@ import type { GetStaticPaths } from "astro";
 import Layout from "@layouts/Layout.astro";
 import EntryList from "@components/EntryList.astro";
 import { getCollectionByCollectionKeys } from "@lib/utils";
-import { TAGS } from "@lib/tags";
+import { TAGS } from "@/constants";
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	const allTags = Object.keys(TAGS);

@@ -3,7 +3,7 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import Tag from "@components/Tag.astro";
 import { getCollectionByCollectionKeys } from "@lib/utils";
-import { TAGS } from "@lib/tags";
+import { TAGS } from "@/constants";
 
 const posts = await getCollectionByCollectionKeys("posts", "zenn", "qiita");
 
