@@ -1,5 +1,4 @@
 import { defineConfig } from "astro/config";
-import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import rehypeExternalLinks from "rehype-external-links";
 import tailwindcss from "@tailwindcss/vite";
@@ -9,7 +8,7 @@ import pagefindIndexer from "./src/integrations/pagefindIndexer";
 export default defineConfig({
   site: "https://blog.736b.moe",
   output: "static",
-  integrations: [sitemap(), mdx(), pagefindIndexer()],
+  integrations: [sitemap(), pagefindIndexer()],
   markdown: {
     shikiConfig: {
       theme: "github-dark-default",
@@ -24,4 +23,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+	experimental: {
+		contentIntellisense: true,
+  }
 });

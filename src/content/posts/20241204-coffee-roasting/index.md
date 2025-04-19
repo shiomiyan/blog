@@ -6,16 +6,12 @@ ulid: 01JE7FEV00Z816DJYP48CZDPMF
 tags:
   - raspberry-pi
 ---
-import { Image, Picture } from "astro:assets";
-import img_20241121_222830 from "./20241121_222830.jpg";
-import img_20241121_222851 from "./20241121_222851.jpg";
-import img_fritzing from "./fritzing.png";
 
 [Raspberry Pi Advent Calendar 2024](https://adventar.org/calendars/10003)の4日目の記事です。
 
 コーヒー豆の手鍋焙煎にハマっており、安定した焙煎をするために（？）焙煎温度を計測したくなったので、やってみました。
 
-<Image src={img_20241121_222830} alt="焙煎する直前の様子" class="w-auto h-[400px] object-contain" />
+![焙煎する直前の様子](./20241121_222830.jpg)
 
 といっても[CircuitPythonライブラリのチュートリアルみたいなドキュメント](https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/spi-sensors-devices)をなぞっていくだけです。
 
@@ -28,7 +24,7 @@ import img_fritzing from "./fritzing.png";
 - [K型熱電対プローブ](https://www.switch-science.com/products/2976)
 - はんだ、はんだゴテ
 
-一通り必要そうなものはスイッチサイエンスで揃えつつ、作業していて必要になったものは秋月電子に買いに行きました（色々間違えて日に2度も秋月電子に足を運ぶことになりました）。
+一通り必要そうなものはスイッチサイエンスで揃えつつ、作業していて必要になったものは秋月電子へ買いに行きました（色々間違えて日に2度も秋月電子に足を運ぶことになりました）。
 
 ## ラズパイのセットアップ
 
@@ -46,11 +42,11 @@ sudo raspi-config
 
 [チュートリアルの配線図](https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/spi-sensors-devices#wiring-2993466)通りに繋いでいくだけです。
 
-<Image src={img_fritzing} alt="adafruitのドキュメントで用いられている配線図" class="w-auto h-[400px] object-contain" />
+![adafruitのドキュメントで用いられている配線図](./fritzing.png)
 
 というわけで、つなぎました。
 
-<Image src={img_20241121_222851} alt="ラズパイにMAX31855を接続した様子" class="w-auto h-[400px] object-contain" />
+![ラズパイにMAX31855を接続した様子](./20241121_222851.jpg)
 
 ## 計測する
 
@@ -112,7 +108,7 @@ if __name__ == "__main__":
 ```
 
 何度かテストしていると`RuntimeError: short circuit to ground`が頻発するようになったので、握りつぶしました。  
-デバイスにはあまり良くなさそうですが、人が死ぬわけではないので...
+デバイスにはあまり良くなさそうですが、人が死ぬわけではないので...。
 
 ## 結果をグラフに出力する
 
