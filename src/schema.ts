@@ -1,12 +1,9 @@
 import { TAGS } from "@/constants";
 import { z } from "astro:content";
 
-const tagSlugs = Object.keys(TAGS) as [
-	keyof typeof TAGS,
-	...(keyof typeof TAGS)[],
-];
+const tagKeys = Object.keys(TAGS) as [keyof typeof TAGS];
 
-const tagSchema = z.array(z.enum(tagSlugs)).default([]);
+const tagSchema = z.array(z.enum(tagKeys)).default([]);
 
 export const postSchema = z.object({
 	title: z.string(),
