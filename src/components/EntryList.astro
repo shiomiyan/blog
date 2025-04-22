@@ -13,17 +13,15 @@ const { entries } = Astro.props;
 <Container>
 	<div class="space-y-10" data-pagefind-ignore="all">
 		<div class="space-y-4">
-			<section class="space-y-4">
-				<ul class="not-prose flex flex-col gap-4">
-					{
-						entries.map((entry) => (
-							<li>
-								<EntryCard entry={entry} />
-							</li>
-						))
-					}
-				</ul>
-			</section>
+			<ul class="not-prose flex flex-col gap-4">
+				{
+					entries.map((entry) => (
+						<li>
+							<EntryCard entry={entry} />
+						</li>
+					))
+				}
+			</ul>
 		</div>
 	</div>
 </Container>
