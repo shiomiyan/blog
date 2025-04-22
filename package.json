@@ -4,15 +4,15 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "npm run wrangler:types && astro dev",
-    "build": "npm run wrangler:types && astro check && astro build",
+    "dev": "astro dev",
+    "build": "npm run cf-typegen && astro check && astro build",
     "preview": "wrangler pages dev ./dist",
     "astro": "astro",
+    "cf-typegen": "wrangler types --path ./functions/worker-configuration.d.ts",
+    "wrangler:dev": "npm run build && wrangler pages dev --local --live-reload",
     "textlint": "textlint",
     "format": "prettier --write .",
-    "create-post": "tsx bin/create-post.ts",
-    "wrangler:types": "wrangler types --path ./functions/types.d.ts",
-    "wrangler:dev": "npm run build && wrangler pages dev --local --live-reload"
+    "create-post": "tsx bin/create-post.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
