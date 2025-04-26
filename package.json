@@ -41,6 +41,7 @@
     "textlint": "^14.6.0",
     "textlint-filter-rule-allowlist": "^4.0.0",
     "textlint-rule-preset-ja-technical-writing": "^12.0.2",
+    "tsx": "^4.19.3",
     "wrangler": "^4.12.0"
   },
   "overrides": {
