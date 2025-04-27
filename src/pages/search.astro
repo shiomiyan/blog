@@ -11,16 +11,27 @@ const meta = {
 
 <Layout title={meta.title} description={meta.description}>
 	<Container>
-		<div id="search" class="search-container"></div>
+		<div id="search" class="search-container" transition:persist></div>
 	</Container>
 </Layout>
 
 <script>
-	import { PagefindUI } from "@pagefind/default-ui";
+	const initSearch = async () => {
+		const container = document.querySelector("#search") as HTMLElement;
 
-	window.addEventListener("DOMContentLoaded", () => {
+		if (!container || container.dataset.pagefindReady) return;
+
+		container.dataset.pagefindReady = "true";
+		const { PagefindUI } = await import("@pagefind/default-ui");
 		new PagefindUI({ element: "#search", showSubResults: true });
-	});
+	};
+
+	document.addEventListener("astro:page-load", initSearch);
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", initSearch);
+	} else {
+		initSearch();
+	}
 </script>
 
 <style>

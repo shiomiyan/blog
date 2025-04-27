@@ -7,6 +7,9 @@ import pagefindIndexer from "./src/integrations/pagefindIndexer";
 // https://astro.build/config
 export default defineConfig({
   site: "https://blog.736b.moe",
+	build: {
+		format: "file"
+	},
   output: "static",
   integrations: [sitemap(), pagefindIndexer()],
   markdown: {
