@@ -4,8 +4,8 @@ date: 2024-12-09T03:38:59.187Z
 description: ""
 ulid: 01JEMQZD7KMBQJ5025R6V6G931
 tags:
-  - random
   - puppeteer
+  - deno
 ---
 
 イマドキなWebアプリはクライアントでDOMを生成するケースが多い。

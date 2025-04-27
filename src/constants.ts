@@ -34,10 +34,14 @@ export const TAGS = {
 	"random": "雑記",
 	"tree-sitter": "Tree-sitter",
 	"astro": "Astro",
-	"cloudflare-workers": "Cloudflare Workers",
+	"cloudflare": "Cloudflare",
 	"raspberry-pi": "Raspberry Pi",
 	"puppeteer": "Puppeteer",
 	"typescript": "TypeScript",
 	"deno": "Deno",
-	"http": "HTTP",
+	"npm": "npm",
+	"rollup": "rollup",
+	"browser": "Browser",
+	"rfc": "RFC",
+	"site-updates": "Site updates"
 } as const;

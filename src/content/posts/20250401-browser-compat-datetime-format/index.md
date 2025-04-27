@@ -4,8 +4,8 @@ date: 2025-04-01T02:44:01.686Z
 description: ""
 ulid: 01JQQKR00P3C9WXBWSZABXKKVN
 tags:
-  - random
-  - http
+  - browser
+  - rfc
 ---
 
 日々HTTPメッセージと格闘していると、まじでどうでも良さそうなことを調べたくなります。その備忘録です。

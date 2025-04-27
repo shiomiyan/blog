@@ -1,11 +1,10 @@
 ---
-title: "私のブクマ事情: 初めてのCloudflare Workers"
+title: "初めてのCloudflare Workers"
 date: "2024-10-31"
 description: ""
 ulid: 01JBFXYD0060S8W3R3417SNKTA
 tags:
-  - random
-  - cloudflare-workers
+  - cloudflare
 ---
 
 ウェブリソースのブックマークは[こんな感じのbookmarklet](https://gist.github.com/kepano/90c05f162c37cf730abb8ff027987ca3)を用意してブラウザからトリガしてObsidianに保存、というスタイルを取っていた。

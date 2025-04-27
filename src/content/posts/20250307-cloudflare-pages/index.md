@@ -4,7 +4,7 @@ date: 2025-03-07T09:42:53.780Z
 description: ""
 ulid: 01JNQZS02MGBXWZNB5GFQM23WJ
 tags:
-  - random
+  - cloudflare
 ---
 
 このブログのホスティング先を、GitHub PagesからCloudflare Pagesに移行したので作業ログをまとめておきます。

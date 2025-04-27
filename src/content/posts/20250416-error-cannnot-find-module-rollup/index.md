@@ -4,7 +4,8 @@ date: 2025-04-16T02:16:06.432Z
 description: ""
 ulid: 01JRY63N115YK9A6XXV193SSS9
 tags:
-  - random
+  - npm
+  - rollup
 ---
 
 npmの依存関係をアップデートしていたときに、ローカル（macbook pro 2019）ではビルドが通るのに、GitHub Actionsではビルドが通らないという問題が発生した。
