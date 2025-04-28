@@ -43,5 +43,6 @@ export const TAGS = {
 	"rollup": "rollup",
 	"browser": "Browser",
 	"rfc": "RFC",
-	"site-updates": "Site updates"
+	"site-updates": "Site updates",
+	"weekly-report": "Weekly report"
 } as const;
