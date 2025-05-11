@@ -21,11 +21,11 @@ const href =
 const favicon = entry.collection !== "posts" ? await getFavicon(href) : "";
 ---
 
-<div>
-	<span class="whitespace-nowrap text-xs text-gray-600">
+<div class="block sm:flex sm:flex-wrap sm:items-baseline sm:gap-1">
+	<span class="text-xs whitespace-nowrap text-gray-600">
 		<time datetime={isoDateTime}>{date}</time>:
 	</span>
-	<a href={href} class="text-base font-semibold hover:underline">
+	<a href={href} class="inline text-base font-semibold hover:underline">
 		{entry.data.title}
 		{
 			entry.collection !== "posts" && favicon && (
@@ -39,21 +39,3 @@ const favicon = entry.collection !== "posts" ? await getFavicon(href) : "";
 		}
 	</a>
 </div>
-
-<style>
-	div {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: baseline;
-		gap: 0.25rem;
-	}
-
-	@media (max-width: 640px) {
-		div {
-			display: block;
-		}
-		a {
-			display: inline;
-		}
-	}
-</style>
