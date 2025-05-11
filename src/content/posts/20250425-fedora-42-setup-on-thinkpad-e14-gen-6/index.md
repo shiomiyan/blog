@@ -7,12 +7,10 @@ tags:
   - random
 ---
 
-
 ## TL;DR
 
 - Thinkpad E14を買った
 - Fedora 42をインストールし、目立ったトラブルもなく、快適に使えている
-
 
 ## 背景など
 
@@ -70,6 +68,8 @@ CPUに関して、MacBook Proのそれと比較すると、[ベンチマーク](
 
 OSは[Fedora Workstation](https://fedoraproject.org/workstation/)を選択した。私見でしかないが、ちょうどいい塩梅で壊れにくい印象がある。
 
+KDEがエディションに昇格したタイミングではあったが、さらにデフォルトになるなどがなければ、しばらくGnomeを使おうと思う。
+
 デュアルブートな環境ではなく、Linuxのみの環境にする。基本的に気をつけるポイントはないが、日本語で環境設定を進めるとホームディレクトリ直下に日本語でディレクトリが作成されてしまうため、すべて英語で進める。
 
 [有志による互換ドキュメント](https://github.com/ramaureirac/thinkpad-e14-linux/tree/main/thinkpad-e14-gen6)があったので、大きな問題は起きないだろう、と踏んでいた。
@@ -84,55 +84,17 @@ ThinkpadのBIOS設定でFnとCtrlは入れ替えている。あと、Fn as Prima
 
 ### キーリマップ
 
-
-key remapperは[evremap](https://github.com/wez/evremap)を使う。evremapはプリビルドバイナリを提供してくれていないので、自分でビルドしないといけない。
-
-なので、まずはRustをインストールする。
-
-https://www.rust-lang.org/learn/get-started
-
-evremapはlibevdevに依存しているので、追加の依存関係をインストールし、ビルドする。
+リマッパーは[evremap](https://github.com/wez/evremap)を使っていたが、k0kubunさんの[xremap](https://github.com/xremap/xremap)を使い始めた。（evremapは設定がデバイスごとだったり、バイナリ配布されていなかったり、私には合わなかった）
 
 ```
-sudo dnf install libevdev-devel
-cargo build --release
+sudo dnf copr enable blakegardner/xremap
+sudo dnf install xremap-gnome
 ```
 
-設定ファイル群はsystemdの`.service`ファイルと設定用のtomlファイルが必要だが、どちらもevremapのリポジトリで設定例を確認できる。
-なので、難しいことは考えずにこれを踏襲して、ビルドしたバイナリと設定ファイルを配置する。
+複雑な設定は必要なく、下記だけ設定している。
 
-```
-sudo cp target/release/evremap /usr/bin/evremap
-sudo touch /etc/evremap.toml
-```
-
-evremap.tomlは次のように設定した。
-
-```toml
-device_name = "AT Translated Set 2 keyboard"
-
-[[dual_role]]
-input = "KEY_CAPSLOCK"
-hold = ["KEY_LEFTCTRL"]
-tap = ["KEY_ESC"]
-
-[[remap]]
-input = ["KEY_LEFTCTRL", "KEY_LEFTBRACE"]
-output = ["KEY_ESC"]
-```
-
-<details><summary>⚙️ 設定詳細</summary><div>
-
-- `CapsLock`単体押しは`Esc`にマップする
 - `CapsLock`を修飾キーとして使うときは`Ctrl`として使う
 - `Ctrl+[`はEscにマップする
-
-</div></details>
-
-今のところキーボード（入力デバイス）単位で設定する必要があるため、`device_name`を書き換えたconfigをもう1つ用意している。
-私の場合はThinkpadのオンデバイスキーボードとKeychronキーボードを兼用しているので、`evremap.toml`と`evremap-keychron-k2.toml`を用意して、それぞれ別のサービスとして登録した。
-
-https://github.com/shiomiyan/dotfiles/tree/6d1621cbe744c5466e2de9ac6c1c1794053cde7a/system/evremap
 
 ## タッチパッド・ポインティングデバイス周り
 
