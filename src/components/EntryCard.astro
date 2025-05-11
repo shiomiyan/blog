@@ -21,23 +21,39 @@ const href =
 const favicon = entry.collection !== "posts" ? await getFavicon(href) : "";
 ---
 
-<div class="flex items-center gap-2 text-xs text-gray-600">
-	<time datetime={isoDateTime}>
-		{date}
-	</time>
-</div>
-<div class="items-center">
+<div>
+	<span class="whitespace-nowrap text-xs text-gray-600">
+		<time datetime={isoDateTime}>{date}</time>:
+	</span>
 	<a href={href} class="text-base font-semibold hover:underline">
 		{entry.data.title}
+		{
+			entry.collection !== "posts" && favicon && (
+				<img
+					src={favicon}
+					alt="favicon"
+					title={entry.collection}
+					class="ml-0.5 inline h-4 w-4"
+				/>
+			)
+		}
 	</a>
-	{
-		entry.collection !== "posts" && favicon && (
-			<img
-				src={favicon}
-				alt="favicon"
-				title={entry.collection}
-				class="relative -top-[2px] ml-0.5 inline h-4 w-4"
-			/>
-		)
-	}
 </div>
+
+<style>
+	div {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.25rem;
+	}
+
+	@media (max-width: 640px) {
+		div {
+			display: block;
+		}
+		a {
+			display: inline;
+		}
+	}
+</style>
