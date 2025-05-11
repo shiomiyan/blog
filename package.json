@@ -45,6 +45,6 @@
     "wrangler": "^4.14.4"
   },
   "overrides": {
-    "rollup": "npm:@rollup/wasm-node@^4.40.0"
+    "rollup": "npm:@rollup/wasm-node@^4.40.2"
   }
 }
