@@ -21,12 +21,10 @@ const SVGComponents: Record<string, any> = {
 <header transition:persist>
 	<Container>
 		<div class="flex flex-wrap justify-between gap-y-2">
-			<a href="/">
-				<div class="font-semibold">
-					{SITE.TITLE}
-				</div>
+			<a href="/" class="font-semibold">
+				{SITE.TITLE}
 			</a>
-			<nav class="flex items-center gap-2 text-sm">
+			<nav class="flex items-center gap-2">
 				{
 					SOCIALS.map((SOCIAL) => {
 						const SVGComponent = SVGComponents[SOCIAL.SVG_NAME];
@@ -36,22 +34,23 @@ const SVGComponents: Record<string, any> = {
 								aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
 								target="_blank"
 								rel="noopener noreferer"
+								class="p-1"
 							>
-								<SVGComponent width={20} height={20} />
+								<SVGComponent width={22} height={22} />
 							</a>
 						);
 					})
 				}
-				<a href="/tags" aria-label="All tags on this site">
-					<TagsIcon width={20} height={20} />
+				<a href="/tags" aria-label="All tags on this site" class="p-1">
+					<TagsIcon width={22} height={22} />
 				</a>
 
-				<a href="/search" aria-label="Search for blog.736b.moe">
-					<SearchIcon width={20} height={20} />
+				<a href="/search" aria-label="Search for blog.736b.moe" class="p-1">
+					<SearchIcon width={22} height={22} />
 				</a>
 
-				<a href="/rss.xml" aria-label="RSS feed for blog.736b.moe">
-					<RssIcon width={20} height={20} />
+				<a href="/rss.xml" aria-label="RSS feed for blog.736b.moe" class="p-1">
+					<RssIcon width={22} height={22} />
 				</a>
 			</nav>
 		</div>
