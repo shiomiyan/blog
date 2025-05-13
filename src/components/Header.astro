@@ -1,21 +1,6 @@
 ---
 import Container from "@components/Container.astro";
-import { SITE, SOCIALS } from "@constants";
-
-import TwitterIcon from "../assets/icons/twitter.svg";
-import GitHubIcon from "../assets/icons/github.svg";
-import MastodonIcon from "../assets/icons/mastodon.svg";
-import BlueskyIcon from "../assets/icons/bluesky.svg";
-import TagsIcon from "../assets/icons/tags.svg";
-import RssIcon from "../assets/icons/rss.svg";
-import SearchIcon from "../assets/icons/search.svg";
-
-const SVGComponents: Record<string, any> = {
-	twitter: TwitterIcon,
-	github: GitHubIcon,
-	mastodon: MastodonIcon,
-	bluesky: BlueskyIcon,
-};
+import { SITE } from "@constants";
 ---
 
 <header transition:persist>
@@ -24,33 +9,27 @@ const SVGComponents: Record<string, any> = {
 			<a href="/" class="font-semibold">
 				{SITE.TITLE}
 			</a>
-			<nav class="flex items-center gap-2">
-				{
-					SOCIALS.map((SOCIAL) => {
-						const SVGComponent = SVGComponents[SOCIAL.SVG_NAME];
-						return (
-							<a
-								href={SOCIAL.HREF}
-								aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
-								target="_blank"
-								rel="noopener noreferer"
-								class="p-1"
-							>
-								<SVGComponent width={22} height={22} />
-							</a>
-						);
-					})
-				}
-				<a href="/tags" aria-label="All tags on this site" class="p-1">
-					<TagsIcon width={22} height={22} />
+			<nav class="flex items-center gap-3">
+				<a href="/about" aria-label="About author" class="underline">About</a>
+
+				<a href="/tags" aria-label="All tags on this site" class="underline">
+					Tags
 				</a>
 
-				<a href="/search" aria-label="Search for blog.736b.moe" class="p-1">
-					<SearchIcon width={22} height={22} />
+				<a
+					href="/search"
+					aria-label="Search for blog.736b.moe"
+					class="underline"
+				>
+					Search
 				</a>
 
-				<a href="/rss.xml" aria-label="RSS feed for blog.736b.moe" class="p-1">
-					<RssIcon width={22} height={22} />
+				<a
+					href="/rss.xml"
+					aria-label="RSS feed for blog.736b.moe"
+					class="underline"
+				>
+					Feed
 				</a>
 			</nav>
 		</div>

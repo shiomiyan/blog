@@ -1,0 +1,29 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import { SOCIALS, SITE } from "@constants";
+
+const TITLE = "About me";
+---
+
+<Layout title={TITLE} description="">
+	<Container>
+		<ul class="flex flex-col">
+			{
+				SOCIALS.map((SOCIAL) => (
+					<li class="list-inside list-disc">
+						<a
+							href={SOCIAL.HREF}
+							aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="underline"
+						>
+							{SOCIAL.NAME}
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</Container>
+</Layout>
