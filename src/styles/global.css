@@ -14,8 +14,7 @@ body {
 body {
   @apply font-sans;
   @apply flex flex-col;
-  @apply bg-neutral-100;
-  @apply text-black/75;
+  @apply bg-neutral-50;
 }
 
 header {
@@ -33,9 +32,7 @@ footer {
 }
 
 article {
-  @apply prose prose-neutral prose-img:mx-auto prose-img:my-auto max-w-full;
-  @apply prose-headings:font-semibold;
-  @apply prose-headings:text-black;
+  @apply prose prose-blue max-w-full;
 }
 
 h1::before {
@@ -62,9 +59,6 @@ h6::before {
   content: "###### ";
 }
 
-article a {
-  @apply text-[#0069C2];
-}
 article a:visited {
   @apply text-[#551A8B];
 }

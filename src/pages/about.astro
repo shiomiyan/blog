@@ -8,10 +8,11 @@ const TITLE = "About me";
 
 <Layout title={TITLE} description="">
 	<Container>
-		<ul class="flex flex-col">
+		<div class="mt-10">
 			{
-				SOCIALS.map((SOCIAL) => (
-					<li class="list-inside list-disc">
+				SOCIALS.map((SOCIAL, index) => (
+					<>
+						{index > 0 && <span class="mx-2">/</span>}
 						<a
 							href={SOCIAL.HREF}
 							aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
@@ -21,9 +22,9 @@ const TITLE = "About me";
 						>
 							{SOCIAL.NAME}
 						</a>
-					</li>
+					</>
 				))
 			}
-		</ul>
+		</div>
 	</Container>
 </Layout>
