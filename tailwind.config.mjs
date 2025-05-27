@@ -12,6 +12,12 @@ export default {
         DEFAULT: {
           css: {
             "--tw-prose-body": "#000",
+            "ul > li": {
+              lineHeight: "1.4",
+            },
+            "ol > li": {
+              lineHeight: "1.4",
+            },
           },
         },
       }),
