@@ -25,7 +25,7 @@ const favicon = entry.collection !== "posts" ? await getFavicon(href) : "";
 	<span class="whitespace-nowrap">
 		<time datetime={isoDateTime}>{date}</time>:
 	</span>
-	<a href={href} class="inline underline hover:text-blue-600">
+	<a href={href} class="inline underline decoration-dotted hover:text-blue-600">
 		{entry.data.title}
 		{
 			entry.collection !== "posts" && favicon && (
