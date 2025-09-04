@@ -15,4 +15,11 @@ const qiita = defineCollection({
 	loader: rssLoader({ url: "https://qiita.com/736b/feed", tag: "qiita" }),
 });
 
-export const collections = { posts, zenn, qiita };
+const speakerdeck = defineCollection({
+	loader: rssLoader({
+		url: "https://speakerdeck.com/shiomiyan.rss",
+		tag: "slides",
+	}),
+});
+
+export const collections = { posts, zenn, qiita, speakerdeck };

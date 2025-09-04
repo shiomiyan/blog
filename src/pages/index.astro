@@ -4,7 +4,12 @@ import EntryList from "@components/EntryList.astro";
 import { SITE } from "@constants";
 import { getCollectionByCollectionKeys } from "@lib/utils";
 
-const posts = await getCollectionByCollectionKeys("posts", "zenn", "qiita");
+const posts = await getCollectionByCollectionKeys(
+	"posts",
+	"zenn",
+	"qiita",
+	"speakerdeck"
+);
 ---
 
 <Layout title={SITE.TITLE} description={SITE.DESCRIPTION}>

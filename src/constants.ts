@@ -44,5 +44,6 @@ export const TAGS = {
 	"browser": "Browser",
 	"rfc": "RFC",
 	"site-updates": "Site updates",
-	"weekly-report": "Weekly report"
+	"weekly-report": "Weekly report",
+	"slides": "Slides",
 } as const;
