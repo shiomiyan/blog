@@ -22,7 +22,7 @@
     "@pagefind/default-ui": "^1.4.0",
     "@tailwindcss/vite": "^4.1.12",
     "98.css": "^0.1.21",
-    "astro": "^5.13.5",
+    "astro": "^5.14.4",
     "marked": "^16.2.1",
     "pagefind": "^1.4.0",
     "rehype-external-links": "^3.0.0",
