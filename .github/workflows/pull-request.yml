@@ -26,6 +26,3 @@ jobs:
 
       - name: Build
         run: npm run build
-
-      - name: Report status
-        run: echo "Build successfully completed!" 
