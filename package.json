@@ -15,35 +15,35 @@
     "create-post": "tsx bin/create-post.ts"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.5",
-    "@astrojs/mdx": "^4.3.10",
-    "@astrojs/rss": "^4.0.13",
+    "@astrojs/check": "^0.9.6",
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/rss": "^4.0.14",
     "@astrojs/sitemap": "^3.6.0",
     "@pagefind/default-ui": "^1.4.0",
-    "@tailwindcss/vite": "^4.1.17",
+    "@tailwindcss/vite": "^4.1.18",
     "98.css": "^0.1.21",
-    "astro": "^5.15.5",
-    "marked": "^17.0.0",
+    "astro": "^5.16.5",
+    "marked": "^17.0.1",
     "pagefind": "^1.4.0",
     "rehype-external-links": "^3.0.0",
     "rss-parser": "^3.13.0",
     "sanitize-html": "^2.17.0",
-    "tailwindcss": "^4.1.17",
+    "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
-    "ulid": "^3.0.1"
+    "ulid": "^3.0.2"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.19",
     "@types/sanitize-html": "^2.16.0",
-    "prettier": "^3.6.2",
+    "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-organize-imports": "^4.3.0",
-    "prettier-plugin-tailwindcss": "^0.7.1",
-    "textlint": "^15.3.0",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "textlint": "^15.5.0",
     "textlint-filter-rule-allowlist": "^4.0.0",
     "textlint-rule-preset-ja-technical-writing": "^12.0.2",
-    "tsx": "^4.20.6",
-    "wrangler": "^4.47.0"
+    "tsx": "^4.21.0",
+    "wrangler": "^4.54.0"
   },
   "overrides": {
     "rollup": "npm:@rollup/wasm-node@^4.40.2"
