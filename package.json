@@ -21,7 +21,6 @@
     "@astrojs/sitemap": "^3.6.0",
     "@pagefind/default-ui": "^1.4.0",
     "@tailwindcss/vite": "^4.1.18",
-    "98.css": "^0.1.21",
     "astro": "^5.16.5",
     "marked": "^17.0.1",
     "pagefind": "^1.4.0",
