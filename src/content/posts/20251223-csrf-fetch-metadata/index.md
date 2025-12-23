@@ -7,6 +7,10 @@ tags:
   - security
 ---
 
+[東葛.dev Advent Calendar 2025](https://adventar.org/calendars/11653)、21日目の記事です。
+
+（現在時刻: 2025年12月21日72時43分（:suimasen:））
+
 すでにN番煎じとなりつつありますが、モダンなCSRF対策の話です。
 
 ## Fetch Metadata
