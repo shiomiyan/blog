@@ -4,12 +4,19 @@ import Container from "@components/Container.astro";
 import Category from "@components/Category.astro";
 import { getCollectionByCollectionKeys } from "@lib/utils";
 import { CATEGORIES } from "@/constants";
+import type { CollectionEntry } from "astro:content";
 
 type CategoryKey = (typeof CATEGORIES)[number];
+type CategoryPostEntry = CollectionEntry<"posts"> & {
+	data: CollectionEntry<"posts">["data"] & { category: CategoryKey };
+};
 
 const posts = (
 	await getCollectionByCollectionKeys("posts", "zenn", "qiita")
-).filter((post) => post.data.category);
+).filter(
+	(post): post is CategoryPostEntry =>
+		"category" in post.data && Boolean(post.data.category),
+);
 
 const categoryCounts = Object.fromEntries(
 	CATEGORIES.map((category) => [category, 0]),
