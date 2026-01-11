@@ -6,6 +6,7 @@ ulid: 01GKDW6478X302QKXRVGQW2G3G
 tags:
   - security
   - random
+category: Tech
 ---
 
 ![](score.png)

@@ -22,6 +22,8 @@ export const SOCIALS = [
 	},
 ] as const;
 
+export const CATEGORIES = ["Tech", "Diary"] as const;
+
 /**
  * Mapping of tag definitions can be used in this site.
  */

@@ -6,6 +6,7 @@ ulid: 01JQQKR00P3C9WXBWSZABXKKVN
 tags:
   - browser
   - rfc
+category: Tech
 ---
 
 日々HTTPメッセージと格闘していると、まじでどうでも良さそうなことを調べたくなります。その備忘録です。

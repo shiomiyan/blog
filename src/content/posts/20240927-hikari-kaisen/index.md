@@ -5,6 +5,7 @@ description: ""
 ulid: 01J8RCDZ00264V21QGG4B6AYFB
 tags:
   - random
+category: Diary
 ---
 
 引っ越しにあたり、自宅回線を引いて周辺端末を調達した話を書きます。

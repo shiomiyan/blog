@@ -6,6 +6,7 @@ ulid: 01JK0X8J5K9NXZW584CDAA5XQ3
 tags:
   - deno
   - typescript
+category: Tech
 ---
 
 ブラウザ機能だとかの検証のために、サクッとウェブアプリを作りたいときにDenoとHonoの組み合わせが便利でした。次のような感じでサクッとアプリを書けます。

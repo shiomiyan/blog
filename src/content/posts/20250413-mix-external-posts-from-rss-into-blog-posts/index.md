@@ -6,6 +6,7 @@ ulid: 01JRQGCNPR70143HF9Y7KVNFY1
 tags:
   - astro
   - typescript
+category: Tech
 ---
 
 Astroで外部サイトのRSSから記事を取得して、ブログに混ぜて表示するときのメモ。

@@ -5,6 +5,7 @@ description: ""
 ulid: 01JJV8TFHJVEY0090QKHH6E9WC
 tags:
   - random
+category: Diary
 ---
 
 インフルエンザ感染者数が過去最大と話題ですが、2度目（もしかしたら3度目）のCOVID-19🦠罹患となりました。

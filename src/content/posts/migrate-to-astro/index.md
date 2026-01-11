@@ -6,6 +6,7 @@ ulid: 01J2CZ1600DCRN6FTV3KZRW035
 tags:
   - astro
   - site-updates
+category: Tech
 ---
 
 このブログで利用している静的サイトジェネレータをHugoから[Astro](https://astro.build/)に乗り換えた。

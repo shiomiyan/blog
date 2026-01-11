@@ -6,6 +6,7 @@ ulid: 01GX8N6278H7Y4EA8T4ZB89JMR
 tags:
   - security
   - random
+category: Tech
 ---
 
 Hack The Boxを始めてからとりあえずの目標にしていた[Hackerランクに（3ヶ月ほど前に）到達した](https://twitter.com/shiomiyan/status/16128302030589829150)ので、やったこととか感想などを忘れないうちに（3ヶ月立ってしまったが）まとめてみる。

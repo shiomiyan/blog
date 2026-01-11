@@ -5,6 +5,7 @@ description: ""
 ulid: 01JSNA2927QP1S6JJ7P8EZ5VY6
 tags:
   - random
+category: Tech
 ---
 
 ## TL;DR

@@ -5,6 +5,7 @@ description: ""
 ulid: 01JBFXYD0060S8W3R3417SNKTA
 tags:
   - cloudflare
+category: Tech
 ---
 
 ウェブリソースのブックマークは[こんな感じのbookmarklet](https://gist.github.com/kepano/90c05f162c37cf730abb8ff027987ca3)を用意してブラウザからトリガしてObsidianに保存、というスタイルを取っていた。

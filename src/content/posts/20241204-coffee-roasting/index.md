@@ -5,6 +5,7 @@ description: ""
 ulid: 01JE7FEV00Z816DJYP48CZDPMF
 tags:
   - raspberry-pi
+category: Tech
 ---
 
 [Raspberry Pi Advent Calendar 2024](https://adventar.org/calendars/10003)の4日目の記事です。

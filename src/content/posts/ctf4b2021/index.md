@@ -6,6 +6,7 @@ ulid: 01F6FAP7E8720255V5PZJ84JC7
 tags:
   - security
   - random
+category: Tech
 ---
 
 CTF に初参戦したので、参加記兼 Writeup ということで書きます。

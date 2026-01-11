@@ -1,9 +1,10 @@
-import { TAGS } from "@/constants";
+import { CATEGORIES, TAGS } from "@/constants";
 import { z } from "astro:content";
 
 const tagKeys = Object.keys(TAGS) as [keyof typeof TAGS];
 
 const tagSchema = z.array(z.enum(tagKeys)).default([]);
+const categorySchema = z.enum(CATEGORIES).optional();
 
 export const postSchema = z.object({
 	title: z.string(),
@@ -11,6 +12,7 @@ export const postSchema = z.object({
 	date: z.coerce.date(),
 	draft: z.boolean().optional(),
 	ulid: z.string(),
+	category: categorySchema,
 	tags: tagSchema,
 });
 

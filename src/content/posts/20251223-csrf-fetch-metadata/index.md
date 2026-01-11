@@ -5,6 +5,7 @@ description: ""
 ulid: 01KD5RXACHX8CMEPSEWJVHY8KR
 tags:
   - security
+category: Tech
 ---
 
 [東葛.dev Advent Calendar 2025](https://adventar.org/calendars/11653)、21日目の記事です。

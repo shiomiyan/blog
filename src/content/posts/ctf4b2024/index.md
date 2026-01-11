@@ -6,6 +6,7 @@ ulid: 01J0GJ4540APFMGEGP7VG5H2Z3
 tags:
   - security
   - random
+category: Tech
 ---
 
 今年も...って思ったら多分2021以来まともに参加していなかった。
