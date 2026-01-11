@@ -1,0 +1,54 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import Category from "@components/Category.astro";
+import { getCollectionByCollectionKeys } from "@lib/utils";
+import { CATEGORIES } from "@/constants";
+
+type CategoryKey = (typeof CATEGORIES)[number];
+
+const posts = (
+	await getCollectionByCollectionKeys("posts", "zenn", "qiita")
+).filter((post) => post.data.category);
+
+const categoryCounts = Object.fromEntries(
+	CATEGORIES.map((category) => [category, 0]),
+) as Record<CategoryKey, number>;
+
+for (const { data } of posts) {
+	if (!data.category) continue;
+	categoryCounts[data.category] = (categoryCounts[data.category] ?? 0) + 1;
+}
+
+const categories = CATEGORIES.map((category) => ({
+	slug: category,
+	count: categoryCounts[category],
+}));
+
+const meta = {
+	description: "A list of all categories",
+	title: "Categories",
+};
+---
+
+<Layout {...meta}>
+	<Container>
+		<div class="mt-10" data-pagefind-ignore="all">
+			<div class="space-y-4">
+				<section class="space-y-4">
+					<ul
+						class="grid list-none grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4"
+					>
+						{
+							categories.map((category) => (
+								<li>
+									<Category category={category.slug} count={category.count} />
+								</li>
+							))
+						}
+					</ul>
+				</section>
+			</div>
+		</div>
+	</Container>
+</Layout>

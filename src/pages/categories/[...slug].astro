@@ -1,0 +1,27 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "@layouts/Layout.astro";
+import EntryList from "@components/EntryList.astro";
+import { getCollectionByCollectionKeys } from "@lib/utils";
+import { CATEGORIES } from "@/constants";
+
+type CategoryKey = (typeof CATEGORIES)[number];
+
+export const getStaticPaths: GetStaticPaths = async () => {
+	return CATEGORIES.map((category) => ({ params: { slug: category } }));
+};
+
+const { slug } = Astro.params as { slug: CategoryKey };
+const posts = (
+	await getCollectionByCollectionKeys("posts", "zenn", "qiita")
+).filter((post) => post.data.category === slug);
+
+const meta = {
+	description: `Posts in category ${slug}`,
+	title: `category: ${slug}`,
+};
+---
+
+<Layout title={meta.title} description={meta.description}>
+	<EntryList entries={posts} />
+</Layout>
