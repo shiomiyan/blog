@@ -9,7 +9,7 @@ type CategoryKey = (typeof CATEGORIES)[number];
 
 const posts = (
 	await getCollectionByCollectionKeys("posts", "zenn", "qiita")
-).filter((post) => post.data.category);
+).filter((post) => "category" in post.data && post.data.category);
 
 const categoryCounts = Object.fromEntries(
 	CATEGORIES.map((category) => [category, 0]),

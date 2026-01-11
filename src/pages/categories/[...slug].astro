@@ -14,7 +14,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 const { slug } = Astro.params as { slug: CategoryKey };
 const posts = (
 	await getCollectionByCollectionKeys("posts", "zenn", "qiita")
-).filter((post) => post.data.category === slug);
+).filter(
+	(post) => "category" in post.data && post.data.category === slug,
+);
 
 const meta = {
 	description: `Posts in category ${slug}`,
