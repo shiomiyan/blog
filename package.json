@@ -18,10 +18,10 @@
     "@astrojs/check": "^0.9.6",
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/rss": "^4.0.14",
-    "@astrojs/sitemap": "^3.6.0",
+    "@astrojs/sitemap": "^3.6.1",
     "@pagefind/default-ui": "^1.4.0",
     "@tailwindcss/vite": "^4.1.18",
-    "astro": "^5.16.5",
+    "astro": "^5.16.8",
     "marked": "^17.0.1",
     "pagefind": "^1.4.0",
     "rehype-external-links": "^3.0.0",
@@ -42,7 +42,7 @@
     "textlint-filter-rule-allowlist": "^4.0.0",
     "textlint-rule-preset-ja-technical-writing": "^12.0.2",
     "tsx": "^4.21.0",
-    "wrangler": "^4.54.0"
+    "wrangler": "^4.58.0"
   },
   "overrides": {
     "rollup": "npm:@rollup/wasm-node@^4.53.3"
