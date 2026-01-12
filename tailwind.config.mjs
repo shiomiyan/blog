@@ -8,7 +8,7 @@ export default {
         sans: ['sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji"'],
         mono: ['ui-monospace,SFMono-Regular,Consolas,Menlo,Monaco,Liberation Mono,Courier New,Droid Sans Mono,monospace'],
       },
-      typography: (theme) => ({
+      typography: () => ({
         DEFAULT: {
           css: {
             "--tw-prose-body": "#000",

@@ -8,17 +8,30 @@ interface Props {
 }
 
 const { entries } = Astro.props;
+const hasHeader = Astro.slots.has("header");
 ---
 
 <Container>
 	<div class="mt-10" data-pagefind-ignore="all">
-		<ul class="not-prose flex flex-col gap-2">
+		{
+			hasHeader && (
+				<div class="mb-4">
+					<slot name="header" />
+				</div>
+			)
+		}
+		<ul class="not-prose flex flex-col gap-2" data-entry-list>
 			{
-				entries.map((entry) => (
-					<li>
-						<EntryCard entry={entry} />
-					</li>
-				))
+				entries.map((entry) => {
+					const category =
+						"category" in entry.data ? entry.data.category : undefined;
+
+					return (
+						<li data-entry data-category={category ?? ""}>
+							<EntryCard entry={entry} />
+						</li>
+					);
+				})
 			}
 		</ul>
 	</div>

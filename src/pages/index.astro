@@ -1,7 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import EntryList from "@components/EntryList.astro";
-import { SITE } from "@constants";
+import { SITE, CATEGORIES } from "@constants";
 import { getCollectionByCollectionKeys } from "@lib/utils";
 
 const posts = await getCollectionByCollectionKeys(
@@ -13,5 +13,70 @@ const posts = await getCollectionByCollectionKeys(
 ---
 
 <Layout title={SITE.TITLE} description={SITE.DESCRIPTION}>
-	<EntryList entries={posts} />
+	<EntryList entries={posts}>
+		<nav slot="header" aria-label="Categories">
+			<ul class="not-prose flex flex-wrap gap-2">
+				<li>
+					<button
+						type="button"
+						class="rounded-lg border border-black/15 px-2 py-0.5 font-mono text-xs hover:bg-gray-200"
+						data-category-filter="all"
+						aria-pressed="true"
+					>
+						All
+					</button>
+				</li>
+				{CATEGORIES.map((category) => (
+					<li>
+						<button
+							type="button"
+							class="rounded-lg border border-black/15 px-2 py-0.5 font-mono text-xs hover:bg-gray-200"
+							data-category-filter={category}
+							aria-pressed="false"
+						>
+							{category}
+						</button>
+					</li>
+				))}
+			</ul>
+		</nav>
+	</EntryList>
+	<script>
+		document.addEventListener("astro:page-load", () => {
+			const filterButtons = Array.from(
+				document.querySelectorAll<HTMLButtonElement>(
+					"[data-category-filter]",
+				),
+			);
+			const entries = Array.from(
+				document.querySelectorAll<HTMLLIElement>("[data-entry]"),
+			);
+
+			if (filterButtons.length === 0 || entries.length === 0) return;
+
+			const activeClassName = "bg-gray-200";
+			const applyFilter = (value: string) => {
+				for (const entry of entries) {
+					const category = entry.dataset.category ?? "";
+					const isVisible = value === "all" || category === value;
+					entry.hidden = !isVisible;
+				}
+
+				for (const button of filterButtons) {
+					const isActive = button.dataset.categoryFilter === value;
+					button.setAttribute("aria-pressed", String(isActive));
+					button.classList.toggle(activeClassName, isActive);
+				}
+			};
+
+			for (const button of filterButtons) {
+				button.addEventListener("click", () => {
+					const value = button.dataset.categoryFilter ?? "all";
+					applyFilter(value);
+				});
+			}
+
+			applyFilter("all");
+		});
+	</script>
 </Layout>
