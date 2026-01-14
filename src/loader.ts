@@ -1,4 +1,4 @@
-import type { TAGS } from "@constants";
+import type { CATEGORIES, TAGS } from "@constants";
 import { rssSchema } from "@schema";
 import type { Loader } from "astro/loaders";
 import Parser from "rss-parser";
@@ -6,6 +6,7 @@ import Parser from "rss-parser";
 export const rssLoader = (options: {
 	url: string;
 	tag: keyof typeof TAGS;
+	category?: (typeof CATEGORIES)[number];
 }): Loader => {
 	return {
 		name: "rss-loader",
@@ -32,6 +33,7 @@ export const rssLoader = (options: {
 						title: item.title,
 						link: item.link,
 						date: new Date(item.pubDate),
+						category: options.category,
 						tags: [options.tag],
 					},
 				});

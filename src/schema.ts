@@ -20,5 +20,6 @@ export const rssSchema = z.object({
 	title: z.string(),
 	link: z.string(),
 	date: z.date(),
+	category: categorySchema,
 	tags: tagSchema,
 });
