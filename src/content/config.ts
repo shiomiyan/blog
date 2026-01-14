@@ -15,6 +15,14 @@ const qiita = defineCollection({
 	loader: rssLoader({ url: "https://qiita.com/736b/feed", tag: "qiita" }),
 });
 
+const note = defineCollection({
+	loader: rssLoader({
+		url: "https://note.com/736b/rss",
+		tag: "random",
+		category: "Diary",
+	}),
+});
+
 const speakerdeck = defineCollection({
 	loader: rssLoader({
 		url: "https://speakerdeck.com/shiomiyan.rss",
@@ -22,4 +30,4 @@ const speakerdeck = defineCollection({
 	}),
 });
 
-export const collections = { posts, zenn, qiita, speakerdeck };
+export const collections = { posts, zenn, qiita, speakerdeck, note };

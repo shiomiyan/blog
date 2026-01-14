@@ -8,7 +8,8 @@ const posts = await getCollectionByCollectionKeys(
 	"posts",
 	"zenn",
 	"qiita",
-	"speakerdeck"
+	"speakerdeck",
+	"note"
 );
 ---
 
@@ -26,30 +27,30 @@ const posts = await getCollectionByCollectionKeys(
 						All
 					</button>
 				</li>
-				{CATEGORIES.map((category) => (
-					<li>
-						<button
-							type="button"
-							class="rounded-lg border border-black/15 px-2 py-0.5 font-mono text-xs hover:bg-gray-200"
-							data-category-filter={category}
-							aria-pressed="false"
-						>
-							{category}
-						</button>
-					</li>
-				))}
+				{
+					CATEGORIES.map((category) => (
+						<li>
+							<button
+								type="button"
+								class="rounded-lg border border-black/15 px-2 py-0.5 font-mono text-xs hover:bg-gray-200"
+								data-category-filter={category}
+								aria-pressed="false"
+							>
+								{category}
+							</button>
+						</li>
+					))
+				}
 			</ul>
 		</nav>
 	</EntryList>
 	<script>
 		document.addEventListener("astro:page-load", () => {
 			const filterButtons = Array.from(
-				document.querySelectorAll<HTMLButtonElement>(
-					"[data-category-filter]",
-				),
+				document.querySelectorAll<HTMLButtonElement>("[data-category-filter]")
 			);
 			const entries = Array.from(
-				document.querySelectorAll<HTMLLIElement>("[data-entry]"),
+				document.querySelectorAll<HTMLLIElement>("[data-entry]")
 			);
 
 			if (filterButtons.length === 0 || entries.length === 0) return;
