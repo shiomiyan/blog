@@ -45,12 +45,5 @@
     "typescript": "^6.0.2",
     "ulid": "^3.0.2",
     "wrangler": "^4.78.0"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "sharp",
-      "workerd"
-    ]
   }
 }
