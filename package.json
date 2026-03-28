@@ -17,6 +17,7 @@
     "create-post": "tsx bin/create-post.ts"
   },
   "devDependencies": {
+    "98.css": "^0.1.21",
     "@astrojs/check": "^0.9.8",
     "@astrojs/cloudflare": "^13.1.4",
     "@astrojs/mdx": "^5.0.3",

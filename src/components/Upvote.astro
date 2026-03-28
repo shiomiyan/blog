@@ -1,4 +1,6 @@
 ---
+import ninetyEightCssUrl from "98.css/dist/98.css?url";
+
 interface Props {
   postId: string;
 }
@@ -7,56 +9,112 @@ const { postId } = Astro.props;
 ---
 
 <upvote-button data-post-id={postId} title="Click to upvote this post!">
-  <button
-    class="cursor-pointer rounded-lg border border-black/15 px-3 py-0.5 font-mono hover:bg-gray-200"
-    >👍&nbsp;<span>0</span></button
-  >
+  <template shadowrootmode="open">
+    <link rel="stylesheet" href={ninetyEightCssUrl} />
+    <style>
+      :host {
+        display: inline-block;
+      }
+
+      button {
+        align-items: center;
+        cursor: pointer;
+        display: inline-flex;
+        gap: 0.35rem;
+        justify-content: center;
+        line-height: 1;
+      }
+
+      .count {
+        min-width: 1ch;
+      }
+
+      .icon {
+        flex: none;
+        color: #222;
+        font-size: 14px;
+        line-height: 1;
+        text-shadow: none;
+      }
+    </style>
+    <button class="default" type="button">
+      <span class="icon" aria-hidden="true">👍</span>
+      <span>Upvote</span>
+      <span class="count" aria-live="polite">0</span>
+    </button>
+  </template>
 </upvote-button>
 
 <script>
   type UpvoteResponse = {
-    upvotes: string | number;
+    upvotes: number;
   };
 
   class UpvoteButton extends HTMLElement {
-    constructor() {
-      super();
+    private button: HTMLButtonElement | null = null;
+    private count: HTMLSpanElement | null = null;
+    private isSubmitting = false;
 
-      const postId = this.dataset.postId;
-      const button = this.querySelector("button");
-      const count = this.querySelector("span");
-
-      if (!button || !count) {
-        throw new Error("Upvote button or count element not found");
-      }
-
-      button.addEventListener("click", async () => {
-        try {
-          const response = await fetch("/api/upvote", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ post_id: postId }),
-          });
-
-          if (!response.ok) {
-            throw new Error("Failed to update upvote");
-          }
-
-          const updated = (await response.json()) as UpvoteResponse;
-          count.textContent = String(updated.upvotes);
-        } catch (error) {
-          console.error(error);
-        }
-      });
+    connectedCallback() {
+      this.initializeElements();
+      this.button?.addEventListener("click", this.handleClick);
+      void this.loadUpvotes();
     }
 
-    async connectedCallback() {
-      const postId = this.dataset.postId;
-      const count = this.querySelector("span");
+    disconnectedCallback() {
+      this.button?.removeEventListener("click", this.handleClick);
+    }
 
-      if (!count) return;
+    private initializeElements() {
+      if (this.button && this.count) return;
+
+      const shadowRoot = this.shadowRoot;
+
+      if (!shadowRoot) {
+        throw new Error("Upvote shadow root not found");
+      }
+
+      this.button = shadowRoot.querySelector("button");
+      this.count = shadowRoot.querySelector(".count");
+
+      if (!this.button || !this.count) {
+        throw new Error("Upvote button or count element not found");
+      }
+    }
+
+    private handleClick = async () => {
+      const postId = this.dataset.postId;
+
+      if (!postId || !this.button || !this.count || this.isSubmitting) return;
+
+      this.isSubmitting = true;
+
+      try {
+        const response = await fetch("/api/upvote", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ post_id: postId }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to update upvote");
+        }
+
+        const updated = (await response.json()) as UpvoteResponse;
+        this.count.textContent = String(updated.upvotes);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.isSubmitting = false;
+      }
+    };
+
+    private async loadUpvotes() {
+      const postId = this.dataset.postId;
+
+      if (!postId || !this.count) return;
 
       try {
         const response = await fetch(`/api/upvote?post_id=${postId}`);
@@ -64,11 +122,14 @@ const { postId } = Astro.props;
           throw new Error("Failed to GET upvote count");
         }
         const data = (await response.json()) as UpvoteResponse;
-        count.textContent = String(data.upvotes);
+        this.count.textContent = String(data.upvotes);
       } catch (error) {
         console.error(error);
       }
     }
   }
-  customElements.define("upvote-button", UpvoteButton);
+
+  if (!customElements.get("upvote-button")) {
+    customElements.define("upvote-button", UpvoteButton);
+  }
 </script>

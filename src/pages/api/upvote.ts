@@ -4,6 +4,8 @@ import { env } from "cloudflare:workers";
 
 const ERROR_MESSAGE_POST_ID_REQUIRED = "post_id is required";
 const ERROR_MESSAGE_INVALID_ULID = "Invalid ULID";
+const ERROR_MESSAGE_INVALID_UPVOTE_COUNT = "Invalid upvote count";
+const DEFAULT_UPVOTE_COUNT = 1;
 
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -18,6 +20,19 @@ const getKnownPostIds = async () => {
   return new Set(posts.map((post: CollectionEntry<"posts">) => post.data.ulid));
 };
 
+const parseUpvoteCount = (rawUpvoteCount: string | null) => {
+  const upvoteCount = parseInt(
+    rawUpvoteCount ?? DEFAULT_UPVOTE_COUNT.toString(),
+    10,
+  );
+
+  if (Number.isNaN(upvoteCount)) {
+    throw new Error(ERROR_MESSAGE_INVALID_UPVOTE_COUNT);
+  }
+
+  return upvoteCount;
+};
+
 export const GET: APIRoute = async ({ request }) => {
   try {
     const url = new URL(request.url);
@@ -27,9 +42,8 @@ export const GET: APIRoute = async ({ request }) => {
       throw new Error(ERROR_MESSAGE_POST_ID_REQUIRED);
     }
 
-    const upvotes = parseInt(
-      (await env.BLOG_736B_MOE_UPVOTE_COUNTER.get(postId)) || "1",
-      10,
+    const upvotes = parseUpvoteCount(
+      await env.BLOG_736B_MOE_UPVOTE_COUNTER.get(postId),
     );
 
     return json({
@@ -57,9 +71,8 @@ export const POST: APIRoute = async ({ request }) => {
       throw new Error(ERROR_MESSAGE_INVALID_ULID);
     }
 
-    const currentUpvotes = parseInt(
-      (await env.BLOG_736B_MOE_UPVOTE_COUNTER.get(postId)) || "1",
-      10,
+    const currentUpvotes = parseUpvoteCount(
+      await env.BLOG_736B_MOE_UPVOTE_COUNTER.get(postId),
     );
     const newUpvotes = currentUpvotes + 1;
 
