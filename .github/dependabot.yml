@@ -2,6 +2,8 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
+    schedule:
+      interval: "daily"
     cooldown:
       semver-major-days: 3
     ignore:
@@ -11,6 +13,8 @@ updates:
 
   - package-ecosystem: "github-actions"
     directory: "/"
+    schedule:
+      interval: "daily"
     cooldown:
       semver-major-days: 3
     ignore:
