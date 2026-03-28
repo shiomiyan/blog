@@ -46,6 +46,7 @@ secretsは次のようになってます。
 [cloudflare/wrangler-action](https://github.com/cloudflare/wrangler-action)を使ってデプロイします。Actionsのyamlは次のようになりました。
 
 ```yaml
+
 ...
 jobs:
   deploy:
@@ -61,7 +62,7 @@ jobs:
       - name: Build
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
       - run: npm ci
       - run: npm run build
 

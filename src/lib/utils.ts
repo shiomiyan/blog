@@ -1,7 +1,7 @@
 import {
   getCollection,
-  type CollectionKey,
   type CollectionEntry,
+  type CollectionKey,
 } from "astro:content";
 
 /**
@@ -36,9 +36,7 @@ export const getFavicon = async (url: string): Promise<string | undefined> => {
  * Retrieve all posts data including external posts.
  * @returns Posts collection sorted by date (newest first)
  */
-export const getCollectionByCollectionKeys = async <
-  C extends CollectionKey,
->(
+export const getCollectionByCollectionKeys = async <C extends CollectionKey>(
   ...collectionKeys: C[]
 ): Promise<CollectionEntry<C>[]> => {
   const promises = collectionKeys.map((collectionKey) =>

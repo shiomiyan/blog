@@ -56,7 +56,6 @@ CPUに関して、MacBook Proのそれと比較すると、[ベンチマーク](
 
 </div></details>
 
-
 ## 下準備
 
 - Windows上で実施した作業

@@ -20,18 +20,18 @@ Astro 5.0以降では[Content Loader API](https://docs.astro.build/en/reference/
 ```ts
 // Astro内部の記事
 const posts = defineCollection({
-	type: "content",
-	schema: postSchema,
+  type: "content",
+  schema: postSchema,
 });
 
 // ZennのRSSから取得した記事
 const zenn = defineCollection({
-	loader: rssLoader({ url: "https://zenn.dev/736b/feed", tag: "zenn" }),
+  loader: rssLoader({ url: "https://zenn.dev/736b/feed", tag: "zenn" }),
 });
 
 // QiitaのRSSから取得した記事
 const qiita = defineCollection({
-	loader: rssLoader({ url: "https://qiita.com/736b/feed", tag: "qiita" }),
+  loader: rssLoader({ url: "https://qiita.com/736b/feed", tag: "qiita" }),
 });
 
 export const collections = { posts, zenn, qiita };
@@ -53,20 +53,20 @@ type Post = {
     title: string;
     pubdate: Date;
     link: string;
-		// ...
+    // ...
   };
 };
 
 const merged = async (): Promise<Post[]> => {
-	const result: Post[] = [];
-	const posts = (await getCollection("posts")) as Post[];
-	const zenn = (await getCollection("zenn")) as Post[];
-	const qiita = (await getCollection("qiita")) as Post[];
-	result.push(...posts, ...zenn, ...qiita);
+  const result: Post[] = [];
+  const posts = (await getCollection("posts")) as Post[];
+  const zenn = (await getCollection("zenn")) as Post[];
+  const qiita = (await getCollection("qiita")) as Post[];
+  result.push(...posts, ...zenn, ...qiita);
 
-	// resultを日付でソートする処理（ここでは省略）
+  // resultを日付でソートする処理（ここでは省略）
 
-	return result;
+  return result;
 };
 ```
 
@@ -83,32 +83,36 @@ const merged = async (): Promise<Post[]> => {
 Astroでは、`getCollection`関数は次のように定義されていた。
 
 > ```ts
-> export function getCollection<C extends keyof AnyEntryMap, E extends CollectionEntry<C>>(
-> 	collection: C,
-> 	filter?: (entry: CollectionEntry<C>) => entry is E,
+> export function getCollection<
+>   C extends keyof AnyEntryMap,
+>   E extends CollectionEntry<C>,
+> >(
+>   collection: C,
+>   filter?: (entry: CollectionEntry<C>) => entry is E,
 > ): Promise<E[]>;
 > export function getCollection<C extends keyof AnyEntryMap>(
-> 	collection: C,
-> 	filter?: (entry: CollectionEntry<C>) => unknown,
+>   collection: C,
+>   filter?: (entry: CollectionEntry<C>) => unknown,
 > ): Promise<CollectionEntry<C>[]>;
 > ```
+>
 > https://github.com/withastro/astro/blob/main/packages/astro/templates/content/types.d.ts#L67-L74
 
 正直細かいことはよくわかっていないが、`AnyEntryMap`と`CollectionEntry`あたりは使えそうだな。ということで書いてみたのがこれ。
 
 ```ts
 export const getCollectionByCollectionKeys = async <
-	C extends keyof AnyEntryMap,
+  C extends keyof AnyEntryMap,
 >(
-	...collections: C[]
+  ...collections: C[]
 ): Promise<CollectionEntry<C>[]> => {
-	const result: CollectionEntry<C>[] = [];
-	for (const collection of collections) {
-		const posts = await getCollection(collection);
-		result.push(...posts);
-	}
-	result.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-	return result;
+  const result: CollectionEntry<C>[] = [];
+  for (const collection of collections) {
+    const posts = await getCollection(collection);
+    result.push(...posts);
+  }
+  result.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  return result;
 };
 ```
 

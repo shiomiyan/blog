@@ -19,7 +19,7 @@ category: Tech
 ## 準備したもの
 
 - [Raspberry Pi 4 Model B (RAM 4G)](https://www.switch-science.com/products/6030)
-    - オーバースペックでしかないですが、いつか役に立つと思って...
+  - オーバースペックでしかないですが、いつか役に立つと思って...
 - ブレッドボード・ジャンパワイヤ
 - [K型熱電対アンプモジュール（MAX31855）](https://akizukidenshi.com/catalog/g/g108218/)
 - [K型熱電対プローブ](https://www.switch-science.com/products/2976)

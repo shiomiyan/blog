@@ -17,6 +17,7 @@ npmの依存関係をアップデートしていたときに、ローカル（ma
 > [cause]: Error: Cannot find module '@rollup/rollup-linux-x64-gnu'
 > ...
 > ```
+>
 > https://github.com/shiomiyan/blog/actions/runs/14482057130/job/40620848586
 
 使用していたGitHub ActionsはLinux環境なので、`@rollup/rollup-linux-x64-gnu`が必要になる。対して（macOS上で生成した）`package-lock.json`には`@rollup/rollup-darwin-x64`が[記載されていた](https://github.com/shiomiyan/blog/blob/d23e9a3e0cc38a618b29b96f085dcdf1c0234588/package-lock.json#L782C19-L782C43)。

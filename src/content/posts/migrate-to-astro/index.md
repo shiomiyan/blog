@@ -32,7 +32,7 @@ JS系フレームワークを触るのも、CSSフレームワークを触るの
 ### UI周り
 
 既存のブログレイアウトは捨てた。
-とはいえ、~~ゼロからUIを考えるほどのやる気はないので~~やはり先人たちの知恵を有効活用するべきなので、[Astro Micro](https://astro.build/themes/details/astro-micro/)というテーマをベースにパッチを当てて使用している。  
+とはいえ、~~ゼロからUIを考えるほどのやる気はないので~~やはり先人たちの知恵を有効活用するべきなので、[Astro Micro](https://astro.build/themes/details/astro-micro/)というテーマをベースにパッチを当てて使用している。
 
 #### フォント
 

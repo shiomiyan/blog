@@ -19,15 +19,15 @@ import { FC } from "jsr:@hono/hono@4.6.8/jsx";
 const app = new Hono();
 
 const MyComponent: FC<{ message: string }> = (props) => {
-    return <h1>{props.message}</h1>;
+  return <h1>{props.message}</h1>;
 };
 
 app.get("/", (c) => {
-    return c.html(
-        <html>
-            <MyComponent message="Foo Bar" />
-        </html>,
-    );
+  return c.html(
+    <html>
+      <MyComponent message="Foo Bar" />
+    </html>,
+  );
 });
 
 Deno.serve({ port: 3000 }, app.fetch);

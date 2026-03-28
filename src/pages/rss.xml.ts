@@ -36,7 +36,9 @@ export async function GET(context: Context) {
       };
     }),
   );
-  items.sort((a: RssItem, b: RssItem) => b.pubDate.getTime() - a.pubDate.getTime());
+  items.sort(
+    (a: RssItem, b: RssItem) => b.pubDate.getTime() - a.pubDate.getTime(),
+  );
 
   return rss({
     title: SITE.TITLE,
