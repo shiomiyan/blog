@@ -35,7 +35,7 @@ if (!title || !slug) {
   process.exit(1);
 }
 
-if (slug.match(/[^a-z0-9\-]/g)) {
+if (slug.match(/[^a-z0-9-]/g)) {
   console.error("Do not use not allowed characters");
   process.exit(1);
 }
