@@ -3,28 +3,30 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import { SOCIALS, SITE } from "@constants";
 
+export const prerender = true;
+
 const TITLE = "About me";
 ---
 
 <Layout title={TITLE} description="">
-	<Container>
-		<div class="mt-10">
-			{
-				SOCIALS.map((SOCIAL, index) => (
-					<>
-						{index > 0 && <span class="mx-2">/</span>}
-						<a
-							href={SOCIAL.HREF}
-							aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="underline"
-						>
-							{SOCIAL.NAME}
-						</a>
-					</>
-				))
-			}
-		</div>
-	</Container>
+  <Container>
+    <div class="mt-10">
+      {
+        SOCIALS.map((SOCIAL, index) => (
+          <>
+            {index > 0 && <span class="mx-2">/</span>}
+            <a
+              href={SOCIAL.HREF}
+              aria-label={`${SITE.TITLE} on ${SOCIAL.NAME}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="underline"
+            >
+              {SOCIAL.NAME}
+            </a>
+          </>
+        ))
+      }
+    </div>
+  </Container>
 </Layout>

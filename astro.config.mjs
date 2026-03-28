@@ -1,16 +1,18 @@
-import { defineConfig } from "astro/config";
+import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
-import rehypeExternalLinks from "rehype-external-links";
 import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from "astro/config";
+import rehypeExternalLinks from "rehype-external-links";
 import pagefindIndexer from "./src/integrations/pagefindIndexer";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://blog.736b.moe",
-	build: {
-		format: "file"
-	},
-  output: "static",
+  adapter: cloudflare(),
+  build: {
+    format: "file",
+  },
+  output: "server",
   integrations: [sitemap(), pagefindIndexer()],
   markdown: {
     shikiConfig: {
@@ -26,10 +28,10 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-	experimental: {
-		contentIntellisense: true,
+  experimental: {
+    contentIntellisense: true,
   },
-	devToolbar: {
-		enabled: false
-	}
+  devToolbar: {
+    enabled: false,
+  },
 });

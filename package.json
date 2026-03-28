@@ -6,16 +6,17 @@
   "scripts": {
     "dev": "astro dev",
     "build": "npm run cf-typegen && astro check && astro build",
-    "preview": "wrangler pages dev ./dist",
+    "preview": "astro preview",
+    "deploy": "npm run build && wrangler deploy",
     "astro": "astro",
-    "cf-typegen": "wrangler types --path ./functions/worker-configuration.d.ts",
-    "wrangler:dev": "npm run build && wrangler pages dev --local --live-reload",
+    "cf-typegen": "wrangler types --path ./src/worker-configuration.d.ts",
     "textlint": "textlint",
     "format": "prettier --write .",
     "create-post": "tsx bin/create-post.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.8",
+    "@astrojs/cloudflare": "^13.1.4",
     "@astrojs/mdx": "^5.0.3",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",

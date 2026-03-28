@@ -1,70 +1,74 @@
 ---
 interface Props {
-	postId: string;
+  postId: string;
 }
 
 const { postId } = Astro.props;
 ---
 
 <upvote-button data-post-id={postId} title="Click to upvote this post!">
-	<button
-		class="cursor-pointer rounded-lg border border-black/15 px-3 py-0.5 font-mono hover:bg-gray-200"
-		>👍&nbsp;<span>0</span></button
-	>
+  <button
+    class="cursor-pointer rounded-lg border border-black/15 px-3 py-0.5 font-mono hover:bg-gray-200"
+    >👍&nbsp;<span>0</span></button
+  >
 </upvote-button>
 
 <script>
-	class UpvoteButton extends HTMLElement {
-		constructor() {
-			super();
+  type UpvoteResponse = {
+    upvotes: string | number;
+  };
 
-			const postId = this.dataset.postId;
-			const button = this.querySelector("button");
-			const count = this.querySelector("span");
+  class UpvoteButton extends HTMLElement {
+    constructor() {
+      super();
 
-			if (!button || !count) {
-				throw new Error("Upvote button or count element not found");
-			}
+      const postId = this.dataset.postId;
+      const button = this.querySelector("button");
+      const count = this.querySelector("span");
 
-			button.addEventListener("click", async () => {
-				try {
-					const response = await fetch("/api/upvote", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify({ post_id: postId }),
-					});
+      if (!button || !count) {
+        throw new Error("Upvote button or count element not found");
+      }
 
-					if (!response.ok) {
-						throw new Error("Failed to update upvote");
-					}
+      button.addEventListener("click", async () => {
+        try {
+          const response = await fetch("/api/upvote", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ post_id: postId }),
+          });
 
-					const updated = await response.json();
-					count.textContent = updated.upvotes;
-				} catch (error) {
-					console.error(error);
-				}
-			});
-		}
+          if (!response.ok) {
+            throw new Error("Failed to update upvote");
+          }
 
-		async connectedCallback() {
-			const postId = this.dataset.postId;
-			const count = this.querySelector("span");
+          const updated = (await response.json()) as UpvoteResponse;
+          count.textContent = String(updated.upvotes);
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    }
 
-			if (!count) return;
+    async connectedCallback() {
+      const postId = this.dataset.postId;
+      const count = this.querySelector("span");
 
-			try {
-				const response = await fetch(`/api/upvote?post_id=${postId}`);
-				if (!response.ok) {
-					throw new Error("Failed to GET upvote count");
-				}
-				const data = await response.json();
-				count.textContent = data.upvotes;
-			} catch (error) {
-				console.error(error);
-			}
-		}
-	}
-	customElements.define("upvote-button", UpvoteButton);
+      if (!count) return;
+
+      try {
+        const response = await fetch(`/api/upvote?post_id=${postId}`);
+        if (!response.ok) {
+          throw new Error("Failed to GET upvote count");
+        }
+        const data = (await response.json()) as UpvoteResponse;
+        count.textContent = String(data.upvotes);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+  customElements.define("upvote-button", UpvoteButton);
 </script>

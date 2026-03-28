@@ -5,48 +5,50 @@ import Tag from "@components/Tag.astro";
 import { getCollectionByCollectionKeys } from "@lib/utils";
 import { TAGS } from "@/constants";
 
+export const prerender = true;
+
 const posts = (
-	await getCollectionByCollectionKeys("posts", "zenn", "qiita")
+  await getCollectionByCollectionKeys("posts", "zenn", "qiita")
 ).filter((post) => post.data.tags);
 const tagCounts = {} as Record<keyof typeof TAGS, number>;
 
 for (const { data } of posts) {
-	for (const tag of (data.tags ?? []) as (keyof typeof TAGS)[]) {
-		tagCounts[tag] = (tagCounts[tag] ?? 0) + 1;
-	}
+  for (const tag of (data.tags ?? []) as (keyof typeof TAGS)[]) {
+    tagCounts[tag] = (tagCounts[tag] ?? 0) + 1;
+  }
 }
 
 const tags = Object.entries(tagCounts)
-	.map<{ slug: keyof typeof TAGS; count: number }>(([slug, count]) => ({
-		slug: slug as keyof typeof TAGS,
-		count,
-	}))
-	.sort((a, b) => a.slug.localeCompare(b.slug));
+  .map<{ slug: keyof typeof TAGS; count: number }>(([slug, count]) => ({
+    slug: slug as keyof typeof TAGS,
+    count,
+  }))
+  .sort((a, b) => a.slug.localeCompare(b.slug));
 
 const meta = {
-	description: "A list of all tags",
-	title: "Tags",
+  description: "A list of all tags",
+  title: "Tags",
 };
 ---
 
 <Layout {...meta}>
-	<Container>
-		<div class="mt-10" data-pagefind-ignore="all">
-			<div class="space-y-4">
-				<section class="space-y-4">
-					<ul
-						class="grid list-none grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4"
-					>
-						{
-							tags.map((tag) => (
-								<li>
-									<Tag tag={tag.slug} count={tag.count} />
-								</li>
-							))
-						}
-					</ul>
-				</section>
-			</div>
-		</div>
-	</Container>
+  <Container>
+    <div class="mt-10" data-pagefind-ignore="all">
+      <div class="space-y-4">
+        <section class="space-y-4">
+          <ul
+            class="grid list-none grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4"
+          >
+            {
+              tags.map((tag) => (
+                <li>
+                  <Tag tag={tag.slug} count={tag.count} />
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+      </div>
+    </div>
+  </Container>
 </Layout>

@@ -4,7 +4,7 @@ import EntryCard from "@components/EntryCard.astro";
 import type { CollectionEntry, CollectionKey } from "astro:content";
 
 interface Props {
-	entries: CollectionEntry<CollectionKey>[];
+  entries: CollectionEntry<CollectionKey>[];
 }
 
 const { entries } = Astro.props;
@@ -12,27 +12,27 @@ const hasHeader = Astro.slots.has("header");
 ---
 
 <Container>
-	<div class="mt-10" data-pagefind-ignore="all">
-		{
-			hasHeader && (
-				<div class="mb-4">
-					<slot name="header" />
-				</div>
-			)
-		}
-		<ul class="not-prose flex flex-col gap-2" data-entry-list>
-			{
-				entries.map((entry) => {
-					const category =
-						"category" in entry.data ? entry.data.category : undefined;
+  <div class="mt-10" data-pagefind-ignore="all">
+    {
+      hasHeader && (
+        <div class="mb-4">
+          <slot name="header" />
+        </div>
+      )
+    }
+    <ul class="not-prose flex flex-col gap-2" data-entry-list>
+      {
+        entries.map((entry) => {
+          const category =
+            "category" in entry.data ? entry.data.category : undefined;
 
-					return (
-						<li data-entry data-category={category ?? ""}>
-							<EntryCard entry={entry} />
-						</li>
-					);
-				})
-			}
-		</ul>
-	</div>
+          return (
+            <li data-entry data-category={category ?? ""}>
+              <EntryCard entry={entry} />
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
 </Container>

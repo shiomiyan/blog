@@ -4,34 +4,36 @@ import { getCollection } from "astro:content";
 import { marked } from "marked";
 import sanitizeHtml from "sanitize-html";
 
+export const prerender = true;
+
 type Context = {
-	site: string;
+  site: string;
 };
 
 export async function GET(context: Context) {
-	const posts = (await getCollection("posts")).filter(
-		(post) => !post.data.draft,
-	);
+  const posts = (await getCollection("posts")).filter(
+    (post) => !post.data.draft,
+  );
 
-	const items = await Promise.all(
-		posts.map(async (item) => {
-			const { title, description, date } = item.data;
-			const content = sanitizeHtml(await marked.parse(item.body ?? ""));
-			return {
-				title,
-				description,
-				pubDate: date,
-				link: `/${item.collection}/${item.id}/`,
-				content,
-			};
-		}),
-	);
-	items.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+  const items = await Promise.all(
+    posts.map(async (item) => {
+      const { title, description, date } = item.data;
+      const content = sanitizeHtml(await marked.parse(item.body ?? ""));
+      return {
+        title,
+        description,
+        pubDate: date,
+        link: `/${item.collection}/${item.id}/`,
+        content,
+      };
+    }),
+  );
+  items.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 
-	return rss({
-		title: SITE.TITLE,
-		description: SITE.DESCRIPTION,
-		site: context.site,
-		items,
-	});
+  return rss({
+    title: SITE.TITLE,
+    description: SITE.DESCRIPTION,
+    site: context.site,
+    items,
+  });
 }

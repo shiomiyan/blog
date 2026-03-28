@@ -16,8 +16,5 @@
     "editor.formatOnSave": true
   },
   "astro.content-intellisense": true,
-  "textlint.languages": [
-    "markdown",
-    "mdx"
-  ]
+  "textlint.languages": ["markdown", "mdx"]
 }

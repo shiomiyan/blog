@@ -5,23 +5,25 @@ import EntryList from "@components/EntryList.astro";
 import { getCollectionByCollectionKeys } from "@lib/utils";
 import { TAGS } from "@/constants";
 
+export const prerender = true;
+
 export const getStaticPaths: GetStaticPaths = async () => {
-	const allTags = Object.keys(TAGS);
-	return allTags.map((tag) => ({ params: { slug: tag } }));
+  const allTags = Object.keys(TAGS);
+  return allTags.map((tag) => ({ params: { slug: tag } }));
 };
 
 const { slug } = Astro.params as { slug: keyof typeof TAGS };
 const posts = (
-	await getCollectionByCollectionKeys("posts", "zenn", "qiita")
+  await getCollectionByCollectionKeys("posts", "zenn", "qiita")
 ).filter((post) => post.data.tags?.includes(slug));
 
 const tagDisplayName = TAGS[slug];
 const meta = {
-	description: `Posts tagged with ${slug}`,
-	title: `tag: ${tagDisplayName}`,
+  description: `Posts tagged with ${slug}`,
+  title: `tag: ${tagDisplayName}`,
 };
 ---
 
 <Layout title={meta.title} description={meta.description}>
-	<EntryList entries={posts} />
+  <EntryList entries={posts} />
 </Layout>

@@ -2,8 +2,8 @@
 import { TAGS } from "@/constants";
 
 type Props = {
-	tag: keyof typeof TAGS;
-	count?: number;
+  tag: keyof typeof TAGS;
+  count?: number;
 };
 
 const { tag, count } = Astro.props;
@@ -11,9 +11,9 @@ const displayName = TAGS[tag];
 ---
 
 <a
-	href={`/tags/${tag}`}
-	class="rounded-lg border border-black/15 px-2 py-0.5 font-mono text-xs hover:bg-gray-200"
-	aria-label={`tag: ${displayName}`}
+  href={`/tags/${tag}`}
+  class="rounded-lg border border-black/15 px-2 py-0.5 font-mono text-xs hover:bg-gray-200"
+  aria-label={`tag: ${displayName}`}
 >
-	{displayName}{count !== undefined && ` (${count})`}
+  {displayName}{count !== undefined && ` (${count})`}
 </a>

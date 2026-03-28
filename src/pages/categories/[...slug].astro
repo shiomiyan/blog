@@ -8,27 +8,29 @@ import { CATEGORIES } from "@/constants";
 
 type CategoryKey = (typeof CATEGORIES)[number];
 type CategoryPostEntry = CollectionEntry<"posts"> & {
-	data: CollectionEntry<"posts">["data"] & { category: CategoryKey };
+  data: CollectionEntry<"posts">["data"] & { category: CategoryKey };
 };
 
+export const prerender = true;
+
 export const getStaticPaths: GetStaticPaths = async () => {
-	return CATEGORIES.map((category) => ({ params: { slug: category } }));
+  return CATEGORIES.map((category) => ({ params: { slug: category } }));
 };
 
 const { slug } = Astro.params as { slug: CategoryKey };
 const posts = (
-	await getCollectionByCollectionKeys("posts", "zenn", "qiita")
+  await getCollectionByCollectionKeys("posts", "zenn", "qiita")
 ).filter(
-	(post): post is CategoryPostEntry =>
-		"category" in post.data && post.data.category === slug,
+  (post): post is CategoryPostEntry =>
+    "category" in post.data && post.data.category === slug,
 );
 
 const meta = {
-	description: `Posts in category ${slug}`,
-	title: `category: ${slug}`,
+  description: `Posts in category ${slug}`,
+  title: `category: ${slug}`,
 };
 ---
 
 <Layout title={meta.title} description={meta.description}>
-	<EntryList entries={posts} />
+  <EntryList entries={posts} />
 </Layout>
