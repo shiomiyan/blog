@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import { env } from "cloudflare:workers";
 
 const ERROR_MESSAGE_POST_ID_REQUIRED = "post_id is required";
@@ -15,7 +15,7 @@ const json = (body: unknown, status = 200) =>
 
 const getKnownPostIds = async () => {
   const posts = await getCollection("posts");
-  return new Set(posts.map((post) => post.data.ulid));
+  return new Set(posts.map((post: CollectionEntry<"posts">) => post.data.ulid));
 };
 
 export const GET: APIRoute = async ({ request }) => {

@@ -1,7 +1,7 @@
 import {
   getCollection,
+  type CollectionKey,
   type CollectionEntry,
-  type DataEntryMap,
 } from "astro:content";
 
 /**
@@ -37,7 +37,7 @@ export const getFavicon = async (url: string): Promise<string | undefined> => {
  * @returns Posts collection sorted by date (newest first)
  */
 export const getCollectionByCollectionKeys = async <
-  C extends keyof DataEntryMap,
+  C extends CollectionKey,
 >(
   ...collectionKeys: C[]
 ): Promise<CollectionEntry<C>[]> => {

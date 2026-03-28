@@ -1,6 +1,6 @@
 import rss from "@astrojs/rss";
 import { SITE } from "@constants";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import { marked } from "marked";
 import sanitizeHtml from "sanitize-html";
 
@@ -10,13 +10,21 @@ type Context = {
   site: string;
 };
 
+type RssItem = {
+  title: string;
+  description: string;
+  pubDate: Date;
+  link: string;
+  content: string;
+};
+
 export async function GET(context: Context) {
   const posts = (await getCollection("posts")).filter(
-    (post) => !post.data.draft,
+    (post: CollectionEntry<"posts">) => !post.data.draft,
   );
 
-  const items = await Promise.all(
-    posts.map(async (item) => {
+  const items: RssItem[] = await Promise.all(
+    posts.map(async (item: CollectionEntry<"posts">) => {
       const { title, description, date } = item.data;
       const content = sanitizeHtml(await marked.parse(item.body ?? ""));
       return {
@@ -28,7 +36,7 @@ export async function GET(context: Context) {
       };
     }),
   );
-  items.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+  items.sort((a: RssItem, b: RssItem) => b.pubDate.getTime() - a.pubDate.getTime());
 
   return rss({
     title: SITE.TITLE,
