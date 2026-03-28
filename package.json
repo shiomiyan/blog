@@ -3,49 +3,53 @@
   "type": "module",
   "version": "0.0.1",
   "private": true,
+  "packageManager": "pnpm@10.25.0",
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run cf-typegen && astro check && astro build",
+    "build": "pnpm run cf-typegen && pnpm run typecheck && astro check && astro build",
     "preview": "astro preview",
-    "deploy": "npm run build && wrangler deploy",
+    "deploy": "pnpm run build && wrangler deploy",
     "astro": "astro",
+    "typecheck": "tsc --NoEmit",
     "cf-typegen": "wrangler types --path ./src/worker-configuration.d.ts",
     "textlint": "textlint",
     "format": "prettier --write .",
     "create-post": "tsx bin/create-post.ts"
   },
-  "dependencies": {
+  "devDependencies": {
     "@astrojs/check": "^0.9.8",
     "@astrojs/cloudflare": "^13.1.4",
     "@astrojs/mdx": "^5.0.3",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
     "@pagefind/default-ui": "^1.4.0",
-    "@tailwindcss/vite": "^4.1.18",
-    "astro": "^6.1.1",
-    "marked": "^17.0.1",
-    "pagefind": "^1.4.0",
-    "rehype-external-links": "^3.0.0",
-    "rss-parser": "^3.13.0",
-    "sanitize-html": "^2.17.0",
-    "tailwindcss": "^4.1.18",
-    "typescript": "^5.9.3",
-    "ulid": "^3.0.2"
-  },
-  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.2",
     "@tailwindcss/typography": "^0.5.19",
-    "@types/sanitize-html": "^2.16.0",
-    "prettier": "^3.7.4",
+    "@types/sanitize-html": "^2.16.1",
+    "astro": "^6.1.1",
+    "marked": "^17.0.5",
+    "pagefind": "^1.4.0",
+    "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-organize-imports": "^4.3.0",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "textlint": "^15.5.0",
+    "rehype-external-links": "^3.0.0",
+    "rss-parser": "^3.13.0",
+    "sanitize-html": "^2.17.2",
+    "tailwindcss": "^4.2.2",
+    "textlint": "^15.5.2",
     "textlint-filter-rule-allowlist": "^4.0.0",
     "textlint-rule-preset-ja-technical-writing": "^12.0.2",
     "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
+    "ulid": "^3.0.2",
     "wrangler": "^4.78.0"
   },
-  "overrides": {
-    "rollup": "npm:@rollup/wasm-node@^4.53.3"
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "workerd"
+    ]
   }
 }

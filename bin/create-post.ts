@@ -5,10 +5,10 @@
  * src/content/posts/<8-digit-datetime>-<slug>/index.mdx
  * ```
  *
- * Run from npm script.
+ * Run from pnpm script.
  *
  * ```
- * npm run create-post -- '<TITLE>' '<SLUG>'
+ * pnpm run create-post -- '<TITLE>' '<SLUG>'
  * ```
  *
  */
