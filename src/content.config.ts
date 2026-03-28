@@ -4,6 +4,7 @@ import { glob } from "astro/loaders";
 import { defineCollection } from "astro:content";
 
 const posts = defineCollection({
+  // Keep post templates prefixed with `_` so they stay out of this glob.
   loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/posts" }),
   schema: postSchema,
 });
