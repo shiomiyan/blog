@@ -1,3 +1,19 @@
+## Tech Stack
+
+**Core**
+
+- Astro 6: Frontend, small APIs, build system
+- TypeScript 6
+
+**Development**
+
+- pnpm: Package management
+- textlint: Linter for Markdown contents
+
+**Deploy**
+
+- Cloudflare wrangler
+
 ## Code Style
 
 ### Function Definition

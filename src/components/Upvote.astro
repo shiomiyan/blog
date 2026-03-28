@@ -51,35 +51,86 @@ const { postId } = Astro.props;
   };
 
   class UpvoteButton extends HTMLElement {
+    static observedAttributes = ["data-post-id"];
+
     private button: HTMLButtonElement | null = null;
     private count: HTMLSpanElement | null = null;
+    private setupFrame: number | null = null;
     private isSubmitting = false;
+    private lastLoadedPostId: string | null = null;
 
     connectedCallback() {
-      this.initializeElements();
-      this.button?.addEventListener("click", this.handleClick);
-      void this.loadUpvotes();
+      this.scheduleSetup({ forceReload: true });
     }
 
     disconnectedCallback() {
+      this.cancelScheduledSetup();
       this.button?.removeEventListener("click", this.handleClick);
+      this.button = null;
+      this.count = null;
+      this.lastLoadedPostId = null;
+    }
+
+    attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
+      if (
+        name !== "data-post-id" ||
+        oldValue === newValue ||
+        !this.isConnected
+      ) {
+        return;
+      }
+
+      if (this.count) {
+        this.count.textContent = "0";
+      }
+
+      this.scheduleSetup({ forceReload: true });
+    }
+
+    private scheduleSetup({ forceReload }: { forceReload: boolean }) {
+      this.cancelScheduledSetup();
+
+      const run = () => {
+        if (!this.isConnected) return;
+
+        if (!this.initializeElements()) {
+          this.setupFrame = window.requestAnimationFrame(run);
+          return;
+        }
+
+        this.setupFrame = null;
+        this.button?.removeEventListener("click", this.handleClick);
+        this.button?.addEventListener("click", this.handleClick);
+        void this.loadUpvotes({ forceReload });
+      };
+
+      this.setupFrame = window.requestAnimationFrame(run);
+    }
+
+    private cancelScheduledSetup() {
+      if (this.setupFrame === null) return;
+
+      window.cancelAnimationFrame(this.setupFrame);
+      this.setupFrame = null;
     }
 
     private initializeElements() {
-      if (this.button && this.count) return;
-
       const shadowRoot = this.shadowRoot;
 
       if (!shadowRoot) {
-        throw new Error("Upvote shadow root not found");
+        return false;
       }
 
-      this.button = shadowRoot.querySelector("button");
-      this.count = shadowRoot.querySelector(".count");
+      const button = shadowRoot.querySelector<HTMLButtonElement>("button");
+      const count = shadowRoot.querySelector<HTMLSpanElement>(".count");
 
-      if (!this.button || !this.count) {
-        throw new Error("Upvote button or count element not found");
+      if (!button || !count) {
+        return false;
       }
+
+      this.button = button;
+      this.count = count;
+      return true;
     }
 
     private handleClick = async () => {
@@ -111,10 +162,13 @@ const { postId } = Astro.props;
       }
     };
 
-    private async loadUpvotes() {
+    private async loadUpvotes({ forceReload = false }: { forceReload?: boolean } = {}) {
       const postId = this.dataset.postId;
 
       if (!postId || !this.count) return;
+      if (!forceReload && this.lastLoadedPostId === postId) return;
+
+      this.lastLoadedPostId = postId;
 
       try {
         const response = await fetch(`/api/upvote?post_id=${postId}`);
@@ -124,6 +178,7 @@ const { postId } = Astro.props;
         const data = (await response.json()) as UpvoteResponse;
         this.count.textContent = String(data.upvotes);
       } catch (error) {
+        this.lastLoadedPostId = null;
         console.error(error);
       }
     }
