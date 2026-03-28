@@ -1,7 +1,4 @@
 {
-  "workbench.colorCustomizations": {
-    "titleBar.activeBackground": "#fcb32c"
-  },
   "files.associations": {
     "*.css": "tailwindcss"
   },
