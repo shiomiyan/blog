@@ -1,7 +1,14 @@
-name = "blog-736b-moe"
+name = "blog"
 compatibility_date = "2025-03-04"
 
 compatibility_flags = ["nodejs_compat"]
+
+[vars]
+FUNCTIONS_CORS_ORIGIN = "https://blog.736b.moe"
+
+[[routes]]
+pattern = "blog.736b.moe"
+custom_domain = true
 
 [[kv_namespaces]]
 binding = "BLOG_736B_MOE_UPVOTE_COUNTER"
