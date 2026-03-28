@@ -1,20 +1,39 @@
 version: 2
+
 updates:
+  # npm
   - package-ecosystem: "npm"
     directory: "/"
+
     schedule:
       interval: "daily"
     cooldown:
       semver-major-days: 3
+
+    groups:
+      prd-dependencies:
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+
+      dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+
     ignore:
       - dependency-name: "*"
         update-types:
           - "version-update:semver-patch"
 
+# GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
+
     ignore:
       - dependency-name: "*"
         update-types:
