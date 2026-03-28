@@ -23,3 +23,7 @@ declare module "@pagefind/default-ui" {
     });
   }
 }
+
+interface Window {
+  __upvotePageLoadBound?: boolean;
+}
