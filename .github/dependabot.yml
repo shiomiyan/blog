@@ -27,6 +27,10 @@ updates:
       - dependency-name: "*"
         update-types:
           - "version-update:semver-patch"
+      
+      # Use LTS for NodeJS
+      - dependency-name: "@types/node"
+        versions: ["25.x"]
 
 # GitHub Actions
   - package-ecosystem: "github-actions"
