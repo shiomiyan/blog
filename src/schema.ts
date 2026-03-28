@@ -1,5 +1,5 @@
 import { CATEGORIES, TAGS } from "@/constants";
-import { z } from "astro:content";
+import { z } from "astro/zod";
 
 const tagKeys = Object.keys(TAGS) as [keyof typeof TAGS];
 

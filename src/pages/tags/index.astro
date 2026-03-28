@@ -11,8 +11,7 @@ const posts = (
 const tagCounts = {} as Record<keyof typeof TAGS, number>;
 
 for (const { data } of posts) {
-	// TODO: data.tagsはundefinedになりえないと思うが、型推論がうまくいってない...？
-	for (const tag of data.tags ?? []) {
+	for (const tag of (data.tags ?? []) as (keyof typeof TAGS)[]) {
 		tagCounts[tag] = (tagCounts[tag] ?? 0) + 1;
 	}
 }

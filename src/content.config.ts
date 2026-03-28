@@ -1,9 +1,10 @@
 import { rssLoader } from "@loader";
+import { postSchema } from "@schema";
 import { defineCollection } from "astro:content";
-import { postSchema } from "../schema";
+import { glob } from "astro/loaders";
 
 const posts = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/posts" }),
 	schema: postSchema,
 });
 

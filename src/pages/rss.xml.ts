@@ -16,12 +16,12 @@ export async function GET(context: Context) {
 	const items = await Promise.all(
 		posts.map(async (item) => {
 			const { title, description, date } = item.data;
-			const content = sanitizeHtml(await marked.parse(item.body));
+			const content = sanitizeHtml(await marked.parse(item.body ?? ""));
 			return {
 				title,
 				description,
 				pubDate: date,
-				link: `/${item.collection}/${item.slug}/`,
+				link: `/${item.collection}/${item.id}/`,
 				content,
 			};
 		}),

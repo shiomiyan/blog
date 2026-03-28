@@ -15,7 +15,7 @@ const date = isoDateTime.slice(0, 10);
 
 const href =
 	entry.collection === "posts"
-		? `/${entry.collection}/${entry.slug}`
+		? `/${entry.collection}/${entry.id}`
 		: entry.data.link;
 
 const favicon = entry.collection !== "posts" ? await getFavicon(href) : "";

@@ -1,5 +1,5 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
+import { type CollectionEntry, getCollection, render } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import TableOfContents from "@components/TableOfContents.astro";
@@ -12,7 +12,7 @@ export const getStaticPaths = async () => {
 		.filter((post) => !post.data.draft)
 		.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 	return posts.map((post) => ({
-		params: { slug: post.slug },
+		params: { slug: post.id },
 		props: post,
 	}));
 };
@@ -20,7 +20,7 @@ export const getStaticPaths = async () => {
 type Props = CollectionEntry<"posts">;
 const post = Astro.props as Props;
 const { date, title, description, tags, ulid, category } = post["data"];
-const { Content, headings } = await post.render();
+const { Content, headings } = await render(post);
 ---
 
 <Layout title={title} description={description}>
