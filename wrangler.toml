@@ -16,3 +16,14 @@ id = "1839db5b272840018387728603b94304"
 
 [dev]
 port = 4321
+
+[observability]
+enabled = true
+
+[observability.logs]
+head_sampling_rate = 1
+
+[observability.traces]
+enabled = true
+head_sampling_rate = 0.01
+
