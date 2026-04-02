@@ -1,5 +1,6 @@
 import { rssLoader } from "@loader";
 import { postSchema } from "@schema";
+import { FEED_SOURCES, type FeedSourceName } from "./feedSources";
 import { glob } from "astro/loaders";
 import { defineCollection } from "astro:content";
 
@@ -9,17 +10,31 @@ const posts = defineCollection({
   schema: postSchema,
 });
 
+const getFeedSource = (name: FeedSourceName) => {
+  const source = FEED_SOURCES.find((feedSource) => feedSource.name === name);
+  if (!source) {
+    throw new Error(`Feed source "${name}" is not configured.`);
+  }
+  return source;
+};
+
 const zenn = defineCollection({
-  loader: rssLoader({ url: "https://zenn.dev/736b/feed", tag: "zenn" }),
+  loader: rssLoader({
+    cacheFile: getFeedSource("zenn").cacheFile,
+    tag: "zenn",
+  }),
 });
 
 const qiita = defineCollection({
-  loader: rssLoader({ url: "https://qiita.com/736b/feed", tag: "qiita" }),
+  loader: rssLoader({
+    cacheFile: getFeedSource("qiita").cacheFile,
+    tag: "qiita",
+  }),
 });
 
 const note = defineCollection({
   loader: rssLoader({
-    url: "https://note.com/736b/rss",
+    cacheFile: getFeedSource("note").cacheFile,
     tag: "random",
     category: "Diary",
   }),
@@ -27,7 +42,7 @@ const note = defineCollection({
 
 const speakerdeck = defineCollection({
   loader: rssLoader({
-    url: "https://speakerdeck.com/shiomiyan.rss",
+    cacheFile: getFeedSource("speakerdeck").cacheFile,
     tag: "slides",
   }),
 });

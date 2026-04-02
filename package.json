@@ -13,6 +13,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --NoEmit",
     "cf-typegen": "wrangler types --path ./src/worker-configuration.d.ts",
+    "fetch-feeds": "tsx bin/fetch-feeds.ts",
     "textlint": "textlint",
     "format": "prettier --write .",
     "create-post": "tsx bin/create-post.ts"

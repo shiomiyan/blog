@@ -23,3 +23,17 @@ export const rssSchema = z.object({
   category: categorySchema,
   tags: tagSchema,
 });
+
+export const externalRssSchema = rssSchema.extend({
+  id: z.string(),
+  date: z.iso.datetime({ offset: true }),
+  category: z.enum(CATEGORIES).nullable(),
+});
+
+export const snapshotSchema = z.object({
+  sourceUrl: z.url(),
+  fetchedAt: z.iso.datetime({ offset: true }),
+  items: z.array(externalRssSchema),
+});
+
+export type Snapshot = z.infer<typeof snapshotSchema>;
