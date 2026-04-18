@@ -8,7 +8,7 @@ updates:
     schedule:
       interval: "daily"
     cooldown:
-      semver-major-days: 14
+      default-days: 7
 
     groups:
       prd-dependencies:
@@ -23,22 +23,10 @@ updates:
           - "minor"
           - "patch"
 
-    ignore:
-      - dependency-name: "*"
-        update-types:
-          - "version-update:semver-patch"
-
-      # Use LTS for NodeJS
-      - dependency-name: "@types/node"
-        versions: ["25.x"]
-
   # GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
-
-    ignore:
-      - dependency-name: "*"
-        update-types:
-          - "version-update:semver-patch"
+    cooldown:
+      default-days: 7
