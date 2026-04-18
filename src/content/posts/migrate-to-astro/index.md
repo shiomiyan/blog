@@ -1,6 +1,7 @@
 ---
 title: "ブログをHugoからAstroに移行した"
 date: "2024-07-10"
+draft: false
 description: ""
 ulid: 01J2CZ1600DCRN6FTV3KZRW035
 tags:

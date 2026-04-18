@@ -5,16 +5,13 @@ import { SOURCES, type Category, type Feed } from "../src/feeds";
 import type { Snapshot } from "../src/schema";
 
 const REQUEST_TIMEOUT_MS = 10_000;
-const RETRY_DELAYS_MS = [500, 1_000] as const;
-const REQUEST_ATTEMPTS = RETRY_DELAYS_MS.length + 1;
+const RETRY_COUNT = 3;
+const RETRY_DELAY_MS = 1_000;
 
 const parser = new Parser();
 
-const getFeedCategory = (feedConfig: Feed): Category | null => {
-  if ("category" in feedConfig && feedConfig.category) {
-    return feedConfig.category;
-  }
-  return null;
+const getFeedCategory = (feedConfig: Feed): Category | undefined => {
+  return "category" in feedConfig ? feedConfig.category : undefined;
 };
 
 const sleep = async (ms: number): Promise<void> => {
@@ -23,22 +20,13 @@ const sleep = async (ms: number): Promise<void> => {
   });
 };
 
-const toErrorMessage = (error: unknown): string => {
-  if (error instanceof Error) return error.message;
-  return String(error);
-};
-
 const fetchFeedXml = async (feedConfig: Feed): Promise<string> => {
-  let lastError: unknown;
-
-  for (let attempt = 1; attempt <= REQUEST_ATTEMPTS; attempt += 1) {
+  for (let attempt = 1; attempt <= RETRY_COUNT; attempt += 1) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
 
     try {
-      console.log(
-        `Fetching ${feedConfig.name} (${attempt}/${REQUEST_ATTEMPTS}): ${feedConfig.url}`,
-      );
+      console.log(`Fetching ${feedConfig.name}: ${feedConfig.url}`);
 
       const response = await fetch(feedConfig.url, {
         signal: controller.signal,
@@ -55,23 +43,20 @@ const fetchFeedXml = async (feedConfig: Feed): Promise<string> => {
 
       return await response.text();
     } catch (error) {
-      lastError = error;
-
-      if (attempt < REQUEST_ATTEMPTS) {
-        const delayMs = RETRY_DELAYS_MS[attempt - 1];
-        console.warn(
-          `Retrying ${feedConfig.name} after ${delayMs}ms: ${toErrorMessage(error)}`,
-        );
-        await sleep(delayMs);
+      if (attempt === RETRY_COUNT) {
+        throw error;
       }
+
+      console.warn(
+        `Retrying ${feedConfig.name} (${attempt}/${RETRY_COUNT})...`,
+      );
+      await sleep(RETRY_DELAY_MS);
     } finally {
       clearTimeout(timeoutId);
     }
   }
 
-  throw new Error(
-    `Failed to fetch ${feedConfig.name}: ${toErrorMessage(lastError)}`,
-  );
+  throw new Error(`Failed to fetch ${feedConfig.name}`);
 };
 
 const normalizeFeed = async (feedConfig: Feed): Promise<Snapshot> => {
@@ -86,13 +71,14 @@ const normalizeFeed = async (feedConfig: Feed): Promise<Snapshot> => {
 
     const date = new Date(item.pubDate);
     if (Number.isNaN(date.getTime())) continue;
+    const category = getFeedCategory(feedConfig);
 
     items.push({
       id,
       title: item.title ?? item.link ?? id,
       link: item.link ?? id,
       date: date.toISOString(),
-      category: getFeedCategory(feedConfig),
+      ...(category ? { category } : {}),
       tags: [feedConfig.tag] as Snapshot["items"][number]["tags"],
     });
   }
@@ -121,43 +107,15 @@ const writeSnapshot = async (
 };
 
 const main = async (): Promise<void> => {
-  const results = await Promise.allSettled(
-    SOURCES.map(async (feedConfig) => ({
-      feedConfig,
-      snapshot: await normalizeFeed(feedConfig),
-    })),
-  );
-
-  const failures = results.flatMap((result, index) => {
-    if (result.status === "fulfilled") return [];
-
-    return [`${SOURCES[index].name}: ${toErrorMessage(result.reason)}`];
-  });
-
-  if (failures.length > 0) {
-    console.error("Failed to refresh one or more feeds:");
-    for (const failure of failures) {
-      console.error(`- ${failure}`);
-    }
-    process.exitCode = 1;
-    return;
-  }
-
   await Promise.all(
-    results
-      .filter(
-        (
-          result,
-        ): result is PromiseFulfilledResult<{
-          feedConfig: Feed;
-          snapshot: Snapshot;
-        }> => result.status === "fulfilled",
-      )
-      .map(({ value }) => writeSnapshot(value.feedConfig, value.snapshot)),
+    SOURCES.map(async (feedConfig) => {
+      const snapshot = await normalizeFeed(feedConfig);
+      await writeSnapshot(feedConfig, snapshot);
+    }),
   );
 };
 
 main().catch((error) => {
-  console.error(toErrorMessage(error));
+  console.error(error);
   process.exitCode = 1;
 });

@@ -7,13 +7,11 @@ import { TAGS } from "@/constants";
 
 export const prerender = true;
 
-const posts = (
-  await getCollectionByCollectionKeys("posts", "zenn", "qiita")
-).filter((post) => post.data.tags);
+const posts = await getCollectionByCollectionKeys("posts", "zenn", "qiita");
 const tagCounts = {} as Record<keyof typeof TAGS, number>;
 
 for (const { data } of posts) {
-  for (const tag of (data.tags ?? []) as (keyof typeof TAGS)[]) {
+  for (const tag of data.tags as (keyof typeof TAGS)[]) {
     tagCounts[tag] = (tagCounts[tag] ?? 0) + 1;
   }
 }

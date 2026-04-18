@@ -1,6 +1,7 @@
 ---
 title: SECCON Beginners CTF 2024 writeup
 date: "2024-06-16T22:00:00+09:00"
+draft: false
 description: ""
 ulid: 01J0GJ4540APFMGEGP7VG5H2Z3
 tags:

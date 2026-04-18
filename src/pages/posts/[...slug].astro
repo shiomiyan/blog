@@ -40,7 +40,7 @@ const { Content, headings } = await render(post);
         </time>
 
         <div class="flex flex-wrap gap-2">
-          {category && <Category category={category} />}
+          <Category category={category} />
           {tags.map((tag) => <Tag tag={tag} />)}
         </div>
       </div>

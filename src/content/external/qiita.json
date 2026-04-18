@@ -1,13 +1,12 @@
 {
   "sourceUrl": "https://qiita.com/736b/feed",
-  "fetchedAt": "2026-04-17T18:34:44.950Z",
+  "fetchedAt": "2026-04-18T12:00:32.039Z",
   "items": [
     {
       "id": "tag:qiita.com,2005:PublicArticle/1706810",
       "title": "Cargo Alternate Registryを使ってオレオレツールを誰かに使ってもらいやすくする",
       "link": "https://qiita.com/736b/items/724aa685c91dc2646ab3",
       "date": "2023-04-16T11:19:04.000Z",
-      "category": null,
       "tags": [
         "qiita"
       ]

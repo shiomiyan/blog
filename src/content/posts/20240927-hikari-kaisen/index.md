@@ -1,6 +1,7 @@
 ---
 title: "自宅回線を整備した"
 date: "2024-09-27"
+draft: false
 description: ""
 ulid: 01J8RCDZ00264V21QGG4B6AYFB
 tags:

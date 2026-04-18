@@ -1,6 +1,7 @@
 ---
 title: コーヒー豆の焙煎温度を計測してみた
 date: "2024-12-04"
+draft: false
 description: ""
 ulid: 01JE7FEV00Z816DJYP48CZDPMF
 tags:

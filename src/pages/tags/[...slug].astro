@@ -15,7 +15,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 const { slug } = Astro.params as { slug: keyof typeof TAGS };
 const posts = (
   await getCollectionByCollectionKeys("posts", "zenn", "qiita")
-).filter((post) => post.data.tags?.includes(slug));
+).filter((post) => post.data.tags.includes(slug));
 
 const tagDisplayName = TAGS[slug];
 const meta = {
