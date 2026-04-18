@@ -1,11 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import Parser from "rss-parser";
-import {
-  FEED_SOURCES,
-  type Category,
-  type FeedSource,
-} from "../src/feedSources";
+import { SOURCES, type Category, type Feed } from "../src/feeds";
 import type { Snapshot } from "../src/schema";
 
 const REQUEST_TIMEOUT_MS = 10_000;
@@ -14,9 +10,9 @@ const REQUEST_ATTEMPTS = RETRY_DELAYS_MS.length + 1;
 
 const parser = new Parser();
 
-const getFeedCategory = (source: FeedSource): Category | null => {
-  if ("category" in source && source.category) {
-    return source.category;
+const getFeedCategory = (feedConfig: Feed): Category | null => {
+  if ("category" in feedConfig && feedConfig.category) {
+    return feedConfig.category;
   }
   return null;
 };
@@ -32,7 +28,7 @@ const toErrorMessage = (error: unknown): string => {
   return String(error);
 };
 
-const fetchFeedXml = async (source: FeedSource): Promise<string> => {
+const fetchFeedXml = async (feedConfig: Feed): Promise<string> => {
   let lastError: unknown;
 
   for (let attempt = 1; attempt <= REQUEST_ATTEMPTS; attempt += 1) {
@@ -41,10 +37,10 @@ const fetchFeedXml = async (source: FeedSource): Promise<string> => {
 
     try {
       console.log(
-        `Fetching ${source.name} (${attempt}/${REQUEST_ATTEMPTS}): ${source.url}`,
+        `Fetching ${feedConfig.name} (${attempt}/${REQUEST_ATTEMPTS}): ${feedConfig.url}`,
       );
 
-      const response = await fetch(source.url, {
+      const response = await fetch(feedConfig.url, {
         signal: controller.signal,
         headers: {
           "user-agent": "blog.736b.moe feed fetcher",
@@ -64,7 +60,7 @@ const fetchFeedXml = async (source: FeedSource): Promise<string> => {
       if (attempt < REQUEST_ATTEMPTS) {
         const delayMs = RETRY_DELAYS_MS[attempt - 1];
         console.warn(
-          `Retrying ${source.name} after ${delayMs}ms: ${toErrorMessage(error)}`,
+          `Retrying ${feedConfig.name} after ${delayMs}ms: ${toErrorMessage(error)}`,
         );
         await sleep(delayMs);
       }
@@ -74,12 +70,12 @@ const fetchFeedXml = async (source: FeedSource): Promise<string> => {
   }
 
   throw new Error(
-    `Failed to fetch ${source.name}: ${toErrorMessage(lastError)}`,
+    `Failed to fetch ${feedConfig.name}: ${toErrorMessage(lastError)}`,
   );
 };
 
-const normalizeFeed = async (source: FeedSource): Promise<Snapshot> => {
-  const xml = await fetchFeedXml(source);
+const normalizeFeed = async (feedConfig: Feed): Promise<Snapshot> => {
+  const xml = await fetchFeedXml(feedConfig);
   const feed = await parser.parseString(xml);
   const fetchedAt = new Date().toISOString();
   const items: Snapshot["items"] = [];
@@ -96,46 +92,46 @@ const normalizeFeed = async (source: FeedSource): Promise<Snapshot> => {
       title: item.title ?? item.link ?? id,
       link: item.link ?? id,
       date: date.toISOString(),
-      category: getFeedCategory(source),
-      tags: [source.tag] as Snapshot["items"][number]["tags"],
+      category: getFeedCategory(feedConfig),
+      tags: [feedConfig.tag] as Snapshot["items"][number]["tags"],
     });
   }
 
   items.sort((a, b) => b.date.localeCompare(a.date));
 
   return {
-    sourceUrl: source.url,
+    sourceUrl: feedConfig.url,
     fetchedAt,
     items,
   };
 };
 
 const writeSnapshot = async (
-  source: FeedSource,
+  feedConfig: Feed,
   snapshot: Snapshot,
 ): Promise<void> => {
-  const outputPath = path.resolve(process.cwd(), source.cacheFile);
+  const outputPath = path.resolve(process.cwd(), feedConfig.cacheFile);
   await mkdir(path.dirname(outputPath), { recursive: true });
   await writeFile(
     outputPath,
     `${JSON.stringify(snapshot, null, 2)}\n`,
     "utf-8",
   );
-  console.log(`Wrote ${source.name} snapshot to ${source.cacheFile}`);
+  console.log(`Wrote ${feedConfig.name} snapshot to ${feedConfig.cacheFile}`);
 };
 
 const main = async (): Promise<void> => {
   const results = await Promise.allSettled(
-    FEED_SOURCES.map(async (source) => ({
-      source,
-      snapshot: await normalizeFeed(source),
+    SOURCES.map(async (feedConfig) => ({
+      feedConfig,
+      snapshot: await normalizeFeed(feedConfig),
     })),
   );
 
   const failures = results.flatMap((result, index) => {
     if (result.status === "fulfilled") return [];
 
-    return [`${FEED_SOURCES[index].name}: ${toErrorMessage(result.reason)}`];
+    return [`${SOURCES[index].name}: ${toErrorMessage(result.reason)}`];
   });
 
   if (failures.length > 0) {
@@ -153,11 +149,11 @@ const main = async (): Promise<void> => {
         (
           result,
         ): result is PromiseFulfilledResult<{
-          source: FeedSource;
+          feedConfig: Feed;
           snapshot: Snapshot;
         }> => result.status === "fulfilled",
       )
-      .map(({ value }) => writeSnapshot(value.source, value.snapshot)),
+      .map(({ value }) => writeSnapshot(value.feedConfig, value.snapshot)),
   );
 };
 

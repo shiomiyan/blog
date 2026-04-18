@@ -1,8 +1,6 @@
 import rss from "@astrojs/rss";
 import { SITE } from "@constants";
-import { getCollection, type CollectionEntry } from "astro:content";
-import { marked } from "marked";
-import sanitizeHtml from "sanitize-html";
+import { getCollection } from "astro:content";
 
 export const prerender = true;
 
@@ -19,23 +17,17 @@ type RssItem = {
 };
 
 export async function GET(context: Context) {
-  const posts = (await getCollection("posts")).filter(
-    (post: CollectionEntry<"posts">) => !post.data.draft,
-  );
-
-  const items: RssItem[] = await Promise.all(
-    posts.map(async (item: CollectionEntry<"posts">) => {
-      const { title, description, date } = item.data;
-      const content = sanitizeHtml(await marked.parse(item.body ?? ""));
-      return {
-        title,
-        description,
-        pubDate: date,
-        link: `/${item.collection}/${item.id}/`,
-        content,
-      };
-    }),
-  );
+  const posts = await getCollection("posts", ({ data }) => !data.draft);
+  const items: RssItem[] = posts.map((item) => {
+    const { title, description, date } = item.data;
+    return {
+      title,
+      description,
+      pubDate: date,
+      link: `/${item.collection}/${item.id}/`,
+      content: item.rendered?.html ?? "",
+    };
+  });
   items.sort(
     (a: RssItem, b: RssItem) => b.pubDate.getTime() - a.pubDate.getTime(),
   );

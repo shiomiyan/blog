@@ -3,7 +3,7 @@ import { CATEGORIES, TAGS } from "./constants";
 export type Tag = keyof typeof TAGS;
 export type Category = (typeof CATEGORIES)[number];
 
-export type FeedSourceConfig = {
+export type FeedConfig = {
   name: string;
   url: string;
   cacheFile: string;
@@ -11,7 +11,7 @@ export type FeedSourceConfig = {
   category?: Category;
 };
 
-export const FEED_SOURCES = [
+export const SOURCES = [
   {
     name: "zenn",
     url: "https://zenn.dev/736b/feed",
@@ -37,7 +37,7 @@ export const FEED_SOURCES = [
     cacheFile: "src/content/external/speakerdeck.json",
     tag: "slides",
   },
-] as const satisfies readonly FeedSourceConfig[];
+] as const satisfies readonly FeedConfig[];
 
-export type FeedSource = (typeof FEED_SOURCES)[number];
-export type FeedSourceName = FeedSource["name"];
+export type Feed = (typeof SOURCES)[number];
+export type FeedName = Feed["name"];
