@@ -1,7 +1,14 @@
 {
   "rules": {
     "preset-ja-technical-writing": {
-      "ja-no-weak-phrase": false
+      "ja-no-weak-phrase": false,
+      "ja-no-successive-word": {
+        "allow": ["？", "！"]
+      },
+      "no-exclamation-question-mark": {
+        "allowFullWidthExclamation": true,
+        "allowFullWidthQuestion": true
+      }
     }
   },
   "plugins": {

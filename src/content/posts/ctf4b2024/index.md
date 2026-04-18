@@ -12,14 +12,16 @@ category: Tech
 
 今年も...って思ったら多分2021以来まともに参加していなかった。
 
-671点の119位で、solve数は2021よりも上回ったものの、自分が解いたものの中だと多分pwnの2問あたりはかなり難易度が低かった。
-あとChatGPTに助けられた問題もあったので、より何ともである...。
+671点の119位で、solve数は2021よりも上回った。
+ただ、自分が解いたものの中だと、多分pwnの2問あたりはかなり難易度が低かった。
+あとChatGPTに助けられた問題もあったので、何ともいえない。
 
 ## web: ssrforlfi
 
 Pythonの`subprocess.run`によるcurlコマンド呼び出し処理のあるアプリケーションで、環境変数にセットされたフラグを読み出す問題だった。
 
-`https://ssrforlfi.beginners.seccon.games/?url=http://example.com`のようにすると、urlパラメータで与えたURLにアクセスし、レスポンスを表示してくれる。
+たとえば`https://ssrforlfi.beginners.seccon.games/?url=http://example.com`のようにするとアクセスできる。
+urlパラメータで与えたURLにアクセスし、そのレスポンスを表示してくれる。
 
 入力値バリデーションには次の正規表現が用いられていた。
 
@@ -42,7 +44,9 @@ proc = subprocess.run(
 )
 ```
 
-初手何らかの方法でシングルクォートを抜け出してRCEを狙う方法を考えたが、入力値バリデーションによりシングルクォートは入力できないので諦めた（[PythonのREバイパス手法もある](https://www.secjuice.com/python-re-match-bypass-technique/)ようだが、今回は行頭行末指定があるので無理だとなった）。
+初手は、何らかの方法でシングルクォートを抜け出してRCEを狙う方法を考えた。
+ただ、入力値バリデーションによりシングルクォートは入力できないので諦めた。
+([PythonのREバイパス手法もある](https://www.secjuice.com/python-re-match-bypass-technique/)ようだが、今回は行頭行末指定があるので無理だとなった。)
 
 となると残りはSSRFかLFIのどちらかになる。知る限りSSRFを用いてもフラグの読み出しは難しいだろうとなり、LFIの線で試した。
 
@@ -59,9 +63,12 @@ curlが解釈できるURLの形式かつ`file://`以降がPythonの`os.path.exis
 
 `file`URIスキームはホスト名にlocalhostを指定可能であり、たとえば`file:///etc/hosts`は`file://localhost/etc/hosts`と表現できる。
 
-`file://localhost/etc/hosts`をLFIのバリデーションに通すと、`os.path.exists("localhost/etc/hosts")`のようになり存在しないパスと解釈されるため、このバリデーション処理をバイパスすることができる。
+`file://localhost/etc/hosts`をLFIのバリデーションに通すと、`os.path.exists("localhost/etc/hosts")`のようになる。
+存在しないパスと解釈されるため、このバリデーション処理をバイパスできる。
 
-任意のファイルを参照できることがわかり、さらにdocker-compose.ymlからフラグは環境変数にロードされていることがわかるので、[`/proc/self/environ`を参照すれば](https://blog.hamayanhamayan.com/entry/2021/12/08/220449)フラグが得られる。
+任意のファイルを参照できることがわかった。
+さらにdocker-compose.ymlから、フラグは環境変数にロードされていることもわかる。
+そのため、[`/proc/self/environ`を参照すれば](https://blog.hamayanhamayan.com/entry/2021/12/08/220449)フラグを得られる。
 
 ```
 ▶ curl -s 'https://ssrforlfi.beginners.seccon.games/?url=file://localhost/proc/self/environ' | rg --text -o --regexp 'ctf4b\{.*\}'

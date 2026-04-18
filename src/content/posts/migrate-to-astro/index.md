@@ -52,7 +52,7 @@ https://github.com/shiomiyan/blog/blob/master/tailwind.config.mjs#L8-L9
 
 移行前のブログはサイト内検索を実装していなかったが、テーマに組み込まれていたこともあり、Pagefindを使うことにした。
 
-Pagefindで日本語を検索できるようにするために`<html lang="ja">`する必要があるところだけハマった。
+Pagefindで日本語検索を有効にするには、`<html lang="ja">`を指定する必要があるところだけハマった。
 
 #### ほかサイトで書いた記事を一覧に差し込む
 

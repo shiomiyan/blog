@@ -28,7 +28,9 @@ category: Tech
 
 ![ブクマ事情の構成図](./architecture.webp)
 
-Obsidianとうまく連携できるRead It Later系のツールということで、Omnivoreを一旦採用し、Inoreaderの自動化機能（たぶんPro限定の機能かも）からOmnivoreのAPIを叩く。というワークフローを想定していたが、Inoreaderの実装している機能（カスタムwebhookのようなもの）では次のような問題があった。
+Obsidianとうまく連携できるRead It Later系のツールとして、Omnivoreを一旦採用した。
+Inoreaderの自動化機能（たぶんPro限定の機能かも）からOmnivoreのAPIを叩くワークフローを想定していた。
+ただ、Inoreaderの実装している機能（カスタムwebhookのようなもの）では、次のような問題があった。
 
 - リクエストヘッダを付けることができない
   - OmnivoreはAPIキーをヘッダに仕込む必要があるため、なんとかしなければいけない
@@ -87,7 +89,10 @@ Workersの実装はこんな感じになった。
 
 https://github.com/shiomiyan/omnivore-workers/blob/master/src/index.ts
 
-Inoraderのwebhookを[webhook.site](https://webhook.site/)でいくらかテストしてみたところ、リクエストヘッダに`x-inoreader-rule-name`と`x-inoreader-user-id`が付与されていたので、Workers側でアクセス制御的に使うことにした。これらをOmnivoreのAPIキーと併せてWorkersのシークレットに設定しておく。
+Inoraderのwebhookを[webhook.site](https://webhook.site/)でいくらかテストしてみたところ、リクエストヘッダが付与されていた。
+具体的には、`x-inoreader-rule-name`と`x-inoreader-user-id`です。
+そのため、Workers側のアクセス制御の用途として使うことにした。
+これらをOmnivoreのAPIキーと併せて、Workersのシークレットに設定しておく。
 
 ```plaintext
 npx wrangler secret put INOREADER_RULE_NAME
@@ -97,13 +102,16 @@ npx wrangler secret put OMNIVORE_API_KEY
 
 また、Omnivore APIリクエスト時にはUUID（`clientRequestId`）が必要なので、UUIDを適当に生成してリクエストする。
 
-Omnivore APIはGraphQLを採用しているが、わざわざGraphQLクライアントを使うほどではないよな...となっていたところ、WorkersのRuntime APIに[fetch APIが用意されていた](https://developers.cloudflare.com/workers/runtime-apis/fetch/)ので、これを使うことにした。
+Omnivore APIはGraphQLを採用しているが、わざわざGraphQLクライアントを使うほどではないよな、と考えていた。
+そこでWorkersのRuntime APIに[fetch APIが用意されていた](https://developers.cloudflare.com/workers/runtime-apis/fetch/)ので、これを使うことにした。
 
 ## おわり
 
-この手のEdge Function（Serverless Function？）的なサービスを初めて使ったが、ちょっとしたことをサクッと解決できて体験が良かった。
+この手のEdge Function、つまりServerless Function的なサービスを初めて使った。
+ちょっとしたことをサクッと解決できて、体験が良かった。
 
-APIを叩けるエンドポイントの割にガードが甘い気はしているが、せいぜい私のブックマークが爆発する程度の被害だと思うのでヨシ！をした。
+APIを叩けるエンドポイントの割にガードが甘い気はしている。
+ただ、せいぜい私のブックマークが爆発する程度の被害だと思うので、ヨシとした。
 
 ![現場猫](./genbaneko.png)
 
@@ -115,12 +123,14 @@ Omnivoreは記事保存用のGETエンドポイントを用意しているので
 >
 > https://docs.omnivore.app/integrations/api.html
 
-ただこれだとOmnivoreとInoreaderで保存した記事を自動で同期することはできないので、採用を見送った（あとポップアップがウザいなど）。
+ただこれだと、OmnivoreとInoreaderで保存した記事を自動では同期できないので、採用を見送った（あとポップアップがウザいなど）。
 
 ## 追記
 
-この記事を書いた翌日にOmnivoreが「[サ終すんで〜](https://blog.omnivore.app/p/details-on-omnivore-shutting-down)」と言い出したので、即Raindropに乗り換えることになった。アーメン。
+この記事を書いた翌日、Omnivoreが「[サ終すんで〜](https://blog.omnivore.app/p/details-on-omnivore-shutting-down)」と言い出した。
+そのため、即Raindropへ乗り換えることになった。アーメン。
 
 [ObsidianのRaindropプラグイン](https://github.com/kaiiiz/obsidian-raindrop-highlights-plugin)（Community）はかなりできが良く、まぁ結果的に何なら体験が良くなりそうなのでとりあえず良いか。
 
-それはそうとWorkersのプロジェクト名に"Omnivore"を入れてしまったので、いつか変えたいな...めんどくせぇ...
+それはそうと、Workersのプロジェクト名に"Omnivore"を入れてしまったので、いつか変えたい。
+ただ、めんどくせぇ。

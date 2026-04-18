@@ -12,13 +12,18 @@ category: Tech
 ## ことの始まり
 
 JavaScriptコードからコメントをいい感じに削除したくなったのでやってみた。
-インプットになるJavaScriptコードは壊れていることもある前提でこういった処理をする場合、柔軟にエラー復帰してくれないと構文エラーをがあると使い物にならなくなってしまうそうで。
+インプットになるJavaScriptコードは壊れていることもある前提で、こういった処理では柔軟にエラー復帰してくれないと使い物にならないそうだ。
+構文エラーがある場合も扱える必要がある。
 
-[GitHubのCodeQLに関するブログ記事](https://github.blog/2022-02-01-code-scanning-and-ruby-turning-source-code-into-a-queryable-database/)を眺めていたところ、「tree-sitterは良いぞ（雑訳）」みたいなことを言っていたので、試しに使ってみることにした（ところで当のGitHubが使用している[CodeQL for Javaのパーサー](https://github.com/github/codeql/blob/main/javascript/extractor/README.md)はすぐに参考にできる感じではなかった）。
+[GitHubのCodeQLに関するブログ記事](https://github.blog/2022-02-01-code-scanning-and-ruby-turning-source-code-into-a-queryable-database/)を眺めていたところ、「tree-sitterは良いぞ（雑訳）」みたいなことを言っていた。
+それなら試しに使ってみることにした。
+ところで当のGitHubが使用している[CodeQL for Javaのパーサー](https://github.com/github/codeql/blob/main/javascript/extractor/README.md)は、すぐに参考にできる感じではなかった。
 
 ## 環境構築
 
-[tree-sitter公式のJavaバインディング](https://github.com/tree-sitter/java-tree-sitter)が用意されている（用意し始めている）が、Java 22のAPIに依存しているらしく、ちょっとしんどい（それ以外にも共有ライブラリを`java.library.path`に置く必要がありそうなど、まだ出来立てホヤホヤ感がある）。
+[tree-sitter公式のJavaバインディング](https://github.com/tree-sitter/java-tree-sitter)が用意されている。
+ただ、Java 22のAPIに依存しているらしく、ちょっとしんどい。
+それ以外にも共有ライブラリを`java.library.path`に置く必要がありそうで、まだ出来立てホヤホヤ感がある。
 
 諸事情でJava 21の範囲で解決したいので、公式からリンクされているAlternativesのうち、GitHubスターの多い[bonede/tree-sitter-ng](https://github.com/bonede/tree-sitter-ng)で試していく。
 
@@ -80,7 +85,7 @@ OS name: "mac os x", version: "14.2.1", arch: "x86_64", family: "mac"
 (SNIP)
 ```
 
-Junit経由で実行するほうがお手軽なので、基本的にテスト経由で呼び出す想定で進める。
+Junit経由で実行するほうが手軽なので、基本的にはテストから呼び出す想定で進める。
 
 ## ことはじめ
 
@@ -180,10 +185,10 @@ public class TSPlayground {
 }
 ```
 
-あまりきれいな実装ができた気がしない...が、とりあえず上記のように実装してみた。
+あまりきれいな実装ができた気はしないものの、とりあえず上記のように実装してみた。
 
 [テストコード](https://github.com/shiomiyan/java-playground/blob/master/src/test/java/com/example/TSPlaygroundTest.java)はここに乗せるにはそこそこ長いので割愛するが、構文エラーがある場合も正しくパースできておりかなり調子が良さそう。
-（当初`TSParser#parseStringEncoding`を使っていたことでサロゲートペアが適切に処理できない問題に当たっており、やや文字に怯えた検証になってしまっている）
+（当初は`TSParser#parseStringEncoding`を使っていたため、サロゲートペアをうまく処理できない問題があり、やや文字を恐れた検証になってしまっている）
 
 ## まとめ
 

@@ -30,7 +30,8 @@ To deploy a folder of assets, run 'wrangler pages deploy [directory]'.
 
 ### Cloudflare Account ID
 
-[CloudflareのDashboard](https://dash.cloudflare.com)から、"Compute (Workers) > Workers & Pages"に進み、右の方にある"Account ID"をコピーして、Repository secretsに登録します。
+[CloudflareのDashboard](https://dash.cloudflare.com)から、"Compute (Workers) > Workers & Pages"に進む。
+右の方にある"Account ID"をコピーして、Repository secretsに登録します。
 
 ### Cloudflare User API Token
 

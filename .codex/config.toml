@@ -1,3 +1,7 @@
 [mcp_servers.astro-docs]
 command = "npx"
 args = ["-y", "mcp-remote", "https://mcp.docs.astro.build/mcp"]
+
+[mcp_servers.textlint]
+command = "npx"
+args = ["-y", "textlint", "--mcp"]

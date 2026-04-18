@@ -79,7 +79,7 @@ if __name__ == "__main__":
 ```
 
 `chr(ord(ch) ^ key)`できているので、keyは数値っぽい。
-原文に`taskctf{`があることは問題文から想像できたので、XORで戻した文字列に`taskctf{`が出現したところが答えになる。
+原文に`taskctf{`があることは問題文から想像できたので、XORで戻した文字列のうち`taskctf{`が出現した箇所を答えとみなせる。
 
 ```python
 f = open("taskctf_flag.txt.encrypted")
@@ -138,13 +138,14 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 SQLiがあるので、なんとかして100番目のユーザーを見つける。
 
-フォームに
+フォームに次を入れる。
 
 ```
 %' or 1=1 order by users.id--
 ```
 
-を入れると、全件`user.id`でソートされた状態で出てくるので、ブラウザ上で全部コピーして、Vimで名前以外全消ししてから（`:%s/[^a-zA-Z_]*//g`）テキストファイルに入れて、Pythonで処理した。
+を入れると、全件を`user.id`順にソートした状態で出てくる。
+ブラウザ上で全部コピーし、Vimで名前以外を全消ししてから（`:%s/[^a-zA-Z_]*//g`）、テキストファイルに入れてPythonで処理した。
 
 ```
 $ python
