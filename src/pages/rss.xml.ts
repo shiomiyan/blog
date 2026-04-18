@@ -1,12 +1,9 @@
 import rss from "@astrojs/rss";
 import { SITE } from "@constants";
-import { getCollection } from "astro:content";
+import type { APIContext } from "astro";
+import { getCollection, type CollectionEntry } from "astro:content";
 
 export const prerender = true;
-
-type Context = {
-  site: string;
-};
 
 type RssItem = {
   title: string;
@@ -16,9 +13,12 @@ type RssItem = {
   content: string;
 };
 
-export async function GET(context: Context) {
-  const posts = await getCollection("posts", ({ data }) => !data.draft);
-  const items: RssItem[] = posts.map((item) => {
+export const GET = async (context: APIContext) => {
+  const posts = await getCollection(
+    "posts",
+    (entry: CollectionEntry<"posts">) => !entry.data.draft,
+  );
+  const items: RssItem[] = posts.map((item: CollectionEntry<"posts">) => {
     const { title, description, date } = item.data;
     return {
       title,
@@ -35,7 +35,7 @@ export async function GET(context: Context) {
   return rss({
     title: SITE.TITLE,
     description: SITE.DESCRIPTION,
-    site: context.site,
+    site: context.site ?? context.url.origin,
     items,
   });
-}
+};

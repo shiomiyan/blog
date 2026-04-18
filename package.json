@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "pnpm run cf-typegen && pnpm run typecheck && astro check && astro build",
+    "check:all": "pnpm run lint && pnpm run typecheck && pnpm run astro -- check && pnpm run textlint",
     "preview": "astro preview",
     "deploy": "pnpm run build && wrangler deploy",
     "astro": "astro",
@@ -17,7 +18,7 @@
     "typecheck": "tsc --NoEmit",
     "cf-typegen": "wrangler types --path ./src/worker-configuration.d.ts",
     "fetch-feeds": "tsx bin/fetch-feeds.ts",
-    "textlint": "textlint",
+    "textlint": "textlint \"README.md\" \"AGENTS.md\" \"src/content/posts/**/*.md\" \"src/content/posts/**/*.mdx\"",
     "format": "prettier --write .",
     "create-post": "tsx bin/create-post.ts"
   },
