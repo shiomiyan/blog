@@ -9,6 +9,7 @@ updates:
       interval: "daily"
     cooldown:
       default-days: 7
+    versioning-strategy: "increase"
 
     groups:
       prd-dependencies:
