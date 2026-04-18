@@ -12,6 +12,7 @@ updates:
     versioning-strategy: "increase"
 
     groups:
+      # Only semver-minor and semver-patch npm updates are eligible for auto-merge.
       prd-dependencies:
         dependency-type: "production"
         update-types:
@@ -25,6 +26,7 @@ updates:
           - "patch"
 
   # GitHub Actions
+  # GitHub Actions updates stay manual even when they are patch releases.
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

@@ -28,11 +28,45 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
-          node-version: "24"
+          node-version-file: .node-version
           cache: pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Lint
+        run: pnpm run lint
+
       - name: Build
         run: pnpm run build
+
+  dependency-review:
+    runs-on: ubuntu-latest
+    name: Dependency Review
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repo using git
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Review dependency changes
+        uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4.9.0
+        with:
+          fail-on-severity: low
+
+  node-policy:
+    runs-on: ubuntu-latest
+    name: Node Policy Check
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repo using git
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Validate Node.js workflow policy
+        run: |
+          test "$(tr -d '\n' < .node-version)" = "24"
+          ! rg -n '^\s*node-version\s*:' .github/workflows
+          rg -n 'node-version-file:\s*\.node-version' .github/workflows/deploy.yml .github/workflows/pull-request.yml .github/workflows/rss-fetch.yml
