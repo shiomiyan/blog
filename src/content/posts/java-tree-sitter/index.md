@@ -3,7 +3,7 @@ title: "Javaでtree-sitterを使ってJavaScriptコードを編集する"
 date: "2024-07-18"
 draft: false
 description: ""
-ulid: 01J31J6Y00V5MVQVXPHETYGBE8
+id: 01J31J6Y00V5MVQVXPHETYGBE8
 tags:
   - tree-sitter
 category: Tech

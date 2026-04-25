@@ -21,7 +21,7 @@ export const getStaticPaths = async () => {
 
 type Props = CollectionEntry<"posts">;
 const post = Astro.props as Props;
-const { date, title, description, tags, ulid, category } = post["data"];
+const { date, title, description, tags, id, category } = post["data"];
 const { Content, headings } = await render(post);
 ---
 
@@ -52,6 +52,6 @@ const { Content, headings } = await render(post);
     <article class="break-words">
       <Content />
     </article>
-    <Upvote postId={ulid} />
+    <Upvote postId={id} />
   </Container>
 </Layout>

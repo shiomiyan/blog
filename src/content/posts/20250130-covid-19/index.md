@@ -3,7 +3,7 @@ title: コロナに罹患した（n回目）
 date: 2025-01-30T09:31:37.394Z
 draft: false
 description: ""
-ulid: 01JJV8TFHJVEY0090QKHH6E9WC
+id: 01JJV8TFHJVEY0090QKHH6E9WC
 tags:
   - random
 category: Diary

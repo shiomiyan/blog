@@ -3,7 +3,7 @@ title: __TITLE__
 date: __DATE__
 draft: true
 description: ""
-ulid: __ULID__
+id: __ID__
 category: Diary
 tags:
   - random

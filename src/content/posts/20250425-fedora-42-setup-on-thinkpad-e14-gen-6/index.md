@@ -3,7 +3,7 @@ title: Thinkpad E14 Gen 6を買った
 date: 2025-04-25T01:47:47.655Z
 draft: false
 description: ""
-ulid: 01JSNA2927QP1S6JJ7P8EZ5VY6
+id: 01JSNA2927QP1S6JJ7P8EZ5VY6
 tags:
   - random
 category: Diary

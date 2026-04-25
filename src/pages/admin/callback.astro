@@ -1,0 +1,151 @@
+---
+import { GitHub } from "arctic";
+import { env } from "cloudflare:workers";
+
+type OAuthEnv = {
+  GITHUB_CLIENT_ID?: string;
+  GITHUB_CLIENT_SECRET?: string;
+};
+
+type SveltiaAuthContent =
+  | {
+      provider: string;
+      token: string;
+    }
+  | {
+      provider: string;
+      error: string;
+      errorCode?: string;
+    };
+
+export const prerender = false;
+
+const PROVIDER = "github";
+const COOKIE_NAME = "csrf-token";
+const COOKIE_PATH = "/admin";
+const CALLBACK_PATH = "/admin/callback";
+const CSRF_COOKIE_PATTERN = /^([a-z-]+?)_(.+)$/;
+
+const oauthEnv = env as Cloudflare.Env & OAuthEnv;
+const url = new URL(Astro.request.url);
+
+const getGitHubClient = () => {
+  const { GITHUB_CLIENT_ID: clientId, GITHUB_CLIENT_SECRET: clientSecret } =
+    oauthEnv;
+
+  if (!clientId || !clientSecret) {
+    return null;
+  }
+
+  return new GitHub(
+    clientId,
+    clientSecret,
+    new URL(CALLBACK_PATH, Astro.request.url).toString(),
+  );
+};
+
+const createErrorContent = (
+  provider: string,
+  error: string,
+  errorCode?: string,
+): SveltiaAuthContent => ({
+  provider,
+  error,
+  errorCode,
+});
+
+const explicitError = url.searchParams.get("error");
+const explicitErrorCode = url.searchParams.get("error_code") ?? undefined;
+const explicitProvider = url.searchParams.get("provider") ?? "unknown";
+let content: SveltiaAuthContent;
+
+if (explicitError) {
+  content = createErrorContent(
+    explicitProvider,
+    explicitError,
+    explicitErrorCode,
+  );
+} else {
+  const code = url.searchParams.get("code");
+  const state = url.searchParams.get("state");
+  const csrfCookie = Astro.cookies.get(COOKIE_NAME)?.value ?? "";
+  const [, cookieProvider, csrfToken] =
+    csrfCookie.match(CSRF_COOKIE_PATTERN) ?? [];
+
+  if (cookieProvider !== PROVIDER) {
+    content = createErrorContent(
+      "unknown",
+      "Your Git backend is not supported by the authenticator.",
+      "UNSUPPORTED_BACKEND",
+    );
+  } else if (!code || !state) {
+    content = createErrorContent(
+      cookieProvider,
+      "Failed to receive an authorization code. Please try again later.",
+      "AUTH_CODE_REQUEST_FAILED",
+    );
+  } else if (!csrfToken || state !== csrfToken) {
+    content = createErrorContent(
+      cookieProvider,
+      "Potential CSRF attack detected. Authentication flow aborted.",
+      "CSRF_DETECTED",
+    );
+  } else {
+    const github = getGitHubClient();
+
+    if (!github) {
+      content = createErrorContent(
+        cookieProvider,
+        "OAuth app client ID or secret is not configured.",
+        "MISCONFIGURED_CLIENT",
+      );
+    } else {
+      try {
+        const tokens = await github.validateAuthorizationCode(code);
+        content = {
+          provider: cookieProvider,
+          token: tokens.accessToken(),
+        };
+      } catch {
+        content = createErrorContent(
+          cookieProvider,
+          "Failed to request an access token. Please try again later.",
+          "TOKEN_REQUEST_FAILED",
+        );
+      }
+    }
+  }
+}
+
+Astro.response.headers.set(
+  "Set-Cookie",
+  `${COOKIE_NAME}=deleted; HttpOnly; Max-Age=0; Path=${COOKIE_PATH}; SameSite=Lax; Secure`,
+);
+
+const provider = content.provider;
+const authState = "token" in content ? "success" : "error";
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Sveltia CMS Authentication</title>
+  </head>
+  <body>
+    <script is:inline define:vars={{ provider, authState, content }}>
+      (() => {
+        window.addEventListener("message", ({ data, origin }) => {
+          if (data === `authorizing:${provider}`) {
+            window.opener?.postMessage(
+              `authorization:${provider}:${authState}:${JSON.stringify(content)}`,
+              origin,
+            );
+          }
+        });
+        window.opener?.postMessage(`authorizing:${provider}`, "*");
+      })();
+    </script>
+  </body>
+</html>

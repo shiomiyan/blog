@@ -3,7 +3,7 @@ title: ブラウザはどんな日時書式を解釈できるのか
 date: 2025-04-01T02:44:01.686Z
 draft: false
 description: ""
-ulid: 01JQQKR00P3C9WXBWSZABXKKVN
+id: 01JQQKR00P3C9WXBWSZABXKKVN
 tags:
   - browser
   - rfc

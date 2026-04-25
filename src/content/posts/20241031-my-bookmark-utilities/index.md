@@ -3,7 +3,7 @@ title: "初めてのCloudflare Workers"
 date: "2024-10-31"
 draft: false
 description: ""
-ulid: 01JBFXYD0060S8W3R3417SNKTA
+id: 01JBFXYD0060S8W3R3417SNKTA
 tags:
   - cloudflare
 category: Tech

@@ -5,6 +5,11 @@ compatibility_flags = ["nodejs_compat"]
 
 [vars]
 FUNCTIONS_CORS_ORIGIN = "https://blog.736b.moe"
+GITHUB_CLIENT_ID = "Ov23liETvAjVf2DK62Bl"
+ALLOWED_DOMAINS = "blog.736b.moe"
+
+[secrets]
+required = ["GITHUB_CLIENT_SECRET"]
 
 [[routes]]
 pattern = "blog.736b.moe"
@@ -26,4 +31,3 @@ head_sampling_rate = 1
 [observability.traces]
 enabled = true
 head_sampling_rate = 0.01
-
