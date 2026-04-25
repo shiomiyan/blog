@@ -1,0 +1,70 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+backend:
+  name: github
+  repo: shiomiyan/blog
+  base_url: https://blog.736b.moe/admin
+  auth_endpoint: auth
+  allow_token_auth: false
+
+media_folder: /public/media
+public_folder: /media
+
+collections:
+  - name: posts
+    label: Posts
+    label_singular: Post
+    folder: /src/content/posts
+    path: "{{slug}}/index"
+    media_folder: ""
+    public_folder: ""
+    format: yaml-frontmatter
+    extension: md
+    preview_path: "/posts/{{slug}}"
+    fields:
+      - { name: title, label: Title, widget: string }
+      - {
+          name: description,
+          label: Description,
+          widget: text,
+          required: false,
+          default: "",
+        }
+      - { name: date, label: Date, widget: datetime, default: "{{datetime}}" }
+      - { name: draft, label: Draft, widget: boolean, default: true }
+      - { name: id, label: ID, widget: uuid }
+      - name: category
+        label: Category
+        widget: select
+        default: Diary
+        options:
+          - Tech
+          - Diary
+      - name: tags
+        label: Tags
+        widget: select
+        multiple: true
+        min: 1
+        default:
+          - random
+        options:
+          - { label: はてなブログ, value: hatenablog }
+          - { label: Qiita, value: qiita }
+          - { label: Zenn, value: zenn }
+          - { label: セキュリティ, value: security }
+          - { label: 雑記, value: random }
+          - { label: Tree-sitter, value: tree-sitter }
+          - { label: Astro, value: astro }
+          - { label: Cloudflare, value: cloudflare }
+          - { label: Raspberry Pi, value: raspberry-pi }
+          - { label: Puppeteer, value: puppeteer }
+          - { label: TypeScript, value: typescript }
+          - { label: Deno, value: deno }
+          - { label: npm, value: npm }
+          - { label: rollup, value: rollup }
+          - { label: Browser, value: browser }
+          - { label: RFC, value: rfc }
+          - { label: Site updates, value: site-updates }
+          - { label: Weekly report, value: weekly-report }
+          - { label: Slides, value: slides }
+      - { name: body, label: Body, widget: markdown }

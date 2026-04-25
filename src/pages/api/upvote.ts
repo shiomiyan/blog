@@ -3,7 +3,7 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import { env } from "cloudflare:workers";
 
 const ERROR_MESSAGE_POST_ID_REQUIRED = "post_id is required";
-const ERROR_MESSAGE_INVALID_ULID = "Invalid ULID";
+const ERROR_MESSAGE_INVALID_POST_ID = "Invalid post ID";
 const ERROR_MESSAGE_INVALID_UPVOTE_COUNT = "Invalid upvote count";
 const DEFAULT_UPVOTE_COUNT = 1;
 
@@ -17,7 +17,7 @@ const json = (body: unknown, status = 200) =>
 
 const getKnownPostIds = async () => {
   const posts = await getCollection("posts");
-  return new Set(posts.map((post: CollectionEntry<"posts">) => post.data.ulid));
+  return new Set(posts.map((post: CollectionEntry<"posts">) => post.data.id));
 };
 
 const parseUpvoteCount = (rawUpvoteCount: string | null) => {
@@ -68,7 +68,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     const knownPostIds = await getKnownPostIds();
     if (!knownPostIds.has(postId)) {
-      throw new Error(ERROR_MESSAGE_INVALID_ULID);
+      throw new Error(ERROR_MESSAGE_INVALID_POST_ID);
     }
 
     const currentUpvotes = parseUpvoteCount(

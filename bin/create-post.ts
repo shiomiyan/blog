@@ -18,13 +18,12 @@
 
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
-import { ulid } from "ulid";
 
 const TEMPLATE_PATH = "src/content/posts/_template.md";
 const TEMPLATE_TOKENS = {
   title: "__TITLE__",
   date: "__DATE__",
-  ulid: "__ULID__",
+  id: "__ID__",
 } as const;
 
 const args = process.argv.slice(2).filter((arg) => arg !== "--");
@@ -56,7 +55,7 @@ const buildContent = (template: string) => {
   return template
     .replaceAll(TEMPLATE_TOKENS.title, title)
     .replaceAll(TEMPLATE_TOKENS.date, nowISO)
-    .replaceAll(TEMPLATE_TOKENS.ulid, ulid());
+    .replaceAll(TEMPLATE_TOKENS.id, crypto.randomUUID());
 };
 
 async function main() {
