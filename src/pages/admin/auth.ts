@@ -14,7 +14,7 @@ const COOKIE_PATH = "/admin";
 const CALLBACK_PATH = "/admin/callback";
 const SCOPES = ["repo", "user"];
 
-const oauthEnv = env as Cloudflare.Env & OAuthEnv;
+const oauthEnv = env as OAuthEnv;
 
 const getAllowedDomains = () =>
   (oauthEnv.ALLOWED_DOMAINS ?? "")

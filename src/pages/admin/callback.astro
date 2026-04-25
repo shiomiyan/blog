@@ -26,7 +26,7 @@ const COOKIE_PATH = "/admin";
 const CALLBACK_PATH = "/admin/callback";
 const CSRF_COOKIE_PATTERN = /^([a-z-]+?)_(.+)$/;
 
-const oauthEnv = env as Cloudflare.Env & OAuthEnv;
+const oauthEnv = env as OAuthEnv;
 const url = new URL(Astro.request.url);
 
 const getGitHubClient = () => {
