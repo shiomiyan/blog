@@ -12,7 +12,7 @@ const PROVIDER = "github";
 const COOKIE_NAME = "csrf-token";
 const COOKIE_PATH = "/admin";
 const CALLBACK_PATH = "/admin/callback";
-const SCOPES = ["repo", "user"];
+const SCOPES = ["public_repo"];
 
 const oauthEnv = env as OAuthEnv;
 

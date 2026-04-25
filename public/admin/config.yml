@@ -5,6 +5,7 @@ backend:
   repo: shiomiyan/blog
   base_url: https://blog.736b.moe/admin
   auth_endpoint: auth
+  auth_scope: public_repo
   allow_token_auth: false
 
 media_folder: /public/media
