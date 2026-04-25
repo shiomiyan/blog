@@ -71,22 +71,23 @@ if (explicitError) {
   const csrfCookie = Astro.cookies.get(COOKIE_NAME)?.value ?? "";
   const [, cookieProvider, csrfToken] =
     csrfCookie.match(CSRF_COOKIE_PATTERN) ?? [];
+  const provider = cookieProvider || PROVIDER;
 
-  if (cookieProvider !== PROVIDER) {
+  if (provider !== PROVIDER) {
     content = createErrorContent(
-      "unknown",
+      provider,
       "Your Git backend is not supported by the authenticator.",
       "UNSUPPORTED_BACKEND",
     );
   } else if (!code || !state) {
     content = createErrorContent(
-      cookieProvider,
+      provider,
       "Failed to receive an authorization code. Please try again later.",
       "AUTH_CODE_REQUEST_FAILED",
     );
   } else if (!csrfToken || state !== csrfToken) {
     content = createErrorContent(
-      cookieProvider,
+      provider,
       "Potential CSRF attack detected. Authentication flow aborted.",
       "CSRF_DETECTED",
     );
@@ -95,7 +96,7 @@ if (explicitError) {
 
     if (!github) {
       content = createErrorContent(
-        cookieProvider,
+        provider,
         "OAuth app client ID or secret is not configured.",
         "MISCONFIGURED_CLIENT",
       );
@@ -103,12 +104,12 @@ if (explicitError) {
       try {
         const tokens = await github.validateAuthorizationCode(code);
         content = {
-          provider: cookieProvider,
+          provider,
           token: tokens.accessToken(),
         };
       } catch {
         content = createErrorContent(
-          cookieProvider,
+          provider,
           "Failed to request an access token. Please try again later.",
           "TOKEN_REQUEST_FAILED",
         );
