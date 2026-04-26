@@ -4,7 +4,7 @@ description: blank
 created: 2026-04-26T17:03:10
 draft: true
 id: dd56e32c-b855-4c58-aa04-10ee571ae033
-category: Diary
+category: diary
 tags:
   - random
 ---
