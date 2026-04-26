@@ -4,7 +4,6 @@ created: __DATE__
 draft: true
 description: ""
 id: __ID__
-category: Diary
-tags:
-  - random
+category: diary
+tags: []
 ---

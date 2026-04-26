@@ -7,7 +7,7 @@ id: 01J0GJ4540APFMGEGP7VG5H2Z3
 tags:
   - security
   - random
-category: Tech
+category: tech
 ---
 
 今年も...って思ったら多分2021以来まともに参加していなかった。

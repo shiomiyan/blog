@@ -1,8 +1,20 @@
-import { postSchema, rssSchema, snapshotSchema } from "@schema";
+import { feedEntrySchema, feedSnapshotsSchema, postSchema } from "@schema";
 import { file, glob } from "astro/loaders";
+import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
-import { SOURCES, type FeedConfig, type FeedName } from "./feeds";
+import { FEEDS_CACHE_FILE, type FeedName } from "./feeds";
 
+const taxonomySchema = z.object({
+  id: z.string(),
+  label: z.string(),
+});
+
+/**
+ * Local Markdown posts.
+ *
+ * The content loader keeps Markdown rendering available, unlike the file
+ * loader used for plain JSON collections.
+ */
 const posts = defineCollection({
   // Keep post templates prefixed with `_` so they stay out of this glob.
   loader: glob({
@@ -13,33 +25,41 @@ const posts = defineCollection({
   schema: postSchema,
 });
 
-const getFeedConfig = (name: FeedName): FeedConfig => {
-  const feedConfig = SOURCES.find((source) => source.name === name);
-  if (!feedConfig) {
-    throw new Error(`Feed source "${name}" is not configured.`);
-  }
-  return feedConfig;
-};
+/**
+ * Tag taxonomy loaded from JSON.
+ *
+ * Keeping taxonomy in Content Collections gives route code the same
+ * `getCollection()` API used for posts.
+ */
+const tags = defineCollection({
+  loader: file("src/data/tags.json"),
+  schema: taxonomySchema,
+});
 
+/**
+ * Category taxonomy loaded from JSON.
+ *
+ * Category URLs use `id`; rendered labels use `label`.
+ */
+const categories = defineCollection({
+  loader: file("src/data/categories.json"),
+  schema: taxonomySchema,
+});
+
+/**
+ * Creates one external feed collection from the shared generated cache file.
+ *
+ * The cache keeps service metadata together; collections expose only the items
+ * so existing `getCollection("note")` style callers remain unchanged.
+ */
 const createFeedCollection = (name: FeedName) => {
-  const feedConfig = getFeedConfig(name);
-
   return defineCollection({
-    loader: file(feedConfig.cacheFile, {
+    loader: file(FEEDS_CACHE_FILE, {
       parser: (text) => {
-        const snapshot = snapshotSchema.parse(JSON.parse(text));
-
-        return snapshot.items.map((item) => ({
-          id: item.id,
-          title: item.title,
-          link: item.link,
-          created: new Date(item.created),
-          category: item.category ?? feedConfig.category,
-          tags: item.tags.length > 0 ? item.tags : [feedConfig.tag],
-        }));
+        return feedSnapshotsSchema.parse(JSON.parse(text))[name].items;
       },
     }),
-    schema: rssSchema,
+    schema: feedEntrySchema,
   });
 };
 
@@ -48,4 +68,12 @@ const qiita = createFeedCollection("qiita");
 const note = createFeedCollection("note");
 const speakerdeck = createFeedCollection("speakerdeck");
 
-export const collections = { posts, zenn, qiita, speakerdeck, note };
+export const collections = {
+  posts,
+  tags,
+  categories,
+  zenn,
+  qiita,
+  speakerdeck,
+  note,
+};

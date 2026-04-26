@@ -2,36 +2,25 @@
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import Category from "@components/Category.astro";
-import { getCollectionByCollectionKeys } from "@lib/utils";
-import { CATEGORIES } from "@/constants";
-import type { CollectionEntry } from "astro:content";
-
-type CategoryKey = (typeof CATEGORIES)[number];
-type CategoryPostEntry = CollectionEntry<"posts"> & {
-  data: CollectionEntry<"posts">["data"] & { category: CategoryKey };
-};
+import { getCollection } from "astro:content";
+import { getCategoryDefinitions } from "@lib/taxonomy";
 
 export const prerender = true;
 
-const posts = (
-  await getCollectionByCollectionKeys("posts", "zenn", "qiita")
-).filter(
-  (post): post is CategoryPostEntry =>
-    "category" in post.data && Boolean(post.data.category),
-);
+const categoryDefinitions = await getCategoryDefinitions();
+const posts = (await getCollection("posts")).filter((post) => !post.data.draft);
 
 const categoryCounts = Object.fromEntries(
-  CATEGORIES.map((category) => [category, 0]),
-) as Record<CategoryKey, number>;
+  categoryDefinitions.map((category) => [category.id, 0]),
+) as Record<string, number>;
 
 for (const { data } of posts) {
-  if (!data.category) continue;
   categoryCounts[data.category] = (categoryCounts[data.category] ?? 0) + 1;
 }
 
-const categories = CATEGORIES.map((category) => ({
-  slug: category,
-  count: categoryCounts[category],
+const categories = categoryDefinitions.map((category) => ({
+  slug: category.id,
+  count: categoryCounts[category.id] ?? 0,
 }));
 
 const meta = {

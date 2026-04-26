@@ -1,18 +1,28 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import EntryList from "@components/EntryList.astro";
-import { SITE, CATEGORIES } from "@constants";
+import { SITE } from "@constants";
+import { getCategoryDefinitions } from "@lib/taxonomy";
 import { getCollectionByCollectionKeys } from "@lib/utils";
 
 export const prerender = true;
 
+const categoryDefinitions = await getCategoryDefinitions();
 const posts = await getCollectionByCollectionKeys(
   "posts",
   "zenn",
   "qiita",
   "speakerdeck",
   "note",
-);
+)
+  .then((entries) =>
+    entries.filter(
+      (entry) => entry.collection !== "posts" || !entry.data.draft,
+    ),
+  )
+  .then((entries) =>
+    entries.sort((a, b) => b.data.created.valueOf() - a.data.created.valueOf()),
+  );
 ---
 
 <Layout title={SITE.TITLE} description={SITE.DESCRIPTION}>
@@ -30,15 +40,15 @@ const posts = await getCollectionByCollectionKeys(
           </button>
         </li>
         {
-          CATEGORIES.map((category) => (
+          categoryDefinitions.map((category) => (
             <li>
               <button
                 type="button"
                 class="rounded-lg border border-black/15 px-2 py-0.5 font-mono text-xs hover:bg-gray-200"
-                data-category-filter={category}
+                data-category-filter={category.id}
                 aria-pressed="false"
               >
-                {category}
+                {category.label}
               </button>
             </li>
           ))

@@ -6,7 +6,7 @@ description: ""
 id: 01J31J6Y00V5MVQVXPHETYGBE8
 tags:
   - tree-sitter
-category: Tech
+category: tech
 ---
 
 ## ことの始まり

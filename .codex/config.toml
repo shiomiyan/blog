@@ -2,6 +2,10 @@
 command = "npx"
 args = ["-y", "mcp-remote", "https://mcp.docs.astro.build/mcp"]
 
+[mcp_servers.cloudflare-docs]
+command = "npx"
+args = ["-y", "mcp-remote", "https://docs.mcp.cloudflare.com/mcp"]
+
 [mcp_servers.textlint]
 command = "npx"
 args = ["-y", "textlint", "--mcp"]

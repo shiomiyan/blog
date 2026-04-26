@@ -1,18 +1,14 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import Parser from "rss-parser";
-import { SOURCES, type Category, type Feed } from "../src/feeds";
-import type { Snapshot } from "../src/schema";
+import { FEEDS_CACHE_FILE, SOURCES, type Feed } from "../src/feeds";
+import type { FeedSnapshots, FeedSourceSnapshot } from "../src/schema";
 
 const REQUEST_TIMEOUT_MS = 10_000;
 const RETRY_COUNT = 3;
 const RETRY_DELAY_MS = 1_000;
 
 const parser = new Parser();
-
-const getFeedCategory = (feedConfig: Feed): Category | undefined => {
-  return "category" in feedConfig ? feedConfig.category : undefined;
-};
 
 const sleep = async (ms: number): Promise<void> => {
   await new Promise((resolve) => {
@@ -59,11 +55,10 @@ const fetchFeedXml = async (feedConfig: Feed): Promise<string> => {
   throw new Error(`Failed to fetch ${feedConfig.name}`);
 };
 
-const normalizeFeed = async (feedConfig: Feed): Promise<Snapshot> => {
+const normalizeFeed = async (feedConfig: Feed): Promise<FeedSourceSnapshot> => {
   const xml = await fetchFeedXml(feedConfig);
   const feed = await parser.parseString(xml);
-  const fetchedAt = new Date().toISOString();
-  const items: Snapshot["items"] = [];
+  const items: FeedSourceSnapshot["items"] = [];
 
   for (const item of feed.items) {
     const id = item.guid || item.id;
@@ -71,48 +66,47 @@ const normalizeFeed = async (feedConfig: Feed): Promise<Snapshot> => {
 
     const created = new Date(item.pubDate);
     if (Number.isNaN(created.getTime())) continue;
-    const category = getFeedCategory(feedConfig);
 
     items.push({
       id,
       title: item.title ?? item.link ?? id,
       link: item.link ?? id,
-      created: created.toISOString(),
-      ...(category ? { category } : {}),
-      tags: [feedConfig.tag] as Snapshot["items"][number]["tags"],
+      created,
     });
   }
 
-  items.sort((a, b) => b.created.localeCompare(a.created));
+  items.sort((a, b) => b.created.valueOf() - a.created.valueOf());
 
   return {
-    sourceUrl: feedConfig.url,
-    fetchedAt,
+    source: feedConfig.url,
     items,
   };
 };
 
-const writeSnapshot = async (
-  feedConfig: Feed,
-  snapshot: Snapshot,
-): Promise<void> => {
-  const outputPath = path.resolve(process.cwd(), feedConfig.cacheFile);
+const writeSnapshots = async (snapshots: FeedSnapshots): Promise<void> => {
+  const outputPath = path.resolve(process.cwd(), FEEDS_CACHE_FILE);
   await mkdir(path.dirname(outputPath), { recursive: true });
   await writeFile(
     outputPath,
-    `${JSON.stringify(snapshot, null, 2)}\n`,
+    `${JSON.stringify(snapshots, null, 2)}\n`,
     "utf-8",
   );
-  console.log(`Wrote ${feedConfig.name} snapshot to ${feedConfig.cacheFile}`);
+  console.log(`Wrote feed snapshots to ${FEEDS_CACHE_FILE}`);
 };
 
 const main = async (): Promise<void> => {
-  await Promise.all(
+  const fetchedAt = new Date();
+  const sourceSnapshots = await Promise.all(
     SOURCES.map(async (feedConfig) => {
       const snapshot = await normalizeFeed(feedConfig);
-      await writeSnapshot(feedConfig, snapshot);
+      return [feedConfig.name, snapshot] as const;
     }),
   );
+
+  await writeSnapshots({
+    fetchedAt,
+    ...Object.fromEntries(sourceSnapshots),
+  } as FeedSnapshots);
 };
 
 main().catch((error) => {

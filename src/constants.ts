@@ -21,31 +21,3 @@ export const SOCIALS = [
     SVG_NAME: "bluesky",
   },
 ] as const;
-
-export const CATEGORIES = ["Tech", "Diary"] as const;
-
-/**
- * Mapping of tag definitions can be used in this site.
- */
-// prettier-ignore
-export const TAGS = {
-  "hatenablog": "はてなブログ",
-  "qiita": "Qiita",
-  "zenn": "Zenn",
-  "security": "セキュリティ",
-  "random": "雑記",
-  "tree-sitter": "Tree-sitter",
-  "astro": "Astro",
-  "cloudflare": "Cloudflare",
-  "raspberry-pi": "Raspberry Pi",
-  "puppeteer": "Puppeteer",
-  "typescript": "TypeScript",
-  "deno": "Deno",
-  "npm": "npm",
-  "rollup": "rollup",
-  "browser": "Browser",
-  "rfc": "RFC",
-  "site-updates": "Site updates",
-  "weekly-report": "Weekly report",
-  "slides": "Slides",
-} as const;

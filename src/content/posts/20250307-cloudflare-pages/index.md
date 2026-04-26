@@ -6,7 +6,7 @@ description: ""
 id: 01JNQZS02MGBXWZNB5GFQM23WJ
 tags:
   - cloudflare
-category: Tech
+category: tech
 ---
 
 このブログのホスティング先を、GitHub PagesからCloudflare Pagesに移行したので作業ログをまとめておきます。

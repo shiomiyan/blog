@@ -1,10 +1,11 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { getFavicon } from "@lib/utils";
-import type { CollectionKey } from "astro:content";
+
+type EntryCollectionKey = "posts" | "zenn" | "qiita" | "speakerdeck" | "note";
 
 type Props = {
-  entry: CollectionEntry<CollectionKey>;
+  entry: CollectionEntry<EntryCollectionKey>;
 };
 
 const { entry } = Astro.props;

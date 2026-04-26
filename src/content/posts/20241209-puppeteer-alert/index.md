@@ -7,7 +7,7 @@ id: 01JEMQZD7KMBQJ5025R6V6G931
 tags:
   - puppeteer
   - deno
-category: Tech
+category: tech
 ---
 
 イマドキなWebアプリはクライアントでDOMを生成するケースが多い。

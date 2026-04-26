@@ -1,13 +1,13 @@
 ---
-import { TAGS } from "@/constants";
+import { getTagLabel } from "@lib/taxonomy";
 
 type Props = {
-  tag: keyof typeof TAGS;
+  tag: string;
   count?: number;
 };
 
 const { tag, count } = Astro.props;
-const displayName = TAGS[tag];
+const displayName = await getTagLabel(tag);
 ---
 
 <a

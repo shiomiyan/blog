@@ -29,7 +29,6 @@ export const getFavicon = async (url: string): Promise<string | undefined> => {
 
 /**
  * Retrieve all posts data including external posts.
- * @returns Posts collection sorted by created (newest first)
  */
 export const getCollectionByCollectionKeys = async <C extends CollectionKey>(
   ...collectionKeys: C[]
@@ -37,9 +36,5 @@ export const getCollectionByCollectionKeys = async <C extends CollectionKey>(
   const promises = collectionKeys.map((collectionKey) =>
     getCollection(collectionKey),
   );
-  const collections = (await Promise.all(promises)).flat();
-  collections.sort(
-    (a, b) => b.data.created.valueOf() - a.data.created.valueOf(),
-  );
-  return collections;
+  return (await Promise.all(promises)).flat();
 };

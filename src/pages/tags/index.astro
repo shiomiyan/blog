@@ -2,26 +2,27 @@
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import Tag from "@components/Tag.astro";
-import { getCollectionByCollectionKeys } from "@lib/utils";
-import { TAGS } from "@/constants";
+import { getCollection } from "astro:content";
+import { getTagDefinitions } from "@lib/taxonomy";
 
 export const prerender = true;
 
-const posts = await getCollectionByCollectionKeys("posts", "zenn", "qiita");
-const tagCounts = {} as Record<keyof typeof TAGS, number>;
+const tagDefinitions = await getTagDefinitions();
+const posts = (await getCollection("posts")).filter((post) => !post.data.draft);
+const tagCounts = Object.fromEntries(
+  tagDefinitions.map((tag) => [tag.id, 0]),
+) as Record<string, number>;
 
 for (const { data } of posts) {
-  for (const tag of data.tags as (keyof typeof TAGS)[]) {
+  for (const tag of data.tags) {
     tagCounts[tag] = (tagCounts[tag] ?? 0) + 1;
   }
 }
 
-const tags = Object.entries(tagCounts)
-  .map<{ slug: keyof typeof TAGS; count: number }>(([slug, count]) => ({
-    slug: slug as keyof typeof TAGS,
-    count,
-  }))
-  .sort((a, b) => a.slug.localeCompare(b.slug));
+const tags = tagDefinitions.map((tag) => ({
+  slug: tag.id,
+  count: tagCounts[tag.id] ?? 0,
+}));
 
 const meta = {
   description: "A list of all tags",
