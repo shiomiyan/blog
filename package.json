@@ -7,6 +7,11 @@
   "engines": {
     "node": ">=24 <25"
   },
+  "pnpm": {
+    "overrides": {
+      "vite": "7.3.2"
+    }
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "pnpm run cf-typegen && pnpm run typecheck && astro check && astro build",

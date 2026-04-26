@@ -4,7 +4,12 @@
     "strictNullChecks": true,
     "types": ["node"],
     "paths": {
-      "@*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@constants": ["./src/constants.ts"],
+      "@schema": ["./src/schema.ts"]
     }
   },
   "exclude": ["dist"]
