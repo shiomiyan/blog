@@ -1,7 +1,7 @@
 ---
 title: SECCON Beginners CTF 2021 writeup
 description: ""
-date: "2021-05-24T22:58:05+09:00"
+created: "2021-05-24T22:58:05+09:00"
 draft: false
 id: 01F6FAP7E8720255V5PZJ84JC7
 tags:

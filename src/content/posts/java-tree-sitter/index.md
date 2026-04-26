@@ -1,6 +1,6 @@
 ---
 title: "Javaでtree-sitterを使ってJavaScriptコードを編集する"
-date: "2024-07-18"
+created: "2024-07-18T00:00:00+09:00"
 draft: false
 description: ""
 id: 01J31J6Y00V5MVQVXPHETYGBE8

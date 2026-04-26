@@ -33,7 +33,7 @@ const createFeedCollection = (name: FeedName) => {
           id: item.id,
           title: item.title,
           link: item.link,
-          date: new Date(item.date),
+          created: new Date(item.created),
           category: item.category ?? feedConfig.category,
           tags: item.tags.length > 0 ? item.tags : [feedConfig.tag],
         }));

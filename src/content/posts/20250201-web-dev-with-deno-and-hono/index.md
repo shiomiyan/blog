@@ -1,6 +1,6 @@
 ---
 title: DenoとHonoでペライチウェブ開発
-date: 2025-02-01T14:05:02.515Z
+created: 2025-02-01T14:05:02.515Z
 draft: false
 description: ""
 id: 01JK0X8J5K9NXZW584CDAA5XQ3

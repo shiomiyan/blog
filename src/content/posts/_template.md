@@ -1,6 +1,6 @@
 ---
 title: __TITLE__
-date: __DATE__
+created: __DATE__
 draft: true
 description: ""
 id: __ID__

@@ -1,6 +1,6 @@
 ---
 title: "初めてのCloudflare Workers"
-date: "2024-10-31"
+created: "2024-10-31T00:00:00+09:00"
 draft: false
 description: ""
 id: 01JBFXYD0060S8W3R3417SNKTA

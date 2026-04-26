@@ -10,7 +10,7 @@ const optionalCategorySchema = categorySchema.optional();
 export const postSchema = z.object({
   title: z.string(),
   description: z.string(),
-  date: z.coerce.date(),
+  created: z.coerce.date(),
   draft: z.boolean().default(true),
   id: z.string(),
   category: categorySchema,
@@ -20,14 +20,14 @@ export const postSchema = z.object({
 export const rssSchema = z.object({
   title: z.string(),
   link: z.string(),
-  date: z.date(),
+  created: z.date(),
   category: optionalCategorySchema,
   tags: tagSchema,
 });
 
 export const externalRssSchema = rssSchema.extend({
   id: z.string(),
-  date: z.iso.datetime({ offset: true }),
+  created: z.iso.datetime({ offset: true }),
 });
 
 export const snapshotSchema = z.object({

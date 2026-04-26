@@ -1,6 +1,6 @@
 ---
 title: "taskctf2022 writeup"
-date: "2022-12-04T15:11:45+09:00"
+created: "2022-12-04T15:11:45+09:00"
 draft: false
 description: ""
 id: 01GKDW6478X302QKXRVGQW2G3G

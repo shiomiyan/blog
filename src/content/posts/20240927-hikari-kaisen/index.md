@@ -1,6 +1,6 @@
 ---
 title: "自宅回線を整備した"
-date: "2024-09-27"
+created: "2024-09-27T00:00:00+09:00"
 draft: false
 description: ""
 id: 01J8RCDZ00264V21QGG4B6AYFB

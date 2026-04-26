@@ -22,7 +22,7 @@ import * as path from "node:path";
 const TEMPLATE_PATH = "src/content/posts/_template.md";
 const TEMPLATE_TOKENS = {
   title: "__TITLE__",
-  date: "__DATE__",
+  created: "__DATE__",
   id: "__ID__",
 } as const;
 
@@ -54,7 +54,7 @@ const assertTemplateTokens = (template: string) => {
 const buildContent = (template: string) => {
   return template
     .replaceAll(TEMPLATE_TOKENS.title, title)
-    .replaceAll(TEMPLATE_TOKENS.date, nowISO)
+    .replaceAll(TEMPLATE_TOKENS.created, nowISO)
     .replaceAll(TEMPLATE_TOKENS.id, crypto.randomUUID());
 };
 

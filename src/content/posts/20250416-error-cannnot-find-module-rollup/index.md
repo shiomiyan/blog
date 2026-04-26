@@ -1,6 +1,6 @@
 ---
 title: "Error: Cannot find module '@rollup/rollup-linux-x64-gnu'"
-date: 2025-04-16T02:16:06.432Z
+created: 2025-04-16T02:16:06.432Z
 draft: false
 description: ""
 id: 01JRY63N115YK9A6XXV193SSS9

@@ -1,6 +1,6 @@
 ---
 title: Puppeteerでalert関数の呼び出しを検知したい
-date: 2024-12-09T03:38:59.187Z
+created: 2024-12-09T03:38:59.187Z
 draft: false
 description: ""
 id: 01JEMQZD7KMBQJ5025R6V6G931

@@ -1,6 +1,6 @@
 ---
 title: CSRFとFetch Metadata
-date: 2025-12-23T14:13:19.376Z
+created: 2025-12-23T14:13:19.376Z
 draft: false
 description: ""
 id: 01KD5RXACHX8CMEPSEWJVHY8KR

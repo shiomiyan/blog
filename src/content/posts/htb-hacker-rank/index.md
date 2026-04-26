@@ -1,6 +1,6 @@
 ---
 title: "Hack The BoxでHackerランクになった話"
-date: "2023-04-05T21:10:09+09:00"
+created: "2023-04-05T21:10:09+09:00"
 draft: false
 description: ""
 id: 01GX8N6278H7Y4EA8T4ZB89JMR

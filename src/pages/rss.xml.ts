@@ -19,11 +19,11 @@ export const GET = async (context: APIContext) => {
     (entry: CollectionEntry<"posts">) => !entry.data.draft,
   );
   const items: RssItem[] = posts.map((item: CollectionEntry<"posts">) => {
-    const { title, description, date } = item.data;
+    const { title, description, created } = item.data;
     return {
       title,
       description,
-      pubDate: date,
+      pubDate: created,
       link: `/${item.collection}/${item.id}/`,
       content: item.rendered?.html ?? "",
     };

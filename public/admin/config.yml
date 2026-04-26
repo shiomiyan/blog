@@ -32,7 +32,7 @@ collections:
           required: false,
           default: "",
         }
-      - { name: date, label: Date, widget: datetime, default: "{{datetime}}" }
+      - { name: created, label: Date, widget: datetime, default: "{{datetime}}" }
       - { name: draft, label: Draft, widget: boolean, default: true }
       - { name: id, label: ID, widget: uuid }
       - name: category

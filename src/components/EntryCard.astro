@@ -10,8 +10,8 @@ type Props = {
 const { entry } = Astro.props;
 
 // https://docs.astro.build/en/guides/content-collections/#working-with-dates-in-the-frontmatter
-const isoDateTime = entry.data.date.toISOString();
-const date = isoDateTime.slice(0, 10);
+const isoDateTime = entry.data.created.toISOString();
+const created = isoDateTime.slice(0, 10);
 
 const href =
   entry.collection === "posts"
@@ -23,7 +23,7 @@ const favicon = entry.collection !== "posts" ? await getFavicon(href) : "";
 
 <div class="block text-base sm:flex sm:flex-wrap sm:items-baseline sm:gap-1">
   <span class="whitespace-nowrap">
-    <time datetime={isoDateTime}>{date}</time>:
+    <time datetime={isoDateTime}>{created}</time>:
   </span>
   <a href={href} class="inline underline decoration-dotted hover:text-blue-600">
     {entry.data.title}

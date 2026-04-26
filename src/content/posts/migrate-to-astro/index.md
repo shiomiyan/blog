@@ -1,6 +1,6 @@
 ---
 title: "ブログをHugoからAstroに移行した"
-date: "2024-07-10"
+created: "2024-07-10T00:00:00+09:00"
 draft: false
 description: ""
 id: 01J2CZ1600DCRN6FTV3KZRW035

@@ -69,21 +69,21 @@ const normalizeFeed = async (feedConfig: Feed): Promise<Snapshot> => {
     const id = item.guid || item.id;
     if (!id || !item.pubDate) continue;
 
-    const date = new Date(item.pubDate);
-    if (Number.isNaN(date.getTime())) continue;
+    const created = new Date(item.pubDate);
+    if (Number.isNaN(created.getTime())) continue;
     const category = getFeedCategory(feedConfig);
 
     items.push({
       id,
       title: item.title ?? item.link ?? id,
       link: item.link ?? id,
-      date: date.toISOString(),
+      created: created.toISOString(),
       ...(category ? { category } : {}),
       tags: [feedConfig.tag] as Snapshot["items"][number]["tags"],
     });
   }
 
-  items.sort((a, b) => b.date.localeCompare(a.date));
+  items.sort((a, b) => b.created.localeCompare(a.created));
 
   return {
     sourceUrl: feedConfig.url,

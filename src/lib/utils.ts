@@ -4,18 +4,13 @@ import {
   type CollectionKey,
 } from "astro:content";
 
-/**
- * Format date to YYYY-MM-DD
- * @param date Date
- * @returns Formatted date
- */
-export function formatDate(date: Date) {
+export const formatDate = (created: Date): string => {
   return Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
-  }).format(date);
-}
+  }).format(created);
+};
 
 /**
  * duckduckgoのfavicon apiから外部サイトのfaviconを取ってきてbase64 data uriにする
@@ -34,7 +29,7 @@ export const getFavicon = async (url: string): Promise<string | undefined> => {
 
 /**
  * Retrieve all posts data including external posts.
- * @returns Posts collection sorted by date (newest first)
+ * @returns Posts collection sorted by created (newest first)
  */
 export const getCollectionByCollectionKeys = async <C extends CollectionKey>(
   ...collectionKeys: C[]
@@ -43,6 +38,8 @@ export const getCollectionByCollectionKeys = async <C extends CollectionKey>(
     getCollection(collectionKey),
   );
   const collections = (await Promise.all(promises)).flat();
-  collections.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  collections.sort(
+    (a, b) => b.data.created.valueOf() - a.data.created.valueOf(),
+  );
   return collections;
 };
