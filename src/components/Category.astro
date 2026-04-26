@@ -1,13 +1,13 @@
 ---
-import { getCategoryLabel } from "@lib/taxonomy";
+import { getCategoryLabel, type CategoryId } from "@lib/taxonomy";
 
 type Props = {
-  category: string;
+  category: CategoryId;
   count?: number;
 };
 
 const { category, count } = Astro.props;
-const displayName = await getCategoryLabel(category);
+const displayName = getCategoryLabel(category);
 ---
 
 <a

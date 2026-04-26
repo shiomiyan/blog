@@ -8,7 +8,7 @@ import { z } from "astro/zod";
  * from the taxonomy collections.
  */
 const categorySchema = z.string().refine(isCategoryId, {
-  message: "Unknown category id. Add it to src/data/categories.json.",
+  message: "Unknown category id. Add it to src/constants.ts.",
 });
 
 /**
@@ -20,7 +20,7 @@ const categorySchema = z.string().refine(isCategoryId, {
 const tagSchema = z
   .array(
     z.string().refine(isTagId, {
-      message: "Unknown tag id. Add it to src/data/tags.json.",
+      message: "Unknown tag id. Add it to src/constants.ts.",
     }),
   )
   .default([])

@@ -7,7 +7,7 @@ import { getCategoryDefinitions } from "@lib/taxonomy";
 
 export const prerender = true;
 
-const categoryDefinitions = await getCategoryDefinitions();
+const categoryDefinitions = getCategoryDefinitions();
 const posts = (await getCollection("posts")).filter((post) => !post.data.draft);
 
 const categoryCounts = Object.fromEntries(

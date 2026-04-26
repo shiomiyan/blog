@@ -8,7 +8,7 @@ import { getCategoryDefinitions, getCategoryLabel } from "@lib/taxonomy";
 export const prerender = true;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const categoryDefinitions = await getCategoryDefinitions();
+  const categoryDefinitions = getCategoryDefinitions();
   return categoryDefinitions.map((category) => ({
     params: { slug: category.id },
   }));
@@ -19,7 +19,7 @@ const posts = (await getCollection("posts"))
   .filter((post) => !post.data.draft)
   .filter((post) => post.data.category === slug);
 
-const categoryDisplayName = await getCategoryLabel(slug);
+const categoryDisplayName = getCategoryLabel(slug);
 const meta = {
   description: `Posts in category ${categoryDisplayName}`,
   title: `category: ${categoryDisplayName}`,

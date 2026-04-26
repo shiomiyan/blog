@@ -1,11 +1,9 @@
-import { getCollection, type CollectionEntry } from "astro:content";
-import categories from "../data/categories.json";
-import tags from "../data/tags.json";
+import { CATEGORIES, TAGS } from "@constants";
 
-export type TagId = string;
-export type CategoryId = string;
-export type TagDefinition = CollectionEntry<"tags">["data"];
-export type CategoryDefinition = CollectionEntry<"categories">["data"];
+export type TagDefinition = (typeof TAGS)[number];
+export type CategoryDefinition = (typeof CATEGORIES)[number];
+export type TagId = TagDefinition["id"];
+export type CategoryId = CategoryDefinition["id"];
 
 /**
  * Synchronous taxonomy ID sets for frontmatter schema validation.
@@ -13,22 +11,23 @@ export type CategoryDefinition = CollectionEntry<"categories">["data"];
  * Content Collection reads are async, while Zod refinements in `postSchema`
  * need synchronous predicates.
  */
-const tagIds = new Set(tags.map((tag) => tag.id));
-const categoryIds = new Set(categories.map((category) => category.id));
+const tagIds = new Set<string>(TAGS.map((tag) => tag.id));
+const categoryIds = new Set<string>(CATEGORIES.map((category) => category.id));
 
 /** Returns whether a value is a defined tag ID. */
-export const isTagId = (value: string): boolean => tagIds.has(value);
+export const isTagId = (value: string): value is TagId => tagIds.has(value);
 
 /** Returns whether a value is a defined category ID. */
-export const isCategoryId = (value: string): boolean => categoryIds.has(value);
+export const isCategoryId = (value: string): value is CategoryId =>
+  categoryIds.has(value);
 
 /** Loads all tag definitions from the taxonomy collection. */
-export const getTagDefinitions = async (): Promise<TagDefinition[]> =>
-  (await getCollection("tags")).map((tag) => tag.data);
+export const getTagDefinitions = (): TagDefinition[] => [...TAGS];
 
 /** Loads all category definitions from the taxonomy collection. */
-export const getCategoryDefinitions = async (): Promise<CategoryDefinition[]> =>
-  (await getCollection("categories")).map((category) => category.data);
+export const getCategoryDefinitions = (): CategoryDefinition[] => [
+  ...CATEGORIES,
+];
 
 /**
  * Resolves a tag ID to its display label.
@@ -36,8 +35,8 @@ export const getCategoryDefinitions = async (): Promise<CategoryDefinition[]> =>
  * Unknown IDs throw because normal post content should already be validated by
  * the frontmatter schema.
  */
-export const getTagLabel = async (id: string): Promise<string> => {
-  const tag = (await getCollection("tags", (tag) => tag.id === id)).at(0)?.data;
+export const getTagLabel = (id: string): string => {
+  const tag = TAGS.find((tag) => tag.id === id);
   if (!tag) {
     throw new Error(`Unknown tag id: "${id}".`);
   }
@@ -51,10 +50,8 @@ export const getTagLabel = async (id: string): Promise<string> => {
  * Unknown IDs throw because normal post content should already be validated by
  * the frontmatter schema.
  */
-export const getCategoryLabel = async (id: string): Promise<string> => {
-  const category = (
-    await getCollection("categories", (category) => category.id === id)
-  ).at(0)?.data;
+export const getCategoryLabel = (id: string): string => {
+  const category = CATEGORIES.find((category) => category.id === id);
   if (!category) {
     throw new Error(`Unknown category id: "${id}".`);
   }

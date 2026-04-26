@@ -21,3 +21,77 @@ export const SOCIALS = [
     SVG_NAME: "bluesky",
   },
 ] as const;
+
+export const TAGS = [
+  {
+    id: "security",
+    label: "セキュリティ",
+  },
+  {
+    id: "random",
+    label: "雑記",
+  },
+  {
+    id: "tree-sitter",
+    label: "Tree-sitter",
+  },
+  {
+    id: "astro",
+    label: "Astro",
+  },
+  {
+    id: "cloudflare",
+    label: "Cloudflare",
+  },
+  {
+    id: "raspberry-pi",
+    label: "Raspberry Pi",
+  },
+  {
+    id: "puppeteer",
+    label: "Puppeteer",
+  },
+  {
+    id: "typescript",
+    label: "TypeScript",
+  },
+  {
+    id: "deno",
+    label: "Deno",
+  },
+  {
+    id: "npm",
+    label: "npm",
+  },
+  {
+    id: "rollup",
+    label: "rollup",
+  },
+  {
+    id: "browser",
+    label: "Browser",
+  },
+  {
+    id: "rfc",
+    label: "RFC",
+  },
+  {
+    id: "site-updates",
+    label: "Site updates",
+  },
+  {
+    id: "weekly-report",
+    label: "Weekly report",
+  },
+] as const;
+
+export const CATEGORIES = [
+  {
+    id: "tech",
+    label: "Tech",
+  },
+  {
+    id: "diary",
+    label: "Diary",
+  },
+] as const;

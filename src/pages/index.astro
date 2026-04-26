@@ -7,7 +7,7 @@ import { getCollection } from "astro:content";
 
 export const prerender = true;
 
-const categoryDefinitions = await getCategoryDefinitions();
+const categoryDefinitions = getCategoryDefinitions();
 const posts = await getCollection("posts")
   .then((entries) => entries.filter((entry) => !entry.data.draft))
   .then((entries) =>
