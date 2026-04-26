@@ -8,23 +8,17 @@ on:
       - reopened
       - synchronize
       - ready_for_review
-  workflow_run:
-    workflows: ["CI"]
-    types:
-      - completed
 
 permissions:
   contents: write
   pull-requests: write
-  statuses: write
 
 jobs:
-  mark-auto-merge-candidate:
+  dependabot:
     runs-on: ubuntu-latest
-    name: Dependabot Auto Merge Candidate
+    name: Dependabot Auto Merge
     timeout-minutes: 10
     if: >-
-      github.event_name == 'pull_request' &&
       github.event.pull_request.user.login == 'dependabot[bot]' &&
       github.repository == 'shiomiyan/blog' &&
       github.event.pull_request.draft == false
@@ -35,7 +29,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Mark supported npm updates for post-CI merge
+      - name: Enable auto-merge for supported npm updates
         if: |
           (
             steps.metadata.outputs.package-ecosystem == 'npm' ||
@@ -48,38 +42,9 @@ jobs:
         env:
           # Use the ephemeral workflow token only. Do not use a PAT here.
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
         run: |
-          gh api \
-            --method POST \
-            "repos/${GITHUB_REPOSITORY}/statuses/${PR_HEAD_SHA}" \
-            -f state=success \
-            -f context='dependabot/automerge' \
-            -f description='Eligible for Dependabot auto-merge.' \
-            -f target_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-
-  merge-after-ci:
-    runs-on: ubuntu-latest
-    name: Dependabot Auto Merge
-    timeout-minutes: 10
-    if: >-
-      github.event_name == 'workflow_run' &&
-      github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.event == 'pull_request' &&
-      github.repository == 'shiomiyan/blog'
-    steps:
-      - name: Merge marked Dependabot pull request
-        env:
-          # Use the ephemeral workflow token only. Do not use a PAT here.
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ github.event.workflow_run.pull_requests[0].number }}
-          WORKFLOW_RUN_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
-        run: |
-          test -n "${PR_NUMBER}" || exit 0
-          gh api "repos/${GITHUB_REPOSITORY}/commits/${WORKFLOW_RUN_HEAD_SHA}/status" \
-            --jq '.statuses[] | select(.context == "dependabot/automerge" and .state == "success")' >/dev/null || exit 0
           gh pr merge \
-            --repo "${GITHUB_REPOSITORY}" \
+            --auto \
             --merge \
-            --match-head-commit "${WORKFLOW_RUN_HEAD_SHA}" \
-            "${PR_NUMBER}"
+            "${PR_URL}"
