@@ -1,14 +1,13 @@
 ---
-title: "TIL: AI threats in the wild: The current state of prompt injections on the web"
+title: 'TIL: AI threats in the wild: The current state of prompt injections on the web'
 description: blank
-created: 2026-04-26T17:03:10
-draft: true
+created: 2026-04-26T17:03:00
+draft: false
 id: dd56e32c-b855-4c58-aa04-10ee571ae033
 category: diary
 tags:
   - random
 ---
-
 
 >There are many channels through which attackers might try to send prompt injections. However, one location is particularly easy to observe - the public web.
 
