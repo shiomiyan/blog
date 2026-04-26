@@ -22,7 +22,6 @@
     "lint": "eslint .",
     "typecheck": "tsc --NoEmit",
     "cf-typegen": "wrangler types --path ./src/worker-configuration.d.ts",
-    "fetch-feeds": "tsx bin/fetch-feeds.ts",
     "textlint": "textlint \"README.md\" \"AGENTS.md\" \"src/content/posts/**/*.md\" \"src/content/posts/**/*.mdx\"",
     "format": "prettier --write .",
     "create-post": "tsx bin/create-post.ts"
@@ -51,7 +50,6 @@
     "prettier-plugin-organize-imports": "^4.3.0",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "rehype-external-links": "^3.0.0",
-    "rss-parser": "^3.13.0",
     "tailwindcss": "^4.2.2",
     "textlint": "^15.5.4",
     "textlint-filter-rule-allowlist": "^4.0.0",

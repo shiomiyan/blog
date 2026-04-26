@@ -1,11 +1,8 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { getFavicon } from "@lib/utils";
-
-type EntryCollectionKey = "posts" | "zenn" | "qiita" | "speakerdeck" | "note";
 
 type Props = {
-  entry: CollectionEntry<EntryCollectionKey>;
+  entry: CollectionEntry<"posts">;
 };
 
 const { entry } = Astro.props;
@@ -13,13 +10,7 @@ const { entry } = Astro.props;
 // https://docs.astro.build/en/guides/content-collections/#working-with-dates-in-the-frontmatter
 const isoDateTime = entry.data.created.toISOString();
 const created = isoDateTime.slice(0, 10);
-
-const href =
-  entry.collection === "posts"
-    ? `/${entry.collection}/${entry.id}`
-    : entry.data.link;
-
-const favicon = entry.collection !== "posts" ? await getFavicon(href) : "";
+const href = `/${entry.collection}/${entry.id}`;
 ---
 
 <div class="block text-base sm:flex sm:flex-wrap sm:items-baseline sm:gap-1">
@@ -28,15 +19,5 @@ const favicon = entry.collection !== "posts" ? await getFavicon(href) : "";
   </span>
   <a href={href} class="inline underline decoration-dotted hover:text-blue-600">
     {entry.data.title}
-    {
-      entry.collection !== "posts" && favicon && (
-        <img
-          src={favicon}
-          alt="favicon"
-          title={entry.collection}
-          class="ml-0.5 inline h-4 w-4"
-        />
-      )
-    }
   </a>
 </div>

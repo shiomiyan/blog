@@ -1,8 +1,7 @@
-import { feedEntrySchema, feedSnapshotsSchema, postSchema } from "@schema";
+import { postSchema } from "@schema";
 import { file, glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
-import { FEEDS_CACHE_FILE, type FeedName } from "./feeds";
 
 const taxonomySchema = z.object({
   id: z.string(),
@@ -46,34 +45,8 @@ const categories = defineCollection({
   schema: taxonomySchema,
 });
 
-/**
- * Creates one external feed collection from the shared generated cache file.
- *
- * The cache keeps service metadata together; collections expose only the items
- * so existing `getCollection("note")` style callers remain unchanged.
- */
-const createFeedCollection = (name: FeedName) => {
-  return defineCollection({
-    loader: file(FEEDS_CACHE_FILE, {
-      parser: (text) => {
-        return feedSnapshotsSchema.parse(JSON.parse(text))[name].items;
-      },
-    }),
-    schema: feedEntrySchema,
-  });
-};
-
-const zenn = createFeedCollection("zenn");
-const qiita = createFeedCollection("qiita");
-const note = createFeedCollection("note");
-const speakerdeck = createFeedCollection("speakerdeck");
-
 export const collections = {
   posts,
   tags,
   categories,
-  zenn,
-  qiita,
-  speakerdeck,
-  note,
 };

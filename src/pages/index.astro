@@ -3,23 +3,13 @@ import Layout from "@layouts/Layout.astro";
 import EntryList from "@components/EntryList.astro";
 import { SITE } from "@constants";
 import { getCategoryDefinitions } from "@lib/taxonomy";
-import { getCollectionByCollectionKeys } from "@lib/utils";
+import { getCollection } from "astro:content";
 
 export const prerender = true;
 
 const categoryDefinitions = await getCategoryDefinitions();
-const posts = await getCollectionByCollectionKeys(
-  "posts",
-  "zenn",
-  "qiita",
-  "speakerdeck",
-  "note",
-)
-  .then((entries) =>
-    entries.filter(
-      (entry) => entry.collection !== "posts" || !entry.data.draft,
-    ),
-  )
+const posts = await getCollection("posts")
+  .then((entries) => entries.filter((entry) => !entry.data.draft))
   .then((entries) =>
     entries.sort((a, b) => b.data.created.valueOf() - a.data.created.valueOf()),
   );

@@ -3,10 +3,8 @@ import Container from "@components/Container.astro";
 import EntryCard from "@components/EntryCard.astro";
 import type { CollectionEntry } from "astro:content";
 
-type EntryCollectionKey = "posts" | "zenn" | "qiita" | "speakerdeck" | "note";
-
 interface Props {
-  entries: CollectionEntry<EntryCollectionKey>[];
+  entries: CollectionEntry<"posts">[];
 }
 
 const { entries } = Astro.props;
@@ -25,11 +23,8 @@ const hasHeader = Astro.slots.has("header");
     <ul class="not-prose flex flex-col gap-2" data-entry-list>
       {
         entries.map((entry) => {
-          const category =
-            "category" in entry.data ? entry.data.category : undefined;
-
           return (
-            <li data-entry data-category={category ?? ""}>
+            <li data-entry data-category={entry.data.category}>
               <EntryCard entry={entry} />
             </li>
           );

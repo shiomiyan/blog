@@ -43,39 +43,3 @@ export const postSchema = z.strictObject({
   category: categorySchema,
   tags: tagSchema,
 });
-
-/**
- * Schema for one external feed item after normalization.
- *
- * Feed items are intentionally smaller than local posts and are not categorized
- * or tagged because taxonomy pages only use the local `posts` collection.
- */
-export const feedEntrySchema = postSchema
-  .pick({
-    id: true,
-    title: true,
-    created: true,
-  })
-  .extend({ link: z.url() });
-
-const feedSourceSnapshotSchema = z.strictObject({
-  source: z.url(),
-  items: z.array(feedEntrySchema),
-});
-
-/**
- * Schema for the generated external feed cache.
- *
- * All sources share one fetched timestamp so content sync reads a single
- * generated artifact while preserving each service as its own collection.
- */
-export const feedSnapshotsSchema = z.strictObject({
-  fetchedAt: z.coerce.date(),
-  zenn: feedSourceSnapshotSchema,
-  qiita: feedSourceSnapshotSchema,
-  note: feedSourceSnapshotSchema,
-  speakerdeck: feedSourceSnapshotSchema,
-});
-
-export type FeedSourceSnapshot = z.infer<typeof feedSourceSnapshotSchema>;
-export type FeedSnapshots = z.infer<typeof feedSnapshotsSchema>;
