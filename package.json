@@ -29,7 +29,7 @@
   "devDependencies": {
     "98.css": "^0.1.21",
     "@astrojs/check": "^0.9.8",
-    "@astrojs/cloudflare": "^13.2.0",
+    "@astrojs/cloudflare": "^13.2.1",
     "@astrojs/mdx": "^5.0.4",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
@@ -48,7 +48,7 @@
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-organize-imports": "^4.3.0",
-    "prettier-plugin-tailwindcss": "^0.7.2",
+    "prettier-plugin-tailwindcss": "^0.7.3",
     "rehype-external-links": "^3.0.0",
     "tailwindcss": "^4.2.4",
     "textlint": "^15.5.4",
