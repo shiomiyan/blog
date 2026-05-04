@@ -12,7 +12,7 @@
  * Run from pnpm script.
  *
  * ```
- * pnpm run create-post -- '<TITLE>' '<SLUG>'
+ * pnpm new -- '<TITLE>' '<SLUG>'
  * ```
  */
 
@@ -30,7 +30,7 @@ const args = process.argv.slice(2).filter((arg) => arg !== "--");
 const [title, slug] = args;
 
 if (!title || !slug) {
-  console.error("Usage: pnpm run create-post -- '<TITLE>' '<SLUG>'");
+  console.error("Usage: pnpm new -- '<TITLE>' '<SLUG>'");
   process.exit(1);
 }
 
@@ -58,7 +58,7 @@ const buildContent = (template: string) => {
     .replaceAll(TEMPLATE_TOKENS.id, crypto.randomUUID());
 };
 
-async function main() {
+const main = async () => {
   const targetDir = path.dirname(target);
 
   try {
@@ -82,7 +82,7 @@ async function main() {
   await fs.writeFile(target, buildContent(template));
 
   console.log(target);
-}
+};
 
 await main().catch((error: unknown) => {
   if (error instanceof Error) {

@@ -19,7 +19,7 @@
     "cf-typegen": "wrangler types --path ./src/worker-configuration.d.ts",
     "textlint": "textlint \"README.md\" \"AGENTS.md\" \"src/content/posts/**/*.md\" \"src/content/posts/**/*.mdx\"",
     "format": "prettier --write .",
-    "create-post": "tsx bin/create-post.ts"
+    "new": "tsx bin/new.ts"
   },
   "devDependencies": {
     "98.css": "^0.1.21",
