@@ -1,8 +1,11 @@
 import { CATEGORIES, TAGS } from "@constants";
 
-export type TagDefinition = (typeof TAGS)[number];
+export type TagDefinition = {
+  id: string;
+  label: string;
+};
 export type CategoryDefinition = (typeof CATEGORIES)[number];
-export type TagId = TagDefinition["id"];
+export type TagId = string;
 export type CategoryId = CategoryDefinition["id"];
 
 /**
@@ -11,18 +14,29 @@ export type CategoryId = CategoryDefinition["id"];
  * Content Collection reads are async, while Zod refinements in `postSchema`
  * need synchronous predicates.
  */
-const tagIds = new Set<string>(TAGS.map((tag) => tag.id));
 const categoryIds = new Set<string>(CATEGORIES.map((category) => category.id));
-
-/** Returns whether a value is a defined tag ID. */
-export const isTagId = (value: string): value is TagId => tagIds.has(value);
 
 /** Returns whether a value is a defined category ID. */
 export const isCategoryId = (value: string): value is CategoryId =>
   categoryIds.has(value);
 
-/** Loads all tag definitions from the taxonomy collection. */
-export const getTagDefinitions = (): TagDefinition[] => [...TAGS];
+/** Builds tag definitions from known labels plus labels used by posts. */
+export const getTagDefinitions = (
+  tagIds: Iterable<string> = [],
+): TagDefinition[] => {
+  const definitionsById = new Map<string, TagDefinition>(
+    TAGS.map((tag) => [tag.id, tag]),
+  );
+
+  for (const id of tagIds) {
+    definitionsById.set(id, {
+      id,
+      label: getTagLabel(id),
+    });
+  }
+
+  return [...definitionsById.values()];
+};
 
 /** Loads all category definitions from the taxonomy collection. */
 export const getCategoryDefinitions = (): CategoryDefinition[] => [
@@ -32,16 +46,12 @@ export const getCategoryDefinitions = (): CategoryDefinition[] => [
 /**
  * Resolves a tag ID to its display label.
  *
- * Unknown IDs throw because normal post content should already be validated by
- * the frontmatter schema.
+ * Unknown IDs fall back to themselves so posts can introduce tags without
+ * updating shared taxonomy first.
  */
 export const getTagLabel = (id: string): string => {
   const tag = TAGS.find((tag) => tag.id === id);
-  if (!tag) {
-    throw new Error(`Unknown tag id: "${id}".`);
-  }
-
-  return tag.label;
+  return tag?.label ?? id;
 };
 
 /**

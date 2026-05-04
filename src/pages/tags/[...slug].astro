@@ -3,26 +3,24 @@ import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import EntryList from "@components/EntryList.astro";
-import { getTagDefinitions, getTagLabel, isTagId } from "@lib/taxonomy";
+import { getTagLabel } from "@lib/taxonomy";
 
 export const prerender = true;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const tagDefinitions = getTagDefinitions();
-  return tagDefinitions.map((tag) => ({ params: { slug: tag.id } }));
+  const posts = (await getCollection("posts")).filter(
+    (post) => !post.data.draft,
+  );
+  const tagIds = new Set(posts.flatMap((post) => post.data.tags));
+  return [...tagIds].map((tag) => ({ params: { slug: tag } }));
 };
 
 const { slug } = Astro.params as { slug: string };
-const tagId = isTagId(slug)
-  ? slug
-  : (() => {
-      throw new Error(`Unknown tag id: "${slug}".`);
-    })();
 const posts = (await getCollection("posts"))
   .filter((post) => !post.data.draft)
-  .filter((post) => post.data.tags.includes(tagId));
+  .filter((post) => post.data.tags.includes(slug));
 
-const tagDisplayName = getTagLabel(tagId);
+const tagDisplayName = getTagLabel(slug);
 const meta = {
   description: `Posts tagged with ${tagDisplayName}`,
   title: `tag: ${tagDisplayName}`,

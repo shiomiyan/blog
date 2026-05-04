@@ -6,12 +6,7 @@ import TableOfContents from "@components/TableOfContents.astro";
 import Tag from "@components/Tag.astro";
 import Category from "@components/Category.astro";
 import Upvote from "@components/Upvote.astro";
-import {
-  isCategoryId,
-  isTagId,
-  type CategoryId,
-  type TagId,
-} from "@lib/taxonomy";
+import { isCategoryId, type CategoryId } from "@lib/taxonomy";
 
 export const prerender = true;
 
@@ -33,13 +28,6 @@ const categoryId: CategoryId = isCategoryId(category)
   : (() => {
       throw new Error(`Unknown category id: "${category}".`);
     })();
-const tagIds: TagId[] = tags.map((tag) => {
-  if (!isTagId(tag)) {
-    throw new Error(`Unknown tag id: "${tag}".`);
-  }
-
-  return tag;
-});
 const { Content, headings } = await render(post);
 ---
 
@@ -59,7 +47,7 @@ const { Content, headings } = await render(post);
 
         <div class="flex flex-wrap gap-2">
           <Category category={categoryId} />
-          {tagIds.map((tag) => <Tag tag={tag} />)}
+          {tags.map((tag) => <Tag tag={tag} />)}
         </div>
       </div>
       <h1 class="text-3xl font-bold text-black">

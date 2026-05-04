@@ -1,4 +1,4 @@
-import { isCategoryId, isTagId } from "@lib/taxonomy";
+import { isCategoryId } from "@lib/taxonomy";
 import { z } from "astro/zod";
 
 /**
@@ -12,17 +12,13 @@ const categorySchema = z.string().refine(isCategoryId, {
 });
 
 /**
- * Validates optional tag IDs in post frontmatter.
+ * Validates optional tag labels in post frontmatter.
  *
  * Missing tags become an empty array so consumers can always map and filter
  * tags without checking for undefined.
  */
 const tagSchema = z
-  .array(
-    z.string().refine(isTagId, {
-      message: "Unknown tag id. Add it to src/constants.ts.",
-    }),
-  )
+  .array(z.string().min(1))
   .default([])
   .refine((tags) => new Set(tags).size === tags.length, {
     message: "Duplicate tags are not allowed.",

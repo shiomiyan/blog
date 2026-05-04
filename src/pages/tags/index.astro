@@ -7,8 +7,9 @@ import { getTagDefinitions } from "@lib/taxonomy";
 
 export const prerender = true;
 
-const tagDefinitions = getTagDefinitions();
 const posts = (await getCollection("posts")).filter((post) => !post.data.draft);
+const postTagIds = new Set(posts.flatMap((post) => post.data.tags));
+const tagDefinitions = getTagDefinitions(postTagIds);
 const tagCounts = Object.fromEntries(
   tagDefinitions.map((tag) => [tag.id, 0]),
 ) as Record<string, number>;
