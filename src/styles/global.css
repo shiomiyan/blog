@@ -17,7 +17,7 @@ body {
 }
 
 header {
-  @apply static top-0 z-50 py-6;
+  @apply static top-0 z-50 py-3;
   @apply bg-neutral-100/75;
   @apply saturate-200 backdrop-blur-xs;
 }
@@ -60,6 +60,65 @@ h6::before {
 
 article a:visited {
   @apply text-[#551A8B];
+}
+
+.markdown-alert {
+  --callout-color: #2579ab;
+  --callout-title-bg: #e7f2fa;
+  --callout-icon: "i";
+  @apply mx-auto my-6 overflow-hidden rounded border border-l-4 bg-white px-3 pt-0 pb-4;
+  border-color: #d8dee4;
+  border-left-color: var(--callout-color);
+}
+
+.markdown-alert :last-child {
+  @apply mb-0;
+}
+
+.markdown-alert .markdown-alert-title ~ * {
+  @apply mx-6;
+}
+
+.markdown-alert .markdown-alert-title {
+  @apply -mx-3 mt-0 mb-2 flex items-center px-3 py-2 pl-8 font-semibold text-black;
+  background-color: var(--callout-title-bg);
+  position: relative;
+}
+
+.markdown-alert .markdown-alert-title::after {
+  @apply absolute left-3 inline-flex size-4 items-center justify-center rounded-full text-xs leading-none font-bold;
+  color: var(--callout-color);
+  content: var(--callout-icon);
+}
+
+.markdown-alert-note {
+  --callout-color: #2579ab;
+  --callout-title-bg: #e7f2fa;
+  --callout-icon: "i";
+}
+
+.markdown-alert-tip {
+  --callout-color: #28a745;
+  --callout-title-bg: #e6f6e6;
+  --callout-icon: "!";
+}
+
+.markdown-alert-important {
+  --callout-color: #f0b37e;
+  --callout-title-bg: #fff3e6;
+  --callout-icon: "!";
+}
+
+.markdown-alert-warning {
+  --callout-color: #f0b37e;
+  --callout-title-bg: #fff3e6;
+  --callout-icon: "!";
+}
+
+.markdown-alert-caution {
+  --callout-color: #dc3545;
+  --callout-title-bg: #fdeaea;
+  --callout-icon: "!";
 }
 
 code,

@@ -32,6 +32,7 @@
     "@pagefind/default-ui": "^1.5.2",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.2.4",
+    "@types/mdast": "^4.0.4",
     "@types/node": "^24.12.2",
     "@typescript-eslint/parser": "^8.59.1",
     "arctic": "^3.7.0",
@@ -52,6 +53,7 @@
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.1",
+    "unified": "^11.0.5",
     "wrangler": "^4.87.0"
   }
 }

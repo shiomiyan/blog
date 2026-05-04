@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import rehypeExternalLinks from "rehype-external-links";
 import pagefindIndexer from "./src/integrations/pagefindIndexer";
+import remarkCallout from "./src/lib/remarkCallout";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,6 +19,7 @@ export default defineConfig({
     shikiConfig: {
       theme: "github-dark-default",
     },
+    remarkPlugins: [remarkCallout],
     rehypePlugins: [
       [
         rehypeExternalLinks,
