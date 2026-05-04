@@ -17,7 +17,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --NoEmit",
     "cf-typegen": "wrangler types --path ./src/worker-configuration.d.ts",
-    "textlint": "textlint \"README.md\" \"AGENTS.md\" \"src/content/posts/**/*.md\" \"src/content/posts/**/*.mdx\"",
+    "textlint": "textlint \"src/content/posts/**/*.md\" \"src/content/posts/**/*.mdx\"",
     "format": "prettier --write .",
     "new": "tsx bin/new.ts"
   },

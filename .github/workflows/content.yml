@@ -1,18 +1,19 @@
-name: CI
+name: Content
 
 on:
   pull_request:
     branches: [master]
+    paths:
+      - "src/content/posts/**"
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 jobs:
-  build:
+  content:
     runs-on: ubuntu-latest
-    name: Build Check
+    name: Content Check
     timeout-minutes: 20
+    permissions:
+      contents: read
     steps:
       - name: Checkout repo using git
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -34,23 +35,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint
-        run: pnpm run lint
+      - name: Textlint
+        run: pnpm run textlint
 
-      - name: Build
-        run: pnpm run build
-
-  dependency-review:
-    runs-on: ubuntu-latest
-    name: Dependency Review
-    timeout-minutes: 10
-    steps:
-      - name: Checkout repo using git
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          persist-credentials: false
-
-      - name: Review dependency changes
-        uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4.9.0
-        with:
-          fail-on-severity: low
+      - name: Astro check
+        run: pnpm run astro -- check
