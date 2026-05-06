@@ -41,9 +41,9 @@ tags:
 
 ## 構成
 
-構成をスイッチしやすくする目的で、[numtide/blueprint](https://numtide.github.io/blueprint/main/)を採用しています。
+構成をスイッチしやすくする目的で、[numtide/blueprint](https://numtide.github.io/blueprint/main/)を採用した。
 
-`hosts/<hostname>/users/<username>/**/*.nix`のような形式でホストやユーザを増やせるので、NixOSを採用したくなった場合や別の端末設定を管理したくなった場合の取り回しがよさそうな気がします。
+いくつか利点はあるが`hosts/<hostname>/users/<username>/**/*.nix`のような形式でホストやユーザを増やせるので、NixOSを採用したくなった場合や別の端末設定を管理したくなった場合の取り回しがよさそうな気がする。
 
 [dotfiles管理に限界を感じたらNixOSとblueprintを試してほしい | zenn.dev](https://zenn.dev/sei40kr/articles/nix-dotfiles-blueprint)
 
