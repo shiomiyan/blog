@@ -14,6 +14,7 @@ jobs:
     timeout-minutes: 20
     permissions:
       contents: read
+      pull-requests: write
     steps:
       - name: Checkout repo using git
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -35,8 +36,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Textlint
-        run: pnpm run textlint
+      - name: Setup reviewdog
+        uses: reviewdog/action-setup@d8edfce3dd5e1ec6978745e801f9c50b5ef80252 # v1.4.0
+
+      - name: Textlint with reviewdog
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -o pipefail
+          pnpm run textlint:checkstyle \
+            | reviewdog -name="textlint" -f=checkstyle -reporter=github-pr-review -filter-mode=added -fail-level=error
 
       - name: Astro check
         run: pnpm run astro -- check

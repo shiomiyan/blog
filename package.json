@@ -18,6 +18,7 @@
     "typecheck": "tsc --NoEmit",
     "cf-typegen": "wrangler types --path ./src/worker-configuration.d.ts",
     "textlint": "textlint \"src/content/posts/**/*.md\" \"src/content/posts/**/*.mdx\"",
+    "textlint:checkstyle": "textlint \"src/content/posts/**/*.md\" \"src/content/posts/**/*.mdx\" -f checkstyle",
     "format": "prettier --write .",
     "new": "tsx bin/new.ts"
   },
