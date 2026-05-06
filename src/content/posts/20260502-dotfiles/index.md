@@ -25,7 +25,7 @@ tags:
 
 ## 私の環境
 
-とりあえずWSL Ubuntuで動く形で設定している。ニッチなディストリビューションでもなければおそらく転用できる。
+とりあえずWSL Ubuntuで動くように設定している。ニッチなディストリビューションでもなければおそらく転用できる。
 
 またすべてを宣言的に管理するモチベーションはそれほどないので、設定の完全移行は目指していない。（一部を管理しだすとそのうち寄せたくなってきそうな気はしますが）
 
@@ -43,13 +43,15 @@ tags:
 
 構成をスイッチしやすくする目的で、[numtide/blueprint](https://numtide.github.io/blueprint/main/)を採用した。
 
-いくつか利点はあるが`hosts/<hostname>/users/<username>/**/*.nix`のような形式でホストやユーザを増やせるので、NixOSを採用したくなった場合や別の端末設定を管理したくなった場合の取り回しがよさそうな気がする。
+いくつか利点はあるが、`hosts/<hostname>/users/<username>/**/*.nix`のような形式でホストやユーザを増やせるのがよい。NixOSを採用したくなった場合や別の端末設定を管理したくなった場合の取り回しがよさそう。
 
 [dotfiles管理に限界を感じたらNixOSとblueprintを試してほしい | zenn.dev](https://zenn.dev/sei40kr/articles/nix-dotfiles-blueprint)
 
 依存を増やしてもなぁという気もするが、最高の同僚もついていることだし、どうとでもなるだろうと割り切りました。
 
-やれていないですが、ホスト名とユーザ名が完全一致すれば[`home-manager switch --flake`で更新できて](https://numtide.github.io/blueprint/main/getting-started/folder_structure/#standalone-configurations)気持ちがいいです。
+また、私はこれ系の構成決めがすこぶるできないので、こうしたpre-definedな仕組みに可能な限り乗っかっておきたい意図もある。
+
+やれていないですが、ホスト名とユーザ名が完全一致すれば[`home-manager switch --flake`で更新できて](https://numtide.github.io/blueprint/main/getting-started/folder_structure/#standalone-configurations:~:text=The%20output%20name%20can%20be%20elided%20entirely%20if%20the%20current%20username%20and%20hostname%20match%20it%2C%20e%2Eg%2E%20home%2Dmanager%20switch%20%2D%2Dflake%20%2E%20%28note%20the%20lack%20of%20%23%29%2E)気持ちがよさそうです。
 
 ## AI周り
 
