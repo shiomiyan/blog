@@ -19,6 +19,9 @@ custom_domain = true
 binding = "BLOG_736B_MOE_UPVOTE_COUNTER"
 id = "1839db5b272840018387728603b94304"
 
+[[kv_namespaces]]
+binding = "SESSION"
+
 [dev]
 port = 4321
 
