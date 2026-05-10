@@ -4,6 +4,6 @@ created: __DATE__
 draft: true
 description: ""
 id: __ID__
-category: diary
+categories: [scrap-notes]
 tags: []
 ---

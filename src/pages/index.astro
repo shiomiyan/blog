@@ -60,8 +60,10 @@ const posts = await getCollection("posts")
       const activeClassName = "bg-gray-200";
       const applyFilter = (value: string) => {
         for (const entry of entries) {
-          const category = entry.dataset.category ?? "";
-          const isVisible = value === "all" || category === value;
+          const categories = (entry.dataset.categories ?? "")
+            .split(",")
+            .filter(Boolean);
+          const isVisible = value === "all" || categories.includes(value);
           entry.hidden = !isVisible;
         }
 

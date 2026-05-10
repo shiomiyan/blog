@@ -35,13 +35,15 @@ collections:
       - { name: created, label: Date, widget: datetime, default: "{{datetime}}" }
       - { name: draft, label: Draft, widget: boolean, default: true }
       - { name: id, label: ID, widget: uuid }
-      - name: category
-        label: Category
+      - name: categories
+        label: Categories
         widget: select
-        default: diary
+        multiple: true
+        default:
+          - scrap-notes
         options:
           - { label: Tech, value: tech }
-          - { label: Diary, value: diary }
+          - { label: Scrap Notes, value: scrap-notes }
       - name: tags
         label: Tags
         widget: list

@@ -4,7 +4,7 @@ created: 2025-11-25T10:04:46.000Z
 draft: false
 description: "デスク下収納をスッキリさせるためのメモ。"
 id: external-note-nb4928eec10df
-category: diary
+categories: [scrap-notes]
 tags:
   - random
 ---

@@ -4,7 +4,7 @@ created: 2025-12-23T09:58:08.000Z
 draft: false
 description: "傾くモニターライトを緩衝材で調整したメモ。"
 id: external-note-ncbca3ceb96a7
-category: diary
+categories: [scrap-notes]
 tags:
   - random
 ---

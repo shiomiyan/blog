@@ -3,7 +3,11 @@ import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import EntryList from "@components/EntryList.astro";
-import { getCategoryDefinitions, getCategoryLabel } from "@lib/taxonomy";
+import {
+  getCategoryDefinitions,
+  getCategoryLabel,
+  isCategoryId,
+} from "@lib/taxonomy";
 
 export const prerender = true;
 
@@ -15,9 +19,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 const { slug } = Astro.params as { slug: string };
+if (!isCategoryId(slug)) {
+  throw new Error(`Unknown category id: "${slug}".`);
+}
+
 const posts = (await getCollection("posts"))
   .filter((post) => !post.data.draft)
-  .filter((post) => post.data.category === slug);
+  .filter((post) => post.data.categories.includes(slug));
 
 const categoryDisplayName = getCategoryLabel(slug);
 const meta = {

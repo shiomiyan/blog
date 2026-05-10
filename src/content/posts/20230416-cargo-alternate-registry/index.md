@@ -4,7 +4,7 @@ created: 2023-04-16T11:19:04.000Z
 draft: false
 description: "Cargo Alternate Registryで自作ツールを配布しやすくするメモ。"
 id: external-qiita-1706810
-category: tech
+categories: [tech]
 tags:
   - random
 ---

@@ -22,12 +22,14 @@ export const getStaticPaths = async () => {
 
 type Props = CollectionEntry<"posts">;
 const post = Astro.props as Props;
-const { created, title, description, tags, id, category } = post["data"];
-const categoryId: CategoryId = isCategoryId(category)
-  ? category
-  : (() => {
-      throw new Error(`Unknown category id: "${category}".`);
-    })();
+const { created, title, description, tags, id, categories } = post["data"];
+const categoryIds: CategoryId[] = categories.map((category) => {
+  if (!isCategoryId(category)) {
+    throw new Error(`Unknown category id: "${category}".`);
+  }
+
+  return category;
+});
 const { Content, headings } = await render(post);
 ---
 
@@ -46,7 +48,7 @@ const { Content, headings } = await render(post);
         </time>
 
         <div class="flex flex-wrap gap-2">
-          <Category category={categoryId} />
+          {categoryIds.map((category) => <Category category={category} />)}
           {tags.map((tag) => <Tag tag={tag} />)}
         </div>
       </div>

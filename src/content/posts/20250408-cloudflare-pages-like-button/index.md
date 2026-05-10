@@ -4,7 +4,7 @@ created: 2025-04-08T11:02:41.000Z
 draft: false
 description: "Cloudflare Pages Functionsで静的サイトにいいねボタンを追加したメモ。"
 id: external-zenn-a9585ef0364e7a
-category: tech
+categories: [tech]
 tags:
   - cloudflare
   - astro

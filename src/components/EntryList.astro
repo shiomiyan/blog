@@ -24,7 +24,7 @@ const hasHeader = Astro.slots.has("header");
       {
         entries.map((entry) => {
           return (
-            <li data-entry data-category={entry.data.category}>
+            <li data-entry data-categories={entry.data.categories.join(",")}>
               <EntryCard entry={entry} />
             </li>
           );
