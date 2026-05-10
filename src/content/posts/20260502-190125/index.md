@@ -5,7 +5,7 @@ created: 2026-05-02T19:01:25
 draft: true
 id: 5a2302f9-e5b1-4701-9532-293110befea8
 categories:
-  - "[[Scrap Notes]]"
+  - scrap-notes
 tags:
   - Nix
 ---
