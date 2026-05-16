@@ -2,12 +2,13 @@
 title: dotfiles (Nix + Home Manager)
 description: "-"
 created: 2026-05-02T19:01:25
-draft: true
+draft: false
 id: 5a2302f9-e5b1-4701-9532-293110befea8
 categories:
   - scrap-notes
 tags:
   - Nix
+  - dotfiles
 ---
 dotfilesをNix flakes + Home Manager中心の管理構成に移行した。
 
