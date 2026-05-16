@@ -17,9 +17,8 @@ dotfilesをNix flakes + Home Manager中心の管理構成に移行した。
 
 - このへん👇の手入れに疲れた（疲れることすらしなくなっていた）
 	- インストールスクリプト
-	- systemd services、etc.
-- dotfilesのディレクトリ構成を変更した際に、シンボリックリンク貼り替えが面倒くさい
-- 最高の同僚がついている今、やれる気がした
+	- systemd servicesとかシンボリックリンクとか
+- AIあるしいけるっしょ
 	- 定期的にトライしていて「割に合わね～」となって辞めていた
 	- シンボリックリンク→chezmoi→stowと渡り歩いたが、肌に合わず気持ちよく管理できていなかった
 
@@ -36,7 +35,7 @@ dotfilesをNix flakes + Home Manager中心の管理構成に移行した。
 いくつかの単語を整理しておく。
 
 - Nix: ビルドシステムおよびパッケージ管理システム
-- Nix flakes: Nixの機能の1つで、lockの仕組みを提供する
+- [Nix flakes](https://nixos.wiki/wiki/flakes): Nixの機能の1つで、lockの仕組みを提供する
 - [Home Manager](https://github.com/nix-community/home-manager): ユーザホームディレクトリを構成する
 
 ## 構成
@@ -47,48 +46,39 @@ dotfilesをNix flakes + Home Manager中心の管理構成に移行した。
 
 [dotfiles管理に限界を感じたらNixOSとblueprintを試してほしい | zenn.dev](https://zenn.dev/sei40kr/articles/nix-dotfiles-blueprint)
 
-依存を増やしてもなぁという気もするが、最高の同僚もついていることだし、どうとでもなるだろうと割り切った。
+依存を増やしてもなぁという気もするが、AIもあるのでどうとでもなるだろうと割り切った。
 
 また、私はこれ系の構成決めがすこぶるできないので、こうした仕組みに可能な限り乗っかっておきたい意図もある。
-
-やれていないが、ホスト名とユーザ名が完全一致すれば[`home-manager switch --flake`で更新できて](https://numtide.github.io/blueprint/main/getting-started/folder_structure/#standalone-configurations:~:text=The%20output%20name%20can%20be%20elided%20entirely%20if%20the%20current%20username%20and%20hostname%20match%20it%2C%20e%2Eg%2E%20home%2Dmanager%20switch%20%2D%2Dflake%20%2E%20%28note%20the%20lack%20of%20%23%29%2E)気持ちがよさそう。
 
 ## ディレクトリ構成
 
 [blueprintのFolder Structure](https://numtide.github.io/blueprint/main/getting-started/folder_structure/)を参考に、`/nix`を切って`flake.nix`、`flake.lock`以外のnix実装はこのフォルダに集めている。
 
+## 設定ファイルの配布
 
+現状はNix管理とそうでないものを併用している。git、Neovimあたりは特にWindows側で必要になることがままあるので、Nixで管理していない。
 
 ## AI周り
 
 ### AI Agentの管理
 
-同僚でおなじみのCodexは、特に気にせず`github:nixos/nixpkgs/nixos-unstable`から取得して使っていました。
-ただ、やはり更新が遅かったので[`github:numtide/llm-agents.nix`](https://github.com/numtide/llm-agents.nix)を使って持ってくることにしました。
+同僚でおなじみのCodexは、特に気にせず`github:nixos/nixpkgs/nixos-unstable`から取得して使っていた。
+ただ、考えていたよりも更新が遅かったので[`github:numtide/llm-agents.nix`](https://github.com/numtide/llm-agents.nix)を使うようにした。
 
-こちらは日時で更新されるので、どんなに遅くても次の日には降ってきます。私の場合、今は仕事で使っているわけではないので、十分かなと思います。
+こちらは日時で更新されるので、どんなに遅くても次の日には降ってくる。私の場合、今は仕事で使っているわけではないので、とりあえず十分。
 
-なお、ビルドが結構時間かかるので、`extra-substituters`、`extra-trusted-public-keys`によるBinary Cacheも設定しました。
+なお、ビルドが結構時間かかるので、`extra-substituters`、`extra-trusted-public-keys`によるBinary Cacheも設定した。
 
 ### Skills
 
-Skills自体、たいして使っていなので管理するほどでもないといえばそうなのですが、[agent-skills-nix](https://github.com/Kyure-A/agent-skills-nix)で管理しました。
+Skills自体、たいして使っていなので管理するほどでもないといえばそうなのですが、[agent-skills-nix](https://github.com/Kyure-A/agent-skills-nix)で管理している。
 
 [Nix で Agent Skills を管理する | zenn.dev](https://zenn.dev/kyre/articles/46269c831775d9)
 
 ## 一応、non-Nixな環境向けに
 
-Nixを使っていない・使えない環境向けに、Home Managerで生成済みのdotfilesをGitHub ActionsのArtifactとして生成してます。
-
-あまり使う機会はなさそうですが。
+Nixを使っていない・使えない環境向けに、Home Managerで生成済みのdotfilesをGitHub ActionsのArtifactに吐き出している。
 
 https://github.com/shiomiyan/dotfiles/blob/5b95e04e54a4a8b613258d3fc7671a2870ee6279/.github/workflows/build.yml#L41-L75
 
-## いろいろ参考にした
-
-- https://zenn.dev/momeemt/articles/dotfiles2025
-- https://github.com/takeokunn/nixos-configuration
-- https://github.com/Kyure-A/nix-config
-- https://github.com/ryoppippi/dotfiles
-- https://github.com/i9wa4/dotfiles
-- https://github.com/mitchellh/nixos-config
+使う機会はまぁない。
