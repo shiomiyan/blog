@@ -96,7 +96,12 @@ const prependAlertTitle = (
   node.data = {
     hName: "div",
     hProperties: {
-      className: ["admonition", type, "markdown-alert", `markdown-alert-${type}`],
+      className: [
+        "admonition",
+        type,
+        "markdown-alert",
+        `markdown-alert-${type}`,
+      ],
       dir: "auto",
     },
   };
