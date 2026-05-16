@@ -1,6 +1,75 @@
 @import "tailwindcss";
 @config "../../tailwind.config.mts";
 
+/* Keep tokens close so new styles extend the system before adding one-offs. */
+@theme {
+  --font-sans:
+    "Noto Sans", "Noto Sans JP", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono:
+    ui-monospace, SFMono-Regular, Consolas, Menlo, Monaco, Liberation Mono,
+    Courier New, Droid Sans Mono, monospace;
+
+  --color-neutral-50: oklch(98.4% 0.002 247.84);
+  --color-neutral-100: oklch(96.8% 0.003 247.84);
+  --color-neutral-200: oklch(92.9% 0.004 247.84);
+  --color-neutral-300: oklch(86.8% 0.006 247.84);
+  --color-neutral-500: oklch(55.4% 0.015 257.42);
+  --color-neutral-700: oklch(37.1% 0.014 257.42);
+  --color-neutral-900: oklch(20.9% 0.006 257.42);
+  --color-neutral-950: oklch(13% 0.004 257.42);
+
+  --color-blue-100: oklch(94.9% 0.03 247.88);
+  --color-blue-200: oklch(90.6% 0.055 247.88);
+  --color-blue-600: oklch(54.4% 0.168 252.37);
+  --color-blue-700: oklch(48.8% 0.151 252.37);
+  --color-green-100: oklch(95.8% 0.03 149.21);
+  --color-green-600: oklch(62.7% 0.16 149.21);
+  --color-orange-100: oklch(96.5% 0.03 67.8);
+  --color-orange-500: oklch(74.8% 0.134 67.8);
+  --color-red-100: oklch(95.3% 0.022 17.38);
+  --color-red-600: oklch(60.1% 0.214 22.18);
+
+  --spacing-badge-x: 0.5rem;
+  --spacing-badge-y: 0.125rem;
+  --spacing-callout-x: 0.75rem;
+  --spacing-callout-y: 1rem;
+  --spacing-link-underline-offset: 0.1875rem;
+
+  --radius-badge: 0.5rem;
+  --radius-panel: 0.5rem;
+
+  --duration-fast: 120ms;
+  --duration-normal: 200ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --color-background: var(--color-neutral-50);
+  --color-foreground: var(--color-neutral-950);
+  --color-foreground-muted: var(--color-neutral-700);
+  --color-surface-primary: var(--color-neutral-50);
+  --color-surface-muted: var(--color-neutral-100);
+  --color-surface-hover: var(--color-neutral-200);
+  --color-surface-inverse: var(--color-neutral-950);
+  --color-border-subtle: var(--color-neutral-300);
+  --color-link: var(--color-foreground);
+  --color-link-visited: oklch(39.8% 0.192 304.95);
+  --color-link-hover: var(--color-surface-inverse);
+  --color-link-hover-foreground: var(--color-surface-primary);
+  --color-accent-info: var(--color-blue-600);
+  --color-accent-info-surface: var(--color-blue-100);
+  --color-accent-success: var(--color-green-600);
+  --color-accent-success-surface: var(--color-green-100);
+  --color-accent-warning: var(--color-orange-500);
+  --color-accent-warning-surface: var(--color-orange-100);
+  --color-accent-danger: var(--color-red-600);
+  --color-accent-danger-surface: var(--color-red-100);
+
+  --component-link-underline-offset: var(--spacing-link-underline-offset);
+  --component-badge-border: var(--color-border-subtle);
+  --component-badge-hover: var(--color-surface-hover);
+  --component-callout-border: var(--color-border-subtle);
+}
+
 html {
   overflow-y: scroll;
   color-scheme: light;
@@ -12,14 +81,16 @@ body {
 }
 
 body {
-  @apply font-sans;
-  @apply flex flex-col;
+  @apply bg-background text-foreground flex flex-col font-sans;
 }
 
 header {
-  @apply static top-0 z-50 py-3;
-  @apply bg-neutral-100/75;
-  @apply saturate-200 backdrop-blur-xs;
+  @apply static top-0 z-50 py-3 saturate-200 backdrop-blur-xs;
+  background-color: color-mix(
+    in oklab,
+    var(--color-surface-muted) 75%,
+    transparent
+  );
 }
 
 main {
@@ -27,11 +98,36 @@ main {
 }
 
 footer {
-  @apply py-6 text-sm;
+  @apply text-foreground-muted py-6 text-sm;
 }
 
 article {
   @apply prose prose-blue max-w-full;
+  color: var(--color-foreground);
+}
+
+article :is(ul > li, ol > li) {
+  line-height: 1.4;
+}
+
+.text-link {
+  color: var(--color-link);
+  text-decoration-thickness: from-font;
+  text-underline-offset: var(--component-link-underline-offset);
+  transition:
+    color var(--duration-fast) var(--ease-standard),
+    background-color var(--duration-fast) var(--ease-standard);
+}
+
+:is(article a, .text-link) {
+  color: var(--color-link);
+}
+
+:is(article a, .text-link):hover,
+:is(article a, .text-link):focus-visible {
+  color: var(--color-link-hover-foreground);
+  background-color: var(--color-link-hover);
+  outline: none;
 }
 
 h1::before {
@@ -59,15 +155,55 @@ h6::before {
 }
 
 article a:visited {
-  @apply text-[#551A8B];
+  color: var(--color-link-visited);
+}
+
+article a:visited:hover,
+article a:visited:focus-visible {
+  color: var(--color-link-hover-foreground);
+}
+
+.ui-badge {
+  @apply rounded-lg border font-mono text-xs;
+  padding-inline: var(--spacing-badge-x);
+  padding-block: var(--spacing-badge-y);
+  border-color: var(--component-badge-border);
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+}
+
+.ui-badge:hover,
+.ui-badge:focus-visible,
+.ui-badge.is-active,
+.ui-badge[aria-pressed="true"] {
+  background-color: var(--component-badge-hover);
+}
+
+.ui-panel {
+  @apply rounded-lg border;
+  border-color: var(--color-border-subtle);
+}
+
+.ui-panel-summary {
+  @apply cursor-pointer rounded-t-lg px-3 py-1.5 text-xs;
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+.ui-panel-summary:hover,
+.ui-panel[open] > .ui-panel-summary {
+  background-color: var(--color-surface-hover);
 }
 
 .markdown-alert {
-  --callout-color: #2579ab;
-  --callout-title-bg: #e7f2fa;
+  --callout-color: var(--color-accent-info);
+  --callout-title-bg: var(--color-accent-info-surface);
   --callout-icon: "i";
-  @apply mx-auto my-6 overflow-hidden rounded border border-l-4 bg-white px-3 pt-0 pb-4;
-  border-color: #d8dee4;
+  @apply mx-auto my-6 overflow-hidden rounded border border-l-4 pt-0;
+  padding-inline: var(--spacing-callout-x);
+  padding-bottom: var(--spacing-callout-y);
+  background-color: var(--color-surface-primary);
+  border-color: var(--component-callout-border);
   border-left-color: var(--callout-color);
 }
 
@@ -80,7 +216,8 @@ article a:visited {
 }
 
 .markdown-alert .markdown-alert-title {
-  @apply -mx-3 mt-0 mb-2 flex items-center px-3 py-2 pl-8 font-semibold text-black;
+  @apply -mx-3 mt-0 mb-2 flex items-center px-3 py-2 pl-8 font-semibold;
+  color: var(--color-foreground);
   background-color: var(--callout-title-bg);
   position: relative;
 }
@@ -92,32 +229,32 @@ article a:visited {
 }
 
 .markdown-alert-note {
-  --callout-color: #2579ab;
-  --callout-title-bg: #e7f2fa;
+  --callout-color: var(--color-accent-info);
+  --callout-title-bg: var(--color-accent-info-surface);
   --callout-icon: "i";
 }
 
 .markdown-alert-tip {
-  --callout-color: #28a745;
-  --callout-title-bg: #e6f6e6;
+  --callout-color: var(--color-accent-success);
+  --callout-title-bg: var(--color-accent-success-surface);
   --callout-icon: "!";
 }
 
 .markdown-alert-important {
-  --callout-color: #f0b37e;
-  --callout-title-bg: #fff3e6;
+  --callout-color: var(--color-accent-warning);
+  --callout-title-bg: var(--color-accent-warning-surface);
   --callout-icon: "!";
 }
 
 .markdown-alert-warning {
-  --callout-color: #f0b37e;
-  --callout-title-bg: #fff3e6;
+  --callout-color: var(--color-accent-warning);
+  --callout-title-bg: var(--color-accent-warning-surface);
   --callout-icon: "!";
 }
 
 .markdown-alert-caution {
-  --callout-color: #dc3545;
-  --callout-title-bg: #fdeaea;
+  --callout-color: var(--color-accent-danger);
+  --callout-title-bg: var(--color-accent-danger-surface);
   --callout-icon: "!";
 }
 

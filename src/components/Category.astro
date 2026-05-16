@@ -12,7 +12,7 @@ const displayName = getCategoryLabel(category);
 
 <a
   href={`/categories/${category}`}
-  class="rounded-lg border border-black/15 px-2 py-0.5 font-mono text-xs hover:bg-gray-200"
+  class="ui-badge"
   aria-label={`category: ${displayName}`}
 >
   {displayName}{count !== undefined && ` (${count})`}
