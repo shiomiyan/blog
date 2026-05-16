@@ -4,12 +4,12 @@ description: "-"
 created: 2026-05-02T19:01:25
 draft: true
 id: 5a2302f9-e5b1-4701-9532-293110befea8
-category: diary
+categories:
+  - scrap-notes
 tags:
   - Nix
-  - random
 ---
-一念発起してdotfilesをNix flakes + Home Manager中心の管理構成に移行した。
+dotfilesをNix flakes + Home Manager中心の管理構成に移行した。
 
 移行ログや、構成イメージをまとめておく。
 
@@ -18,7 +18,7 @@ tags:
 - このへん👇の手入れに疲れた（疲れることすらしなくなっていた）
 	- インストールスクリプト
 	- systemd services、etc.
-- dotfilesを変更した際のシンボリックリンク貼り替えが面倒くさい
+- dotfilesのディレクトリ構成を変更した際に、シンボリックリンク貼り替えが面倒くさい
 - 最高の同僚がついている今、やれる気がした
 	- 定期的にトライしていて「割に合わね～」となって辞めていた
 	- シンボリックリンク→chezmoi→stowと渡り歩いたが、肌に合わず気持ちよく管理できていなかった
@@ -47,11 +47,17 @@ tags:
 
 [dotfiles管理に限界を感じたらNixOSとblueprintを試してほしい | zenn.dev](https://zenn.dev/sei40kr/articles/nix-dotfiles-blueprint)
 
-依存を増やしてもなぁという気もするが、最高の同僚もついていることだし、どうとでもなるだろうと割り切りました。
+依存を増やしてもなぁという気もするが、最高の同僚もついていることだし、どうとでもなるだろうと割り切った。
 
-また、私はこれ系の構成決めがすこぶるできないので、こうしたpre-definedな仕組みに可能な限り乗っかっておきたい意図もある。
+また、私はこれ系の構成決めがすこぶるできないので、こうした仕組みに可能な限り乗っかっておきたい意図もある。
 
-やれていないですが、ホスト名とユーザ名が完全一致すれば[`home-manager switch --flake`で更新できて](https://numtide.github.io/blueprint/main/getting-started/folder_structure/#standalone-configurations:~:text=The%20output%20name%20can%20be%20elided%20entirely%20if%20the%20current%20username%20and%20hostname%20match%20it%2C%20e%2Eg%2E%20home%2Dmanager%20switch%20%2D%2Dflake%20%2E%20%28note%20the%20lack%20of%20%23%29%2E)気持ちがよさそうです。
+やれていないが、ホスト名とユーザ名が完全一致すれば[`home-manager switch --flake`で更新できて](https://numtide.github.io/blueprint/main/getting-started/folder_structure/#standalone-configurations:~:text=The%20output%20name%20can%20be%20elided%20entirely%20if%20the%20current%20username%20and%20hostname%20match%20it%2C%20e%2Eg%2E%20home%2Dmanager%20switch%20%2D%2Dflake%20%2E%20%28note%20the%20lack%20of%20%23%29%2E)気持ちがよさそう。
+
+## ディレクトリ構成
+
+[blueprintのFolder Structure](https://numtide.github.io/blueprint/main/getting-started/folder_structure/)を参考に、`/nix`を切って`flake.nix`、`flake.lock`以外のnix実装はこのフォルダに集めている。
+
+
 
 ## AI周り
 
