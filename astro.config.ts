@@ -3,7 +3,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import rehypeExternalLinks from "rehype-external-links";
-import pagefindIndexer from "./src/integrations/pagefindIndexer";
+import createPagefindIndex from "./src/integrations/create-pagefind-index";
 import remarkCallout from "./src/lib/remarkCallout";
 
 // https://astro.build/config
@@ -14,7 +14,7 @@ export default defineConfig({
     format: "file",
   },
   output: "server",
-  integrations: [sitemap(), pagefindIndexer()],
+  integrations: [sitemap(), createPagefindIndex()],
   markdown: {
     shikiConfig: {
       theme: "github-dark-default",

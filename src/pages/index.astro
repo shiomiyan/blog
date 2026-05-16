@@ -22,7 +22,7 @@ const posts = await getCollection("posts")
         <li>
           <button
             type="button"
-            class="rounded-lg border border-black/15 px-2 py-0.5 font-mono text-xs hover:bg-gray-200"
+            class="ui-badge"
             data-category-filter="all"
             aria-pressed="true"
           >
@@ -34,7 +34,7 @@ const posts = await getCollection("posts")
             <li>
               <button
                 type="button"
-                class="rounded-lg border border-black/15 px-2 py-0.5 font-mono text-xs hover:bg-gray-200"
+                class="ui-badge"
                 data-category-filter={category.id}
                 aria-pressed="false"
               >
@@ -57,18 +57,19 @@ const posts = await getCollection("posts")
 
       if (filterButtons.length === 0 || entries.length === 0) return;
 
-      const activeClassName = "bg-gray-200";
       const applyFilter = (value: string) => {
         for (const entry of entries) {
-          const category = entry.dataset.category ?? "";
-          const isVisible = value === "all" || category === value;
+          const categories = (entry.dataset.categories ?? "")
+            .split(",")
+            .filter(Boolean);
+          const isVisible = value === "all" || categories.includes(value);
           entry.hidden = !isVisible;
         }
 
         for (const button of filterButtons) {
           const isActive = button.dataset.categoryFilter === value;
           button.setAttribute("aria-pressed", String(isActive));
-          button.classList.toggle(activeClassName, isActive);
+          button.classList.toggle("is-active", isActive);
         }
       };
 

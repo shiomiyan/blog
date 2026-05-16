@@ -54,7 +54,8 @@ const { postId } = Astro.props;
     private isSubmitting = false;
 
     setup = () => {
-      const button = this.shadowRoot?.querySelector<HTMLButtonElement>("button");
+      const button =
+        this.shadowRoot?.querySelector<HTMLButtonElement>("button");
 
       if (!button) return;
 

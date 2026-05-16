@@ -8,7 +8,7 @@ import { createIndex } from "pagefind";
  */
 const createPagefindIndex = (): AstroIntegration => {
   return {
-    name: "pagefind-indexer",
+    name: "create-pagefind-index",
     hooks: {
       "astro:build:done": async ({ dir, logger }) => {
         logger.info("Creating pagefind index...");

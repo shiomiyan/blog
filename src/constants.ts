@@ -91,7 +91,7 @@ export const CATEGORIES = [
     label: "Tech",
   },
   {
-    id: "diary",
-    label: "Diary",
+    id: "scrap-notes",
+    label: "Scrap Notes",
   },
 ] as const;

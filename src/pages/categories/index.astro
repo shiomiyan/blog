@@ -15,7 +15,9 @@ const categoryCounts = Object.fromEntries(
 ) as Record<string, number>;
 
 for (const { data } of posts) {
-  categoryCounts[data.category] = (categoryCounts[data.category] ?? 0) + 1;
+  for (const category of data.categories) {
+    categoryCounts[category] = (categoryCounts[category] ?? 0) + 1;
+  }
 }
 
 const categories = categoryDefinitions.map((category) => ({

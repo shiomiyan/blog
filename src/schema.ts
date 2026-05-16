@@ -7,9 +7,24 @@ import { z } from "astro/zod";
  * Frontmatter keeps URL-safe taxonomy IDs while page rendering resolves labels
  * from the taxonomy collections.
  */
-const categorySchema = z.string().refine(isCategoryId, {
+const categoryIdSchema = z.string().refine(isCategoryId, {
   message: "Unknown category id. Add it to src/constants.ts.",
 });
+
+/**
+ * Validates category IDs stored in post frontmatter.
+ *
+ * Categories stay as an explicit non-empty set so list pages and badges can
+ * render without inferring a fallback bucket.
+ */
+const categoriesSchema = z
+  .array(categoryIdSchema)
+  .min(1, {
+    message: "At least one category is required.",
+  })
+  .refine((categories) => new Set(categories).size === categories.length, {
+    message: "Duplicate categories are not allowed.",
+  });
 
 /**
  * Validates optional tag labels in post frontmatter.
@@ -27,7 +42,7 @@ const tagSchema = z
 /**
  * Schema for local Markdown posts.
  *
- * Frontmatter is strict so typos like `descripton` or `catgory` fail during
+ * Frontmatter is strict so typos like `descripton` or `catgories` fail during
  * content sync instead of being silently ignored.
  */
 export const postSchema = z.strictObject({
@@ -36,6 +51,6 @@ export const postSchema = z.strictObject({
   created: z.coerce.date(),
   draft: z.boolean().default(true),
   id: z.string(),
-  category: categorySchema,
+  categories: categoriesSchema,
   tags: tagSchema,
 });
