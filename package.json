@@ -37,7 +37,7 @@
     "@types/node": "^24.12.3",
     "@typescript-eslint/parser": "^8.59.3",
     "astro": "^6.3.2",
-    "eslint": "^10.3.0",
+    "eslint": "^10.4.0",
     "eslint-plugin-astro": "^1.7.0",
     "globals": "^17.6.0",
     "pagefind": "^1.5.2",
