@@ -9,7 +9,8 @@
   },
   "pnpm": {
     "overrides": {
-      "js-cookie": "^3.0.8"
+      "js-cookie": "^3.0.8",
+      "lodash": "^4.18.1"
     }
   },
   "scripts": {
