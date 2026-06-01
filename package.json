@@ -7,6 +7,11 @@
   "engines": {
     "node": ">=24 <25"
   },
+  "pnpm": {
+    "overrides": {
+      "js-cookie": "^3.0.8"
+    }
+  },
   "scripts": {
     "dev": "astro dev",
     "dev:cms": "tinacms dev -c \"astro dev\"",
