@@ -13,5 +13,5 @@
       "@schema": ["./src/schema.ts"]
     }
   },
-  "exclude": ["dist"]
+  "exclude": ["dist", "public/admin", "tina/__generated__"]
 }

@@ -6,7 +6,13 @@ import tseslint from "typescript-eslint";
 
 export default defineConfig([
   {
-    ignores: ["dist/**", ".astro/**", "src/worker-configuration.d.ts"],
+    ignores: [
+      "dist/**",
+      ".astro/**",
+      "public/admin/**",
+      "src/worker-configuration.d.ts",
+      "tina/__generated__/**",
+    ],
   },
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,astro}"],
