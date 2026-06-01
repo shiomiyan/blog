@@ -1,6 +1,7 @@
 import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
+import { tinaAdminDevRedirect } from "@tinacms/astro/vite";
 import { defineConfig } from "astro/config";
 import rehypeExternalLinks from "rehype-external-links";
 import createPagefindIndex from "./src/integrations/create-pagefind-index";
@@ -28,7 +29,7 @@ export default defineConfig({
     ],
   },
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss(), tinaAdminDevRedirect()],
   },
   experimental: {
     contentIntellisense: true,
