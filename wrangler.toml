@@ -5,6 +5,7 @@ compatibility_flags = ["nodejs_compat"]
 
 [vars]
 FUNCTIONS_CORS_ORIGIN = "https://blog.736b.moe"
+TINA_CLIENT_ID = "50739348-e69e-40a6-b388-cd01c80f80de"
 
 [[routes]]
 pattern = "blog.736b.moe"
