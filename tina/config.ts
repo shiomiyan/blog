@@ -1,11 +1,15 @@
 import { defineConfig } from "tinacms";
 import { CATEGORIES } from "../src/constants";
 
-const branch =
-  process.env.HEAD ??
-  process.env.CF_PAGES_BRANCH ??
-  process.env.TINA_BRANCH ??
-  "master";
+const requireEnv = (name: "NEXT_PUBLIC_TINA_CLIENT_ID" | "TINA_TOKEN") => {
+  const value = process.env[name];
+
+  if (!value) {
+    throw new Error(`${name} is required to build TinaCMS`);
+  }
+
+  return value;
+};
 
 /**
  * Keeps new posts in the existing `<folder>/index.md` layout.
@@ -27,9 +31,9 @@ const slugifyPostPath = (value?: string): string => {
 };
 
 export default defineConfig({
-  branch,
-  clientId: process.env.TINA_CLIENT_ID ?? "placeholder-client-id",
-  token: process.env.TINA_TOKEN ?? "placeholder-token",
+  branch: "master",
+  clientId: requireEnv("NEXT_PUBLIC_TINA_CLIENT_ID"),
+  token: requireEnv("TINA_TOKEN"),
   build: {
     outputFolder: "admin",
     publicFolder: "public",
