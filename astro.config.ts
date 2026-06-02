@@ -1,6 +1,7 @@
 import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
+import tina from "@tinacms/astro/integration";
 import { tinaAdminDevRedirect } from "@tinacms/astro/vite";
 import { defineConfig } from "astro/config";
 import rehypeExternalLinks from "rehype-external-links";
@@ -15,7 +16,7 @@ export default defineConfig({
     format: "file",
   },
   output: "server",
-  integrations: [sitemap(), createPagefindIndex()],
+  integrations: [sitemap(), createPagefindIndex(), tina()],
   markdown: {
     shikiConfig: {
       theme: "github-dark-default",
