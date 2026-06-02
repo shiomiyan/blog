@@ -1,8 +1,6 @@
 import cloudflare from "@astrojs/cloudflare";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
-import tina from "@tinacms/astro/integration";
-import { tinaAdminDevRedirect } from "@tinacms/astro/vite";
 import { defineConfig } from "astro/config";
 import rehypeExternalLinks from "rehype-external-links";
 import createPagefindIndex from "./src/integrations/create-pagefind-index";
@@ -16,7 +14,7 @@ export default defineConfig({
     format: "file",
   },
   output: "server",
-  integrations: [sitemap(), createPagefindIndex(), tina()],
+  integrations: [sitemap(), createPagefindIndex()],
   markdown: {
     shikiConfig: {
       theme: "github-dark-default",
@@ -30,7 +28,7 @@ export default defineConfig({
     ],
   },
   vite: {
-    plugins: [tailwindcss(), tinaAdminDevRedirect()],
+    plugins: [tailwindcss()],
   },
   experimental: {
     contentIntellisense: true,

@@ -9,9 +9,7 @@ export default defineConfig([
     ignores: [
       "dist/**",
       ".astro/**",
-      "public/admin/**",
       "src/worker-configuration.d.ts",
-      "tina/__generated__/**",
     ],
   },
   {
