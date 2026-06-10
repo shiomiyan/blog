@@ -7,15 +7,9 @@
   "engines": {
     "node": ">=24 <25"
   },
-  "pnpm": {
-    "overrides": {
-      "js-cookie": "^3.0.8",
-      "lodash": "^4.18.1"
-    }
-  },
   "scripts": {
     "dev": "astro dev",
-    "build": "pnpm run cf-typegen && pnpm run typecheck && astro check && astro build",
+    "build": "pnpm run typecheck && astro check && astro build",
     "check:all": "pnpm run lint && pnpm run typecheck && pnpm run astro -- check && pnpm run textlint",
     "preview": "astro preview",
     "deploy": "pnpm run build && wrangler deploy",
@@ -58,6 +52,6 @@
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.60.0",
     "unified": "^11.0.5",
-    "wrangler": "^4.95.0"
+    "wrangler": "^4.99.0"
   }
 }
