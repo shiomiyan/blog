@@ -1,4 +1,5 @@
 import cloudflare from "@astrojs/cloudflare";
+import { unified } from "@astrojs/markdown-remark";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
@@ -19,13 +20,15 @@ export default defineConfig({
     shikiConfig: {
       theme: "github-dark-default",
     },
-    remarkPlugins: [remarkCallout],
-    rehypePlugins: [
-      [
-        rehypeExternalLinks,
-        { target: "_blank", rel: ["noopener", "noreferrer"] },
+    processor: unified({
+      remarkPlugins: [remarkCallout],
+      rehypePlugins: [
+        [
+          rehypeExternalLinks,
+          { target: "_blank", rel: ["noopener", "noreferrer"] },
+        ],
       ],
-    ],
+    }),
   },
   vite: {
     plugins: [tailwindcss()],
