@@ -24,7 +24,3 @@
 - Prefer arrow functions over `function` declarations.
   - **Exceptions:** use `function` only when hoisting, dynamic `this`, or TypeScript overloading is required.
 - Keep usage consistent across the codebase.
-
-## Documentation
-
-- **MUST** write useful code docs: explain WHY, not WHAT, document public APIs and gotchas, and keep comments concise and current.
