@@ -31,16 +31,16 @@
   "devDependencies": {
     "98.css": "^0.1.21",
     "@astrojs/check": "^0.9.9",
-    "@astrojs/cloudflare": "^13.5.4",
+    "@astrojs/cloudflare": "^13.5.5",
     "@astrojs/rss": "^4.0.18",
-    "@astrojs/sitemap": "^3.7.2",
+    "@astrojs/sitemap": "^3.7.3",
     "@eslint/js": "^10.0.1",
     "@pagefind/default-ui": "^1.5.2",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.3.0",
     "@types/mdast": "^4.0.4",
     "@types/node": "^24.12.3",
-    "astro": "^6.3.7",
+    "astro": "^6.3.8",
     "eslint": "^10.4.0",
     "eslint-plugin-astro": "^1.7.0",
     "globals": "^17.6.0",
@@ -58,6 +58,6 @@
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.60.0",
     "unified": "^11.0.5",
-    "wrangler": "^4.94.0"
+    "wrangler": "^4.95.0"
   }
 }
