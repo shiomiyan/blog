@@ -1,5 +1,9 @@
 packages:
   - .
+allowBuilds:
+  esbuild: true
+  sharp: true
+  workerd: true
 
 overrides:
   js-cookie: ^3.0.8

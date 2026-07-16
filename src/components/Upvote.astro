@@ -1,6 +1,4 @@
 ---
-import ninetyEightCssUrl from "98.css/dist/98.css?url";
-
 interface Props {
   postId: string;
 }
@@ -10,34 +8,86 @@ const { postId } = Astro.props;
 
 <upvote-button data-post-id={postId} title="Click to upvote this post!">
   <template shadowrootmode="open">
-    <link rel="stylesheet" href={ninetyEightCssUrl} />
     <style>
       :host {
         display: inline-block;
+        --upvote-background: var(--color-surface-primary, #fafafa);
+        --upvote-background-hover: var(--color-surface-hover, #ededed);
+        --upvote-background-active: var(--color-neutral-300, #dddddd);
+        --upvote-foreground: var(--color-foreground, #111111);
+        --upvote-border: var(--color-border-subtle, #d4d4d8);
+        --upvote-focus: var(--color-surface-inverse, #111111);
+        --upvote-shadow: color-mix(
+          in srgb,
+          var(--upvote-focus) 14%,
+          transparent
+        );
       }
 
       button {
         align-items: center;
+        background: var(--upvote-background);
+        border: 1px solid var(--upvote-border);
+        border-radius: 0.5rem;
+        color: var(--upvote-foreground);
         cursor: pointer;
         display: inline-flex;
         gap: 0.35rem;
         justify-content: center;
         line-height: 1;
+        min-height: 2.25rem;
+        padding: 0.5rem 0.75rem;
+        transition:
+          background-color 120ms ease,
+          border-color 120ms ease,
+          box-shadow 120ms ease,
+          transform 120ms ease;
+        font: 500 0.75rem/1 var(
+          --font-mono,
+          ui-monospace,
+          SFMono-Regular,
+          Consolas,
+          monospace
+        );
+      }
+
+      button:hover {
+        background: var(--upvote-background-hover);
+      }
+
+      button:active {
+        background: var(--upvote-background-active);
+        transform: translateY(1px);
+      }
+
+      button:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px var(--upvote-shadow);
+        border-color: var(--upvote-focus);
+      }
+
+      button:disabled {
+        cursor: wait;
+        opacity: 0.65;
+        transform: none;
       }
 
       .count {
-        min-width: 1ch;
+        border-left: 1px solid var(--upvote-border);
+        margin-left: 0.15rem;
+        min-width: 2ch;
+        padding-left: 0.5rem;
+        text-align: right;
       }
 
       .icon {
         flex: none;
-        color: #222;
         font-size: 14px;
         line-height: 1;
-        text-shadow: none;
       }
     </style>
-    <button class="default" type="button">
+    <!-- Astro 7 builds now fail on 98.css media queries via Lightning CSS, and this button is too local to justify keeping that dependency. -->
+    <button class="upvote-button" type="button">
       <span class="icon" aria-hidden="true">👍</span>
       <span>Upvote</span>
       <span class="count" aria-live="polite">0</span>
@@ -63,6 +113,16 @@ const { postId } = Astro.props;
       void this.loadUpvotes();
     };
 
+    private setPending(isPending: boolean) {
+      const button =
+        this.shadowRoot?.querySelector<HTMLButtonElement>("button");
+
+      if (!button) return;
+
+      button.disabled = isPending;
+      button.setAttribute("aria-busy", String(isPending));
+    }
+
     private handleClick = async () => {
       const postId = this.dataset.postId;
       const count = this.shadowRoot?.querySelector<HTMLSpanElement>(".count");
@@ -70,6 +130,7 @@ const { postId } = Astro.props;
       if (!postId || !count || this.isSubmitting) return;
 
       this.isSubmitting = true;
+      this.setPending(true);
 
       try {
         const response = await fetch("/api/upvote", {
@@ -90,6 +151,7 @@ const { postId } = Astro.props;
         console.error(error);
       } finally {
         this.isSubmitting = false;
+        this.setPending(false);
       }
     };
 
