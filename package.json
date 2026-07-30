@@ -43,7 +43,7 @@
     "prettier": "^3.9.5",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-organize-imports": "^4.3.0",
-    "prettier-plugin-tailwindcss": "^0.8.0",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "rehype-external-links": "^3.0.0",
     "tailwindcss": "^4.3.2",
     "textlint": "^15.7.1",
