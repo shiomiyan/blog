@@ -37,7 +37,7 @@
     "@types/node": "^24.13.1",
     "astro": "^7.1.6",
     "eslint": "^10.8.0",
-    "eslint-plugin-astro": "^2.1.1",
+    "eslint-plugin-astro": "^3.0.1",
     "globals": "^17.8.0",
     "pagefind": "^1.5.2",
     "prettier": "^3.9.6",
