@@ -36,7 +36,7 @@
     "@types/mdast": "^4.0.4",
     "@types/node": "^24.13.1",
     "astro": "^7.1.6",
-    "eslint": "^10.8.0",
+    "eslint": "^10.8.1",
     "eslint-plugin-astro": "^2.1.1",
     "globals": "^17.9.0",
     "pagefind": "^1.5.2",
@@ -49,10 +49,10 @@
     "textlint": "^15.8.0",
     "textlint-filter-rule-allowlist": "^4.0.0",
     "textlint-rule-preset-ja-technical-writing": "^12.0.2",
-    "tsx": "^4.23.10",
+    "tsx": "^4.23.12",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.66.0",
     "unified": "^11.0.5",
-    "wrangler": "^4.119.0"
+    "wrangler": "^4.120.0"
   }
 }
