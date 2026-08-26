@@ -38,7 +38,7 @@
     "astro": "^7.1.6",
     "eslint": "^10.8.1",
     "eslint-plugin-astro": "^2.1.1",
-    "globals": "^17.9.0",
+    "globals": "^17.10.0",
     "pagefind": "^1.5.2",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
@@ -53,6 +53,6 @@
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.67.0",
     "unified": "^11.0.5",
-    "wrangler": "^4.120.1"
+    "wrangler": "^4.121.0"
   }
 }
