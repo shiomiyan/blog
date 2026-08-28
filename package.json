@@ -35,7 +35,7 @@
     "@tailwindcss/vite": "^4.3.3",
     "@types/mdast": "^4.0.4",
     "@types/node": "^24.13.1",
-    "astro": "^7.2.1",
+    "astro": "^7.2.2",
     "eslint": "^10.8.1",
     "eslint-plugin-astro": "^2.1.1",
     "globals": "^17.11.0",
@@ -53,6 +53,6 @@
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.67.0",
     "unified": "^11.0.5",
-    "wrangler": "^4.122.0"
+    "wrangler": "^4.123.0"
   }
 }
