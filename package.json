@@ -20,7 +20,9 @@
     "textlint": "textlint \"src/content/posts/**/*.md\" \"src/content/posts/**/*.mdx\"",
     "textlint:checkstyle": "textlint \"src/content/posts/**/*.md\" \"src/content/posts/**/*.mdx\" -f checkstyle",
     "fmt": "prettier --write .",
-    "new": "tsx bin/new.ts"
+    "new": "tsx bin/new.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "devDependencies": {
     "98.css": "^0.1.21",
@@ -31,6 +33,7 @@
     "@astrojs/sitemap": "^3.7.3",
     "@eslint/js": "^10.0.1",
     "@pagefind/default-ui": "^1.5.2",
+    "@playwright/test": "^1.55.0",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
     "@types/mdast": "^4.0.4",
