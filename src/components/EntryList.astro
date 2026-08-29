@@ -20,7 +20,7 @@ const hasHeader = Astro.slots.has("header");
         </div>
       )
     }
-    <ul class="not-prose flex flex-col gap-2" data-entry-list>
+    <ul id="entry-list" class="not-prose flex flex-col gap-2" data-entry-list>
       {
         entries.map((entry) => {
           return (

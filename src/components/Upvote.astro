@@ -6,7 +6,7 @@ interface Props {
 const { postId } = Astro.props;
 ---
 
-<upvote-button data-post-id={postId} title="Click to upvote this post!">
+<upvote-button data-post-id={postId}>
   <template shadowrootmode="open">
     <style>
       :host {
@@ -42,13 +42,8 @@ const { postId } = Astro.props;
           border-color 120ms ease,
           box-shadow 120ms ease,
           transform 120ms ease;
-        font: 500 0.75rem/1 var(
-          --font-mono,
-          ui-monospace,
-          SFMono-Regular,
-          Consolas,
-          monospace
-        );
+        font: 500 0.75rem/1
+          var(--font-mono, ui-monospace, SFMono-Regular, Consolas, monospace);
       }
 
       button:hover {
@@ -61,8 +56,9 @@ const { postId } = Astro.props;
       }
 
       button:focus-visible {
-        outline: none;
-        box-shadow: 0 0 0 3px var(--upvote-shadow);
+        outline: 3px solid var(--upvote-focus);
+        outline-offset: 3px;
+        box-shadow: 0 0 0 5px var(--upvote-background);
         border-color: var(--upvote-focus);
       }
 
@@ -80,6 +76,16 @@ const { postId } = Astro.props;
         text-align: right;
       }
 
+      .status {
+        block-size: 1px;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+      }
+
       .icon {
         flex: none;
         font-size: 14px;
@@ -91,6 +97,7 @@ const { postId } = Astro.props;
       <span class="icon" aria-hidden="true">👍</span>
       <span>Upvote</span>
       <span class="count" aria-live="polite">0</span>
+      <span class="status" role="status" aria-live="polite"></span>
     </button>
   </template>
 </upvote-button>
@@ -109,8 +116,15 @@ const { postId } = Astro.props;
 
       if (!button) return;
 
-      button.onclick = this.handleClick;
-      void this.loadUpvotes();
+      if (button.dataset.listenerAttached !== "true") {
+        button.addEventListener("click", this.handleClick);
+        button.dataset.listenerAttached = "true";
+      }
+
+      if (this.dataset.initialized !== "true") {
+        this.dataset.initialized = "true";
+        void this.loadUpvotes();
+      }
     };
 
     private setPending(isPending: boolean) {
@@ -126,11 +140,13 @@ const { postId } = Astro.props;
     private handleClick = async () => {
       const postId = this.dataset.postId;
       const count = this.shadowRoot?.querySelector<HTMLSpanElement>(".count");
+      const status = this.shadowRoot?.querySelector<HTMLSpanElement>(".status");
 
       if (!postId || !count || this.isSubmitting) return;
 
       this.isSubmitting = true;
       this.setPending(true);
+      if (status) status.textContent = "Submitting upvote…";
 
       try {
         const response = await fetch("/api/upvote", {
@@ -147,8 +163,11 @@ const { postId } = Astro.props;
 
         const updated = (await response.json()) as UpvoteResponse;
         count.textContent = String(updated.upvotes);
+        if (status) status.textContent = "Upvote submitted";
       } catch (error) {
         console.error(error);
+        if (status)
+          status.textContent = "Upvote failed. Please try again later.";
       } finally {
         this.isSubmitting = false;
         this.setPending(false);
@@ -158,6 +177,7 @@ const { postId } = Astro.props;
     private async loadUpvotes() {
       const postId = this.dataset.postId;
       const count = this.shadowRoot?.querySelector<HTMLSpanElement>(".count");
+      const status = this.shadowRoot?.querySelector<HTMLSpanElement>(".status");
 
       if (!postId || !count) return;
 
@@ -170,6 +190,7 @@ const { postId } = Astro.props;
         count.textContent = String(data.upvotes);
       } catch (error) {
         console.error(error);
+        if (status) status.textContent = "Unable to load upvote count.";
       }
     }
   }

@@ -17,70 +17,91 @@ const posts = await getCollection("posts")
 
 <Layout title={SITE.TITLE} description={SITE.DESCRIPTION}>
   <EntryList entries={posts}>
-    <nav slot="header" aria-label="Categories">
-      <ul class="not-prose flex flex-wrap gap-2">
-        <li>
-          <button
-            type="button"
-            class="ui-badge"
-            data-category-filter="all"
-            aria-pressed="true"
-          >
-            All
-          </button>
-        </li>
-        {
-          categoryDefinitions.map((category) => (
-            <li>
-              <button
-                type="button"
-                class="ui-badge"
-                data-category-filter={category.id}
-                aria-pressed="false"
-              >
-                {category.label}
-              </button>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
+    <div slot="header">
+      <h1 class="sr-only">Latest posts</h1>
+      <nav aria-label="Categories">
+        <p id="category-filter-status" class="sr-only" aria-live="polite"></p>
+        <ul class="not-prose flex flex-wrap gap-2">
+          <li>
+            <button
+              type="button"
+              class="ui-badge"
+              data-category-filter="all"
+              aria-controls="entry-list"
+              aria-pressed="true"
+            >
+              All
+            </button>
+          </li>
+          {
+            categoryDefinitions.map((category) => (
+              <li>
+                <button
+                  type="button"
+                  class="ui-badge"
+                  data-category-filter={category.id}
+                  aria-controls="entry-list"
+                  aria-pressed="false"
+                >
+                  {category.label}
+                </button>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
   </EntryList>
   <script>
-    document.addEventListener("astro:page-load", () => {
+    const applyFilter = (value: string) => {
       const filterButtons = Array.from(
         document.querySelectorAll<HTMLButtonElement>("[data-category-filter]"),
       );
       const entries = Array.from(
         document.querySelectorAll<HTMLLIElement>("[data-entry]"),
       );
+      const status = document.querySelector<HTMLElement>(
+        "#category-filter-status",
+      );
 
       if (filterButtons.length === 0 || entries.length === 0) return;
 
-      const applyFilter = (value: string) => {
-        for (const entry of entries) {
-          const categories = (entry.dataset.categories ?? "")
-            .split(",")
-            .filter(Boolean);
-          const isVisible = value === "all" || categories.includes(value);
-          entry.hidden = !isVisible;
-        }
-
-        for (const button of filterButtons) {
-          const isActive = button.dataset.categoryFilter === value;
-          button.setAttribute("aria-pressed", String(isActive));
-          button.classList.toggle("is-active", isActive);
-        }
-      };
-
-      for (const button of filterButtons) {
-        button.addEventListener("click", () => {
-          const value = button.dataset.categoryFilter ?? "all";
-          applyFilter(value);
-        });
+      let visibleCount = 0;
+      for (const entry of entries) {
+        const categories = (entry.dataset.categories ?? "")
+          .split(",")
+          .filter(Boolean);
+        const isVisible = value === "all" || categories.includes(value);
+        entry.hidden = !isVisible;
+        if (isVisible) visibleCount += 1;
       }
 
-      applyFilter("all");
-    });
+      for (const button of filterButtons) {
+        const isActive = button.dataset.categoryFilter === value;
+        button.setAttribute("aria-pressed", String(isActive));
+        button.classList.toggle("is-active", isActive);
+      }
+      if (status) status.textContent = `${visibleCount} posts shown`;
+    };
+
+    if (document.documentElement.dataset.categoryFilterBound !== "true") {
+      document.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        const button = target.closest<HTMLButtonElement>(
+          "[data-category-filter]",
+        );
+        if (!button) return;
+        applyFilter(button.dataset.categoryFilter ?? "all");
+      });
+      document.documentElement.dataset.categoryFilterBound = "true";
+    }
+
+    if (
+      document.documentElement.dataset.categoryFilterPageLoadBound !== "true"
+    ) {
+      document.addEventListener("astro:page-load", () => applyFilter("all"));
+      document.documentElement.dataset.categoryFilterPageLoadBound = "true";
+    }
   </script>
 </Layout>

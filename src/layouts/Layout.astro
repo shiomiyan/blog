@@ -19,8 +19,9 @@ const { title, description } = Astro.props;
     <ClientRouter />
   </head>
   <body>
+    <a class="skip-link" href="#content">本文へ移動</a>
     <Header />
-    <main>
+    <main id="content" tabindex="-1">
       <slot />
     </main>
     <Footer />

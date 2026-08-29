@@ -35,5 +35,7 @@ const meta = {
 ---
 
 <Layout title={meta.title} description={meta.description}>
-  <EntryList entries={posts} />
+  <EntryList entries={posts}>
+    <h1 slot="header" class="sr-only">{categoryDisplayName}</h1>
+  </EntryList>
 </Layout>

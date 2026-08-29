@@ -33,7 +33,7 @@ const toc = buildToc(headings);
 
 <details class="ui-panel">
   <summary class="ui-panel-summary">目次</summary>
-  <nav>
+  <nav aria-label="目次">
     <ul class="py-3">
       {toc.map((heading) => <TableOfContentsHeading heading={heading} />)}
     </ul>

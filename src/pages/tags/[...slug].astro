@@ -28,5 +28,7 @@ const meta = {
 ---
 
 <Layout title={meta.title} description={meta.description}>
-  <EntryList entries={posts} />
+  <EntryList entries={posts}>
+    <h1 slot="header" class="sr-only">{tagDisplayName}</h1>
+  </EntryList>
 </Layout>

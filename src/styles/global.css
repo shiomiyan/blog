@@ -55,6 +55,7 @@
   --color-link-visited: oklch(39.8% 0.192 304.95);
   --color-link-hover: var(--color-surface-inverse);
   --color-link-hover-foreground: var(--color-surface-primary);
+  --color-focus-ring: var(--color-blue-700);
   --color-accent-info: var(--color-blue-600);
   --color-accent-info-surface: var(--color-blue-100);
   --color-accent-success: var(--color-green-600);
@@ -97,6 +98,26 @@ main {
   @apply flex-1;
 }
 
+.skip-link {
+  background-color: var(--color-surface-primary);
+  color: var(--color-foreground);
+  left: 1rem;
+  padding: 0.5rem 0.75rem;
+  position: fixed;
+  top: 1rem;
+  transform: translateY(-200%);
+  z-index: 100;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+:is(a, button, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 3px;
+}
+
 footer {
   @apply text-foreground-muted py-6 text-sm;
 }
@@ -127,7 +148,15 @@ article :is(ul > li, ol > li) {
 :is(article a, .text-link):focus-visible {
   color: var(--color-link-hover-foreground);
   background-color: var(--color-link-hover);
-  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 h1::before {
