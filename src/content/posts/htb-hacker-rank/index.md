@@ -12,7 +12,7 @@ categories: [scrap-notes]
 
 Hack The Boxを始めてからとりあえずの目標にしていた[Hackerランクに（3ヶ月ほど前に）到達した](https://twitter.com/shiomiyan/status/16128302030589829150)ので、やったこととか感想などを忘れないうちに（3ヶ月立ってしまったが）まとめてみる。
 
-![](2023-04-05-21-36-03.png)
+![Hack The BoxのプロフィールでHackerランクに到達した画面](2023-04-05-21-36-03.png)
 
 ## 元の状態
 
@@ -38,7 +38,7 @@ https://app.hackthebox.com/profile/activity/260593
 
 Walkthroughが用意されているが、自分が何をしたかをまとめる意味で、少しでも作業したものは非公開のNotionに解法をまとめたりしてた。
 
-![](2023-04-05-23-29-55.png)
+![Hack The Boxのプロフィールに表示された攻略履歴](2023-04-05-23-29-55.png)
 
 ### 半月くらい
 

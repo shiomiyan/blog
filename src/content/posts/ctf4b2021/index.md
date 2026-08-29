@@ -167,7 +167,7 @@ https://osoba.quals.beginners.seccon.jp/?page=public/wip.html
 
 お、トラバーサルか？ と思いましたが、コメント通り `/flag` にありました。
 
-![](2021-05-24-23-55-49.png)
+![osobaの脆弱なページ指定で表示されたflag](2021-05-24-23-55-49.png)
 
 #### Werewolf
 
@@ -246,7 +246,7 @@ for k, v in request.form.items():
 
 これをもとに、Burp あたりを使ってパラメータを弄ってリクエストを飛ばしてみます。
 
-![](2021-05-25-00-40-10.png)
+![Burp SuiteでWEREWOLFのroleを送信しflagが表示された画面](2021-05-25-00-40-10.png)
 
 見事 flag をゲットできました！
 
@@ -269,7 +269,7 @@ for k, v in request.form.items():
 https://check-url.quals.beginners.seccon.jp/?url=0x7F000001
 ```
 
-![](2021-05-25-01-01-43.png)
+![check_urlで16進数表記の127.0.0.1を使ってflagを取得した画面](2021-05-25-01-01-43.png)
 
 ### misc
 

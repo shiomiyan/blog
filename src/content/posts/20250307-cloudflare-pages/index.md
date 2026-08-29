@@ -43,7 +43,7 @@ CloudflareのDashboardから、["👤アイコン > Profile > API Tokens"](https
 
 secretsは次のようになってます。
 
-![](./secrets.png)
+![Cloudflare PagesのSecrets設定画面](./secrets.png)
 
 [cloudflare/wrangler-action](https://github.com/cloudflare/wrangler-action)を使ってデプロイします。Actionsのyamlは次のようになりました。
 

@@ -23,17 +23,17 @@ tags:
 
 特に難しいことはなく、脚固定用のネジを長いものにする。
 
-![](./images/desk-leg-bolt.jpg)
+![デスクの脚から伸びたキャリーボックス固定用のボルト](./images/desk-leg-bolt.jpg)
 
 デスクの脚から伸びたボルト。
 
 これにキャリーボックスを引っ掛けるだけ。
 
-![](./images/storage-box-1.jpg)
+![ボルトにぶら下がっているキャリーボックス](./images/storage-box-1.jpg)
 
 ボルトにぶら下がっているキャリーボックス（1）。
 
-![](./images/storage-box-2.jpg)
+![ボルトにぶら下がっているキャリーボックスを別の角度から見た様子](./images/storage-box-2.jpg)
 
 ボルトにぶら下がっているキャリーボックス（2）。
 

@@ -43,17 +43,17 @@ CPUに関して、MacBook Proのそれと比較すると、[ベンチマーク](
   - バックライトありが良かったかもしれない
 - バッテリー: 57Whに変更した
 
-![Thinkpad E14の本体](./20250426_143002.jpg)
+![ThinkPad E14の本体](./20250426_143002.jpg)
 
 <details><summary>📷️ ギャラリー（主にMacBook Pro 2019との比較）</summary><div>
 
 色の問題もありそうだが、指紋が目立ちやすい印象です。横から見ると倍くらいの厚みがあり、実際重量もMacBook Proより100g程度重いです。（公称値は1.44kg~となっている）
 
-![上から見た図](./20250426_162902.jpg)
+![ThinkPad E14を上から見た様子](./20250426_162902.jpg)
 
-![横から見た図](./20250426_162920.jpg)
+![ThinkPad E14を横から見た様子](./20250426_162920.jpg)
 
-![開いた状態の図](./20250426_163038.jpg)
+![ThinkPad E14を開いた状態](./20250426_163038.jpg)
 
 </div></details>
 
@@ -131,7 +131,7 @@ ln -s /usr/share/applications/org.fcitx.Fcitx5.desktop ~/.config/autostart/
 
 起動できたら、Fcitxの設定でUSとMozcを有効にしておきます。
 
-![](./fcitx-configuration.png)
+![FcitxでUSキーボードとMozcを有効にした設定画面](./fcitx-configuration.png)
 
 この時点で、問題なく変換できる状態になりました。
 

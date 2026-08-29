@@ -88,7 +88,7 @@ echo "test";
 
 ### Firefox 137
 
-![firefox.png](firefox.png)
+![Firefox 137で日時文字列を解釈した結果](firefox.png)
 
 書式によってわずかに秒単位のズレが出ているのは気になりますが、おそらくすべて解釈できていそうです。
 
@@ -110,7 +110,7 @@ Set-Cookie: IMF-fixdate-JST=1; Expires=Fri, 06 Aug 2025 08:00:00 JST
 
 ### Safari 18.2
 
-![safari.png](safari.png)
+![Safari 18.2で日時文字列を解釈した結果](safari.png)
 
 Safariもそれなりに寛容です。
 
@@ -118,7 +118,7 @@ Safariもそれなりに寛容です。
 
 ### Chrome 134
 
-![chrome.png](chrome.png)
+![Chrome 134で日時文字列を解釈した結果](chrome.png)
 
 最も日付書式が厳しく実装されています。
 

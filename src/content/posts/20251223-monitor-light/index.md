@@ -12,12 +12,12 @@ tags:
 XiaomiのモニターライトとLGのモニター（34WQ75C）は相性が悪い。
 普通に乗っけると手前側にかなり傾いてしまう。
 
-![](./images/tilted-monitor-light.jpg)
+![モニターに乗せたモニターライトが手前に傾いている様子](./images/tilted-monitor-light.jpg)
 
 傾いてる図。
 
 ホムセンに売ってた謎の緩衝材で良い感じになった。
 
-![](./images/fixed-monitor-light.jpg)
+![緩衝材でモニターに水平に固定されたモニターライト](./images/fixed-monitor-light.jpg)
 
 バチッとついた図。

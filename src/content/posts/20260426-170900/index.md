@@ -21,6 +21,6 @@ tags:
 > - Data exfiltration
 > - Destruction
 
-![pasted-image-20260426170658](./pasted-image-20260426170658.png)
+![ウェブページに埋め込まれたプロンプトインジェクションの例](./pasted-image-20260426170658.png)
 
 > We believe that this could change soon. Today’s AI systems are much more capable, increasing their value as targets, while threat actors have simultaneously begun automating their operations with agentic AI, bringing down the cost of attack. As a result, we expect both the scale and sophistication of attempted IPI attacks to grow in the near future.

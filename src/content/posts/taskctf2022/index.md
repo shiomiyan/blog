@@ -10,7 +10,7 @@ tags:
 categories: [tech]
 ---
 
-![](score.png)
+![taskctf2022のカテゴリ別チャレンジ得点一覧](score.png)
 
 29位で終わりだった（来年もあれば全完したい）。
 

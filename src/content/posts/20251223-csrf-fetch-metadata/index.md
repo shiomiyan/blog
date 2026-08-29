@@ -21,7 +21,7 @@ categories: [tech]
 
 ブラウザのDevToolsを見る機会があれば、なんかついてるな、くらいには思ったことがあるんじゃないでしょうか。
 
-![](./sec-fetch-in-devtools.png)
+![ブラウザのDevToolsに表示されたFetch Metadataリクエストヘッダ](./sec-fetch-in-devtools.png)
 
 MDNにも記載がある通り、これらのヘッダはCSRFをはじめとするクロスサイトな攻撃の対策として活用できます。
 

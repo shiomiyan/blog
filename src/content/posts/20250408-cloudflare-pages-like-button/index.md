@@ -182,7 +182,7 @@ export default defineConfig({
 
 できました。
 
-![](./images/like-button.gif)
+![ブログ記事に設置したいいねボタンの動作](./images/like-button.gif)
 
 ## おわり
 
